@@ -49,10 +49,12 @@ public class OperationsParser implements RecordSelector, RecordFormatter, Activi
 	fl.addRecordFormat(this, new GenericParser(Operation.class).delimiter(";").removeQuotes(true).trim(true), this);
 
 	File[] fileList = readInputDir();
-	for (int i = 0; i < fileList.length; i++) {
-	    System.out.println("Reading " + fileList[i] + "...");
-	    List<Operation> parseFile = parseFile(fileList[i]);
-	    BankContainer.me().addOperations(parseFile);
+	if (fileList != null) {
+	    for (int i = 0; i < fileList.length; i++) {
+		System.out.println("Reading " + fileList[i] + "...");
+		List<Operation> parseFile = parseFile(fileList[i]);
+		BankContainer.me().addOperations(parseFile);
+	    }
 	}
     }
 
