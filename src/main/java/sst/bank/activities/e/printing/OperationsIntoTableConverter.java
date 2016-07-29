@@ -2,6 +2,7 @@ package sst.bank.activities.e.printing;
 
 import java.time.format.DateTimeFormatter;
 
+import sst.bank.config.BankUtils;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
@@ -35,7 +36,7 @@ class OperationsIntoTableConverter implements IntoTableConverter {
 	}
 	cells[i++] = new CellInfo(operation.getExecutionDate().format(fmt), "date");
 	cells[i++] = new CellInfo(operation.getValueDate().format(fmt), "date");
-	cells[i++] = new CellInfo("" + operation.getAmount(), "amount");
+	cells[i++] = new CellInfo(BankUtils.format(operation.getAmount()), "amount");
 	cells[i++] = new CellInfo(operation.getCurrency(), "currency");
 	cells[i++] = new CellInfo(operation.getCounterparty(), "counterparty");
 	cells[i++] = new CellInfo(operation.getDetail(), "detail");

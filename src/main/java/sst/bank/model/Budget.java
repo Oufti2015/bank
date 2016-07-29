@@ -5,10 +5,9 @@ import java.math.MathContext;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import sst.bank.config.BankUtils;
 import sst.bank.model.container.BankContainer.CategoryName;
 
-@ToString
 public class Budget {
     public enum BudgetFrequencyType {
 	YEARLY, MONTHLY
@@ -56,5 +55,10 @@ public class Budget {
     public BigDecimal monthlyAmount() {
 	return (BudgetFrequencyType.MONTHLY.equals(budgetFrequencyType) ? amount
 		: amount.divide(BigDecimal.valueOf(12), MathContext.DECIMAL32));
+    }
+
+    @Override
+    public String toString() {
+	return String.format("%-15s : %8s", category, BankUtils.format(monthlyAmount()));
     }
 }

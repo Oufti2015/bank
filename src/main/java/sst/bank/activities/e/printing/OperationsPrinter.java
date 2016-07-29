@@ -17,7 +17,6 @@ import sst.common.html.AbstractHTMLElement;
 import sst.common.html.HTML;
 import sst.common.html.HTMLBody;
 import sst.common.html.HTMLDiv;
-import sst.common.html.HTMLFooter;
 import sst.common.html.HTMLHeader;
 import sst.common.html.HTMLHyperlinks;
 import sst.common.html.HTMLListItem;
@@ -72,13 +71,13 @@ public class OperationsPrinter implements Activity {
 	body.addChild(div);
 	printSummary(BankContainer.me().yearlySummary(), div);
 
-	html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon - " + LocalDate.now()));
+	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
+	// " + LocalDate.now()));
 	try (OutputFile output = new OutputFile(constructPathName(bm))) {
 	    output.println(html.toString());
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-
     }
 
     private AbstractHTMLElement tabMenu() {
@@ -146,7 +145,18 @@ public class OperationsPrinter implements Activity {
     }
 
     private AbstractHTMLElement printHeader(String title, BankSummary bm) {
-	return new HTMLHeader(2)
-		.textContent(title + " of " + Month.from(bm.getStartDate()) + " " + Year.from(bm.getStartDate()));
+	String startDateString = formatDate(bm.getStartDate());
+	String endDateString = formatDate(bm.getEndDate());
+	String result;
+	if (startDateString.equals(endDateString)) {
+	    result = title + " of " + startDateString;
+	} else {
+	    result = title + " from " + startDateString + " to " + endDateString;
+	}
+	return new HTMLHeader(2).textContent(result);
+    }
+
+    private String formatDate(LocalDate date) {
+	return Month.from(date) + " " + Year.from(date);
     }
 }
