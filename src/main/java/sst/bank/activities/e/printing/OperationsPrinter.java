@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import sst.bank.activities.Activity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.BankSummary;
+import sst.bank.model.container.BankBudget;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.output.OutputFile;
 import sst.common.html.AbstractHTMLElement;
@@ -131,7 +132,10 @@ public class OperationsPrinter implements Activity {
 	List<IntoTableConverter> listConvert;
 	listConvert = bm.getSummary().keySet().stream()
 		.sorted()
-		.map(c -> new SummaryIntoTableConverter(c, bm.getSummary().get(c)))
+		.map(c -> new SummaryIntoTableConverter(c,
+			bm.getSummary().get(c),
+			BankBudget.me().get(c.getName()),
+			bm.monthQuantity()))
 		.collect(Collectors.toList());
 	listConvert.add(new SummarySumRowIntoTableConverter(bm));
 

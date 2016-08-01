@@ -2,7 +2,9 @@ package sst.bank.model.container;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import sst.bank.model.Budget;
 import sst.bank.model.Budget.BudgetFrequencyType;
@@ -33,7 +35,7 @@ public class BankBudget {
     public double monthlyTotal() { // NO_UCD (unused code)
 	double yearly = budgets.values().stream()
 		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
-		.filter(b -> BudgetType.SPENDING.equals(b.getBudgetType()))
+		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
 		.mapToDouble(b -> b.monthlyAmount().doubleValue())
 		.sum();
 	double saving = budgets.values().stream()
@@ -47,14 +49,14 @@ public class BankBudget {
 	// System.out.println("saving - yearly = " + (saving - yearly));
 
 	return budgets.values().stream()
-		.filter(b -> BudgetType.SPENDING.equals(b.getBudgetType()))
+		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
 		.mapToDouble(b -> b.monthlyAmount().doubleValue()).sum() + (saving - yearly);
     }
 
     public double yearlyTotal() { // NO_UCD (unused code)
 	double yearly = budgets.values().stream()
 		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
-		.filter(b -> BudgetType.SPENDING.equals(b.getBudgetType()))
+		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
 		.mapToDouble(b -> b.yearlyAmount().doubleValue())
 		.sum();
 	double saving = budgets.values().stream()
@@ -68,11 +70,13 @@ public class BankBudget {
 	System.out.println("saving - yearly = " + (saving - yearly));
 
 	return budgets.values().stream()
-		.filter(b -> BudgetType.SPENDING.equals(b.getBudgetType()))
+		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
 		.mapToDouble(b -> b.yearlyAmount().doubleValue()).sum() + (saving - yearly);
     }
 
     public Budget get(CategoryName category) { // NO_UCD (unused code)
+	// System.out.println("category=" + category + "/budget=" +
+	// budgets.get(category));
 	return budgets.get(category);
     }
 
@@ -83,7 +87,8 @@ public class BankBudget {
 	put(new Budget(CategoryName.ASSURANCES, BigDecimal.valueOf(-1634.64), BudgetFrequencyType.YEARLY));
 	put(new Budget(CategoryName.ELECTRICITE, BigDecimal.valueOf(-150.00), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.ANNE, BigDecimal.valueOf(-17.66), BudgetFrequencyType.MONTHLY));
-	put(new Budget(CategoryName.SALAIRE, BigDecimal.valueOf(3401.00), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.SALAIRE, BigDecimal.valueOf(3401.00), BudgetFrequencyType.MONTHLY,
+		BudgetType.SALARY));
 	put(new Budget(CategoryName.TELEPHONE, BigDecimal.valueOf(-108.00), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.AGILITY, BigDecimal.valueOf(-36.00 * 3.00), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.SODEXHO, BigDecimal.valueOf(-216.00), BudgetFrequencyType.MONTHLY));
@@ -112,11 +117,9 @@ public class BankBudget {
 		System.err.println("WARNING: " + categories[i] + " not found in budget.");
 	    }
 	}
+    }
 
-	budgets.values().stream().forEach(b -> System.out.println(b.toString()));
-	System.out.println(
-		"Total Budget : " + budgets.values().stream()
-			.mapToDouble(b -> b.monthlyAmount().doubleValue())
-			.sum());
+    public List<Budget> budgets() {
+	return budgets.values().stream().collect(Collectors.toList());
     }
 }

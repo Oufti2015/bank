@@ -2,6 +2,8 @@ package sst.bank.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -73,5 +75,10 @@ public class BankSummary {
 
     private void computeSummary() {
 	list.stream().filter(o -> null != o.getCategory()).forEach(o -> summary(o.getCategory(), o.getAmount()));
+    }
+
+    public long monthQuantity() {
+	return list.stream().map(o -> Year.from(o.getValueDate()) + "/" + Month.from(o.getValueDate())).distinct()
+		.count();
     }
 }

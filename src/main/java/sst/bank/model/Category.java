@@ -1,20 +1,19 @@
 package sst.bank.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import sst.bank.model.container.BankContainer.CategoryName;
 
+@Data
 public class Category implements Comparable<Category> {
-    @Getter
-    @Setter
+    private CategoryName name;
     private String label;
-    @Getter
-    @Setter
     private String style;
 
-    public Category(String label, String style) {
+    public Category(CategoryName name, String label, String style) {
 	super();
 	this.label = label;
 	this.style = style;
+	this.name = name;
     }
 
     @Override

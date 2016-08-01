@@ -68,27 +68,29 @@ public class BankContainer {
     private static Map<CategoryName, Category> categories = new HashMap<>();
 
     static {
-	categories.put(CategoryName.UNKNOWN, new Category("", ""));
+	categories.put(CategoryName.UNKNOWN, new Category(CategoryName.UNKNOWN, "", ""));
 
-	categories.put(CategoryName.SALAIRE, new Category("Salaire", "salaire"));
-	categories.put(CategoryName.ASSURANCES, new Category("Assurances", "assurances"));
-	categories.put(CategoryName.ELECTRICITE, new Category("&Eacute;lectricit&eacute;", "electricite"));
-	categories.put(CategoryName.TELEPHONE, new Category("T&eacute;l&eacute;phone", "phone"));
-	categories.put(CategoryName.AGILITY, new Category("Agility", "dog"));
-	categories.put(CategoryName.SODEXHO, new Category("Sodexho", "house"));
-	categories.put(CategoryName.SPORT, new Category("Sport", "sport"));
-	categories.put(CategoryName.WATER, new Category("Eau", "house"));
-	categories.put(CategoryName.MUTUELLE, new Category("Mutuelle", "mutuelle"));
-	categories.put(CategoryName.BANK, new Category("Banque", "bank"));
-	categories.put(CategoryName.CAR, new Category("Voiture", "car"));
-	categories.put(CategoryName.HOUSE, new Category("Maison", "house"));
-	categories.put(CategoryName.DOG, new Category("Chiens", "dog"));
-	categories.put(CategoryName.VISA, new Category("Visa", "bank"));
-	categories.put(CategoryName.EPARGNE, new Category("&Eacute;pargne", "bank"));
-	categories.put(CategoryName.ANNE, new Category("Anne", "anne"));
-	categories.put(CategoryName.DRESSING, new Category("Vêtements", "water"));
-	categories.put(CategoryName.LEISURE, new Category("Loisirs", "loisirs"));
-	categories.put(CategoryName.MOVE, new Category("D&eacute;placements", "move"));
+	categories.put(CategoryName.SALAIRE, new Category(CategoryName.SALAIRE, "Salaire", "salaire"));
+	categories.put(CategoryName.ASSURANCES, new Category(CategoryName.ASSURANCES, "Assurances", "assurances"));
+	categories.put(CategoryName.ELECTRICITE,
+		new Category(CategoryName.ELECTRICITE, "&Eacute;lectricit&eacute;", "electricite"));
+	categories.put(CategoryName.TELEPHONE,
+		new Category(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone", "phone"));
+	categories.put(CategoryName.AGILITY, new Category(CategoryName.AGILITY, "Agility", "dog"));
+	categories.put(CategoryName.SODEXHO, new Category(CategoryName.SODEXHO, "Sodexho", "house"));
+	categories.put(CategoryName.SPORT, new Category(CategoryName.SPORT, "Sport", "sport"));
+	categories.put(CategoryName.WATER, new Category(CategoryName.WATER, "Eau", "house"));
+	categories.put(CategoryName.MUTUELLE, new Category(CategoryName.MUTUELLE, "Mutuelle", "mutuelle"));
+	categories.put(CategoryName.BANK, new Category(CategoryName.BANK, "Banque", "bank"));
+	categories.put(CategoryName.CAR, new Category(CategoryName.CAR, "Voiture", "car"));
+	categories.put(CategoryName.HOUSE, new Category(CategoryName.HOUSE, "Maison", "house"));
+	categories.put(CategoryName.DOG, new Category(CategoryName.DOG, "Chiens", "dog"));
+	categories.put(CategoryName.VISA, new Category(CategoryName.VISA, "Visa", "bank"));
+	categories.put(CategoryName.EPARGNE, new Category(CategoryName.EPARGNE, "&Eacute;pargne", "bank"));
+	categories.put(CategoryName.ANNE, new Category(CategoryName.ANNE, "Anne", "anne"));
+	categories.put(CategoryName.DRESSING, new Category(CategoryName.DRESSING, "Vêtements", "water"));
+	categories.put(CategoryName.LEISURE, new Category(CategoryName.LEISURE, "Loisirs", "loisirs"));
+	categories.put(CategoryName.MOVE, new Category(CategoryName.MOVE, "D&eacute;placements", "move"));
     }
 
     public Category category(CategoryName name) {

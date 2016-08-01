@@ -14,7 +14,7 @@ public class Budget {
     }
 
     public enum BudgetType {
-	SAVING, SPENDING
+	SALARY, SAVING, SPENDING
     }
 
     @Getter
@@ -29,6 +29,9 @@ public class Budget {
     @Getter
     @Setter
     private BudgetType budgetType;
+    @Getter
+    @Setter
+    private BigDecimal controlledAmount;
 
     public Budget(CategoryName category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType) {
 	super();
@@ -36,6 +39,7 @@ public class Budget {
 	this.amount = amount;
 	this.budgetFrequencyType = budgetFrequencyType;
 	this.budgetType = BudgetType.SPENDING;
+	this.controlledAmount = monthlyAmount();
     }
 
     public Budget(CategoryName category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType,
@@ -45,6 +49,7 @@ public class Budget {
 	this.amount = amount;
 	this.budgetFrequencyType = budgetFrequencyType;
 	this.budgetType = budgetType;
+	this.controlledAmount = monthlyAmount();
     }
 
     public BigDecimal yearlyAmount() {
@@ -52,13 +57,28 @@ public class Budget {
 		: amount.multiply(BigDecimal.valueOf(12)));
     }
 
+    public BigDecimal yearlyControlledAmount() {
+	return controlledAmount.multiply(BigDecimal.valueOf(12));
+    }
+
     public BigDecimal monthlyAmount() {
 	return (BudgetFrequencyType.MONTHLY.equals(budgetFrequencyType) ? amount
 		: amount.divide(BigDecimal.valueOf(12), MathContext.DECIMAL32));
     }
 
+    public BigDecimal monthlyControlledAmount() {
+	return controlledAmount;
+    }
+
     @Override
     public String toString() {
-	return String.format("%-15s : %8s", category, BankUtils.format(monthlyAmount()));
+	return String.format("%-15s : %10s %10s %10s %10s %7s %8s",
+		category,
+		BankUtils.format(monthlyAmount()),
+		BankUtils.format(monthlyControlledAmount()),
+		BankUtils.format(yearlyAmount()),
+		BankUtils.format(yearlyControlledAmount()),
+		getBudgetFrequencyType(),
+		getBudgetType());
     }
 }

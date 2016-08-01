@@ -18,7 +18,10 @@ class SummarySumRowIntoTableConverter implements IntoTableConverter {
     public CellInfo[] convert() {
 	CellInfo[] cells = new CellInfo[2];
 	cells[0] = new CellInfo("Total", "date");
-	double sum = summary.getSummary().values().stream().mapToDouble(o -> o.doubleValue()).sum();
+	double sum = summary.getSummary().values()
+		.stream()
+		.mapToDouble(o -> o.doubleValue())
+		.sum();
 	cells[1] = new CellInfo(BankUtils.format(sum), "amount");
 	return cells;
     }
