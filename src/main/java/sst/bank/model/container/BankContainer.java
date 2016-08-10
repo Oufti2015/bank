@@ -88,7 +88,7 @@ public class BankContainer {
 	categories.put(CategoryName.VISA, new Category(CategoryName.VISA, "Visa", "bank"));
 	categories.put(CategoryName.EPARGNE, new Category(CategoryName.EPARGNE, "&Eacute;pargne", "bank"));
 	categories.put(CategoryName.ANNE, new Category(CategoryName.ANNE, "Anne", "anne"));
-	categories.put(CategoryName.DRESSING, new Category(CategoryName.DRESSING, "Vêtements", "water"));
+	categories.put(CategoryName.DRESSING, new Category(CategoryName.DRESSING, "V&ecirc;tements", "water"));
 	categories.put(CategoryName.LEISURE, new Category(CategoryName.LEISURE, "Loisirs", "loisirs"));
 	categories.put(CategoryName.MOVE, new Category(CategoryName.MOVE, "D&eacute;placements", "move"));
     }

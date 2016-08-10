@@ -12,6 +12,7 @@ public class MapDetailToCategory implements CategoryActivity {
     static {
 	mapping.put("LAURENT MURIEL", CategoryName.DOG);
 	mapping.put("CFL PETANG", CategoryName.MOVE);
+	mapping.put("TEXACO BARA", CategoryName.CAR);
     }
 
     @Override
