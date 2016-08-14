@@ -1,9 +1,12 @@
 package sst.bank.model.container;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import sst.bank.model.BankSummary;
 import sst.bank.model.Category;
@@ -40,6 +43,16 @@ public class BankContainer {
 
     public void addMonth(BankSummary summary) {
 	operationsByMonth.add(summary);
+    }
+
+    private List<BankSummary> operationsByYear = new ArrayList<>();
+
+    public List<BankSummary> operationsByYear() {
+	return operationsByYear;
+    }
+
+    public void addYear(BankSummary summary) {
+	operationsByYear.add(summary);
     }
 
     public enum CategoryName {
@@ -97,7 +110,12 @@ public class BankContainer {
 	return categories.get(name);
     }
 
-    public BankSummary yearlySummary() {
-	return new BankSummary(operations);
+    public BankSummary yearlySummary(Year year, LocalDate endDate) {
+	List<Operation> result = operations.stream()
+		.filter(o -> year.equals(Year.from(o.getValueDate())))
+		.filter(o -> endDate.compareTo(o.getValueDate()) >= 0)
+		.collect(Collectors.toList());
+
+	return new BankSummary(result);
     }
 }

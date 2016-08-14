@@ -70,7 +70,10 @@ public class OperationsPrinter implements Activity {
 
 	div = new HTMLDiv();
 	body.addChild(div);
-	printSummary(BankContainer.me().yearlySummary(), div);
+	BankSummary yearlySummary = BankContainer.me().yearlySummary(Year.from(bm.getEndDate()), bm.getEndDate());
+	if (bm.operationsCount() < yearlySummary.operationsCount()) {
+	    printSummary(yearlySummary, div);
+	}
 
 	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
 	// " + LocalDate.now()));
@@ -155,7 +158,8 @@ public class OperationsPrinter implements Activity {
 	if (startDateString.equals(endDateString)) {
 	    result = title + " of " + startDateString;
 	} else {
-	    result = title + " from " + startDateString + " to " + endDateString;
+	    result = title + " from " + startDateString + " to " + endDateString + " (" + bm.monthQuantity()
+		    + " months)";
 	}
 	return new HTMLHeader(2).textContent(result);
     }

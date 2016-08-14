@@ -14,9 +14,9 @@ class SummaryIntoTableConverter implements IntoTableConverter {
     private Category category;
     private BigDecimal amount;
     private Budget budget;
-    private long monthQuantity;
+    private int monthQuantity;
 
-    public SummaryIntoTableConverter(Category category, BigDecimal amount, Budget budget, long monthQuantity) {
+    public SummaryIntoTableConverter(Category category, BigDecimal amount, Budget budget, int monthQuantity) {
 	super();
 	this.category = category;
 	this.amount = amount;
@@ -33,8 +33,9 @@ class SummaryIntoTableConverter implements IntoTableConverter {
 	    cells[2] = new CellInfo(BankUtils.format(budget.monthlyControlledAmount()), "amount");
 	    cells[3] = new CellInfo(BankUtils.format(amount.subtract(budget.monthlyControlledAmount())), "amount");
 	} else {
-	    cells[2] = new CellInfo(BankUtils.format(budget.yearlyControlledAmount()), "amount");
-	    cells[3] = new CellInfo(BankUtils.format(amount.subtract(budget.yearlyControlledAmount())), "amount");
+	    cells[2] = new CellInfo(BankUtils.format(budget.yearlyControlledAmount(monthQuantity)), "amount");
+	    cells[3] = new CellInfo(BankUtils.format(amount.subtract(budget.yearlyControlledAmount(monthQuantity))),
+		    "amount");
 	}
 	return cells;
     }

@@ -77,8 +77,12 @@ public class BankSummary {
 	list.stream().filter(o -> null != o.getCategory()).forEach(o -> summary(o.getCategory(), o.getAmount()));
     }
 
-    public long monthQuantity() {
-	return list.stream().map(o -> Year.from(o.getValueDate()) + "/" + Month.from(o.getValueDate())).distinct()
+    public int monthQuantity() {
+	return (int) list.stream().map(o -> Year.from(o.getValueDate()) + "/" + Month.from(o.getValueDate())).distinct()
 		.count();
+    }
+
+    public int operationsCount() {
+	return list.size();
     }
 }

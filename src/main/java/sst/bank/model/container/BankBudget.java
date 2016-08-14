@@ -57,12 +57,12 @@ public class BankBudget {
 	double yearly = budgets.values().stream()
 		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
 		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
-		.mapToDouble(b -> b.yearlyAmount().doubleValue())
+		.mapToDouble(b -> b.yearlyAmount(12).doubleValue())
 		.sum();
 	double saving = budgets.values().stream()
 		.filter(b -> BudgetFrequencyType.MONTHLY.equals(b.getBudgetFrequencyType()))
 		.filter(b -> BudgetType.SAVING.equals(b.getBudgetType()))
-		.mapToDouble(b -> b.yearlyAmount().doubleValue())
+		.mapToDouble(b -> b.yearlyAmount(12).doubleValue())
 		.sum();
 
 	System.out.println("yearly = " + yearly);
@@ -71,7 +71,7 @@ public class BankBudget {
 
 	return budgets.values().stream()
 		.filter(b -> !BudgetType.SAVING.equals(b.getBudgetType()))
-		.mapToDouble(b -> b.yearlyAmount().doubleValue()).sum() + (saving - yearly);
+		.mapToDouble(b -> b.yearlyAmount(12).doubleValue()).sum() + (saving - yearly);
     }
 
     public Budget get(CategoryName category) { // NO_UCD (unused code)
@@ -85,7 +85,7 @@ public class BankBudget {
 		BudgetType.SAVING));
 
 	put(new Budget(CategoryName.ASSURANCES, BigDecimal.valueOf(-1634.64), BudgetFrequencyType.YEARLY));
-	put(new Budget(CategoryName.ELECTRICITE, BigDecimal.valueOf(-150.00), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.ELECTRICITE, BigDecimal.valueOf(-73), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.ANNE, BigDecimal.valueOf(-17.66), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.SALAIRE, BigDecimal.valueOf(3401.00), BudgetFrequencyType.MONTHLY,
 		BudgetType.SALARY));
@@ -98,6 +98,8 @@ public class BankBudget {
 	put(new Budget(CategoryName.DRESSING, BigDecimal.valueOf(-10.4), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.VISA, BigDecimal.valueOf(-1000), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.BANK, BigDecimal.valueOf(-8.2), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.CAR, BigDecimal.valueOf(-329.81), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.HOUSE, BigDecimal.valueOf(-988.80), BudgetFrequencyType.MONTHLY));
 
 	for (CategoryName cat : CategoryName.values()) {
 	    if (!budgets.keySet().contains(cat)) {

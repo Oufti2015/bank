@@ -9,6 +9,8 @@ import sst.bank.config.BankUtils;
 import sst.bank.model.container.BankContainer.CategoryName;
 
 public class Budget {
+    private static final int MONTHS_COUNT = 12;
+
     public enum BudgetFrequencyType {
 	YEARLY, MONTHLY
     }
@@ -52,18 +54,20 @@ public class Budget {
 	this.controlledAmount = monthlyAmount();
     }
 
-    public BigDecimal yearlyAmount() {
+    public BigDecimal yearlyAmount(int monthsCount) {
 	return (BudgetFrequencyType.YEARLY.equals(budgetFrequencyType) ? amount
-		: amount.multiply(BigDecimal.valueOf(12)));
+		: amount.multiply(BigDecimal.valueOf(monthsCount)));
     }
 
-    public BigDecimal yearlyControlledAmount() {
-	return controlledAmount.multiply(BigDecimal.valueOf(12));
+    public BigDecimal yearlyControlledAmount(int monthsCount) {
+	return (BudgetFrequencyType.YEARLY.equals(budgetFrequencyType)
+		? controlledAmount.multiply(BigDecimal.valueOf(MONTHS_COUNT))
+		: controlledAmount.multiply(BigDecimal.valueOf(monthsCount)));
     }
 
     public BigDecimal monthlyAmount() {
 	return (BudgetFrequencyType.MONTHLY.equals(budgetFrequencyType) ? amount
-		: amount.divide(BigDecimal.valueOf(12), MathContext.DECIMAL32));
+		: amount.divide(BigDecimal.valueOf(MONTHS_COUNT), MathContext.DECIMAL32));
     }
 
     public BigDecimal monthlyControlledAmount() {
@@ -76,8 +80,8 @@ public class Budget {
 		category,
 		BankUtils.format(monthlyAmount()),
 		BankUtils.format(monthlyControlledAmount()),
-		BankUtils.format(yearlyAmount()),
-		BankUtils.format(yearlyControlledAmount()),
+		BankUtils.format(yearlyAmount(MONTHS_COUNT)),
+		BankUtils.format(yearlyControlledAmount(MONTHS_COUNT)),
 		getBudgetFrequencyType(),
 		getBudgetType());
     }

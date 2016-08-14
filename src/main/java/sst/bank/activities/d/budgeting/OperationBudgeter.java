@@ -44,11 +44,11 @@ public class OperationBudgeter implements Activity {
 				.sum()),
 			BankUtils.format(budgets
 				.stream()
-				.mapToDouble(b -> b.yearlyAmount().doubleValue())
+				.mapToDouble(b -> b.yearlyAmount(12).doubleValue())
 				.sum()),
 			BankUtils.format(budgets
 				.stream()
-				.mapToDouble(b -> b.yearlyControlledAmount().doubleValue())
+				.mapToDouble(b -> b.yearlyControlledAmount(12).doubleValue())
 				.sum())));
 	System.out.println("------------------------------------------------------------------------------");
     }
