@@ -2,7 +2,9 @@ package sst.bank.activities.e.printing;
 
 import java.math.BigDecimal;
 
-import sst.bank.config.BankUtils;
+import sst.bank.components.AmountCellInfo;
+import sst.bank.components.NegatifAmountCellInfo;
+import sst.bank.components.PositifAmountCellInfo;
 import sst.bank.model.Budget;
 import sst.bank.model.Category;
 import sst.common.html.table.builders.CellInfo;
@@ -28,14 +30,17 @@ class SummaryIntoTableConverter implements IntoTableConverter {
     public CellInfo[] convert() {
 	CellInfo[] cells = new CellInfo[headers.length];
 	cells[0] = new CellInfo(category.getLabel(), category.getStyle());
-	cells[1] = new CellInfo(BankUtils.format(amount), "amount");
+	cells[1] = new AmountCellInfo(amount);
 	if (1 == monthQuantity) {
-	    cells[2] = new CellInfo(BankUtils.format(budget.monthlyControlledAmount()), "amount");
-	    cells[3] = new CellInfo(BankUtils.format(amount.subtract(budget.monthlyControlledAmount())), "amount");
+	    cells[2] = new AmountCellInfo(budget.monthlyControlledAmount());
+	    if (category.isNegatif()) {
+		cells[3] = new PositifAmountCellInfo(amount.subtract(budget.monthlyControlledAmount()));
+	    } else {
+		cells[3] = new NegatifAmountCellInfo(amount.subtract(budget.monthlyControlledAmount()));
+	    }
 	} else {
-	    cells[2] = new CellInfo(BankUtils.format(budget.yearlyControlledAmount(monthQuantity)), "amount");
-	    cells[3] = new CellInfo(BankUtils.format(amount.subtract(budget.yearlyControlledAmount(monthQuantity))),
-		    "amount");
+	    cells[2] = new AmountCellInfo(budget.yearlyControlledAmount(monthQuantity));
+	    cells[3] = new AmountCellInfo(amount.subtract(budget.yearlyControlledAmount(monthQuantity)));
 	}
 	return cells;
     }

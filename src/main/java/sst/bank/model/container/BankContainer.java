@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import sst.bank.model.BankSummary;
 import sst.bank.model.Category;
+import sst.bank.model.Category.CategoryType;
 import sst.bank.model.Operation;
 
 public class BankContainer {
@@ -55,13 +56,14 @@ public class BankContainer {
 	operationsByYear.add(summary);
     }
 
+    @Deprecated
     public enum CategoryName {
 	UNKNOWN,
 	SALAIRE,
 	ASSURANCES,
 	ELECTRICITE,
 	TELEPHONE,
-	AGILITY,
+	DOG_AGILITY,
 	SODEXHO,
 	SPORT,
 	WATER,
@@ -75,35 +77,55 @@ public class BankContainer {
 	EPARGNE,
 	DRESSING,
 	LEISURE,
-	MOVE
+	LEISURE_HOL,
+	MOVE,
+	DOG_VET,
+	DOG_FOOD,
+	CAR_FUEL,
+	HEALTH,
+	TAX,
+	HOUSE_HOT
     };
 
     private static Map<CategoryName, Category> categories = new HashMap<>();
 
     static {
-	categories.put(CategoryName.UNKNOWN, new Category(CategoryName.UNKNOWN, "", ""));
+	addCategory(CategoryName.UNKNOWN, "", "");
 
-	categories.put(CategoryName.SALAIRE, new Category(CategoryName.SALAIRE, "Salaire", "salaire"));
-	categories.put(CategoryName.ASSURANCES, new Category(CategoryName.ASSURANCES, "Assurances", "assurances"));
-	categories.put(CategoryName.ELECTRICITE,
-		new Category(CategoryName.ELECTRICITE, "&Eacute;lectricit&eacute;", "electricite"));
-	categories.put(CategoryName.TELEPHONE,
-		new Category(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone", "phone"));
-	categories.put(CategoryName.AGILITY, new Category(CategoryName.AGILITY, "Agility", "dog"));
-	categories.put(CategoryName.SODEXHO, new Category(CategoryName.SODEXHO, "Sodexho", "house"));
-	categories.put(CategoryName.SPORT, new Category(CategoryName.SPORT, "Sport", "sport"));
-	categories.put(CategoryName.WATER, new Category(CategoryName.WATER, "Eau", "house"));
-	categories.put(CategoryName.MUTUELLE, new Category(CategoryName.MUTUELLE, "Mutuelle", "mutuelle"));
-	categories.put(CategoryName.BANK, new Category(CategoryName.BANK, "Banque", "bank"));
-	categories.put(CategoryName.CAR, new Category(CategoryName.CAR, "Voiture", "car"));
-	categories.put(CategoryName.HOUSE, new Category(CategoryName.HOUSE, "Maison", "house"));
-	categories.put(CategoryName.DOG, new Category(CategoryName.DOG, "Chiens", "dog"));
-	categories.put(CategoryName.VISA, new Category(CategoryName.VISA, "Visa", "bank"));
-	categories.put(CategoryName.EPARGNE, new Category(CategoryName.EPARGNE, "&Eacute;pargne", "bank"));
-	categories.put(CategoryName.ANNE, new Category(CategoryName.ANNE, "Anne", "anne"));
-	categories.put(CategoryName.DRESSING, new Category(CategoryName.DRESSING, "V&ecirc;tements", "water"));
-	categories.put(CategoryName.LEISURE, new Category(CategoryName.LEISURE, "Loisirs", "loisirs"));
-	categories.put(CategoryName.MOVE, new Category(CategoryName.MOVE, "D&eacute;placements", "move"));
+	addCategory(CategoryName.SALAIRE, "Salaire", "salaire");
+	addCategory(CategoryName.ASSURANCES, "Assurances", "assurances");
+	addCategory(CategoryName.ELECTRICITE, "Maison (&Eacute;lectr.)", "house");
+	addCategory(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone", "phone");
+	addCategory(CategoryName.DOG_AGILITY, "Chiens (Agility)", "dog");
+	addCategory(CategoryName.SODEXHO, "Maison (Sodexho)", "house");
+	addCategory(CategoryName.SPORT, "Sport", "sport");
+	addCategory(CategoryName.WATER, "Maison (Eau)", "house");
+	addCategory(CategoryName.MUTUELLE, "Mutuelle", "mutuelle");
+	addCategory(CategoryName.BANK, "Banque", "bank");
+	addCategory(CategoryName.CAR, "Voiture", "car");
+	addCategory(CategoryName.CAR_FUEL, "Voiture (Essence)", "car");
+	addCategory(CategoryName.HOUSE, "Maison", "house");
+	addCategory(CategoryName.HOUSE_HOT, "Maison (Chauffage)", "house");
+	addCategory(CategoryName.DOG, "Chiens", "dog");
+	addCategory(CategoryName.DOG_VET, "Chiens (Soins)", "dog");
+	addCategory(CategoryName.DOG_FOOD, "Chiens (Food)", "dog");
+	addCategory(CategoryName.VISA, "Visa", "bank");
+	addCategory(CategoryName.EPARGNE, "&Eacute;pargne", "bank", CategoryType.NEGATIF);
+	addCategory(CategoryName.ANNE, "Anne", "anne");
+	addCategory(CategoryName.DRESSING, "V&ecirc;tements", "house");
+	addCategory(CategoryName.LEISURE, "Loisirs", "loisirs");
+	addCategory(CategoryName.LEISURE_HOL, "Loisirs (Vacances)", "loisirs");
+	addCategory(CategoryName.MOVE, "D&eacute;placements", "move");
+	addCategory(CategoryName.HEALTH, "Sant&eacute;", "water");
+	addCategory(CategoryName.TAX, "Taxes", "electricite");
+    }
+
+    private static void addCategory(CategoryName category, String label, String css) {
+	categories.put(category, new Category(category, label, css));
+    }
+
+    private static void addCategory(CategoryName category, String label, String css, CategoryType type) {
+	categories.put(category, new Category(category, label, css, type));
     }
 
     public Category category(CategoryName name) {

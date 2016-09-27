@@ -1,6 +1,6 @@
 package sst.bank.activities.e.printing;
 
-import sst.bank.config.BankUtils;
+import sst.bank.components.AmountCellInfo;
 import sst.bank.model.BankSummary;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
@@ -22,7 +22,7 @@ class SummarySumRowIntoTableConverter implements IntoTableConverter {
 		.stream()
 		.mapToDouble(o -> o.doubleValue())
 		.sum();
-	cells[1] = new CellInfo(BankUtils.format(sum), "amount");
+	cells[1] = new AmountCellInfo(sum);
 	return cells;
     }
 }

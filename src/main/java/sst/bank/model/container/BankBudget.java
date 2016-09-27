@@ -87,10 +87,10 @@ public class BankBudget {
 	put(new Budget(CategoryName.ASSURANCES, BigDecimal.valueOf(-1634.64), BudgetFrequencyType.YEARLY));
 	put(new Budget(CategoryName.ELECTRICITE, BigDecimal.valueOf(-73), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.ANNE, BigDecimal.valueOf(-17.66), BudgetFrequencyType.MONTHLY));
-	put(new Budget(CategoryName.SALAIRE, BigDecimal.valueOf(3401.00), BudgetFrequencyType.MONTHLY,
+	put(new Budget(CategoryName.SALAIRE, BigDecimal.valueOf(3376.00), BudgetFrequencyType.MONTHLY,
 		BudgetType.SALARY));
 	put(new Budget(CategoryName.TELEPHONE, BigDecimal.valueOf(-108.00), BudgetFrequencyType.MONTHLY));
-	put(new Budget(CategoryName.AGILITY, BigDecimal.valueOf(-36.00 * 3.00), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.DOG_AGILITY, BigDecimal.valueOf(-36.00 * 3.00), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.SODEXHO, BigDecimal.valueOf(-216.00), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.SPORT, BigDecimal.valueOf(-308), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.WATER, BigDecimal.valueOf(-118.5), BudgetFrequencyType.MONTHLY));
@@ -100,6 +100,7 @@ public class BankBudget {
 	put(new Budget(CategoryName.BANK, BigDecimal.valueOf(-8.2), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.CAR, BigDecimal.valueOf(-329.81), BudgetFrequencyType.MONTHLY));
 	put(new Budget(CategoryName.HOUSE, BigDecimal.valueOf(-988.80), BudgetFrequencyType.MONTHLY));
+	put(new Budget(CategoryName.HOUSE_HOT, BigDecimal.valueOf(-1100), BudgetFrequencyType.YEARLY));
 
 	for (CategoryName cat : CategoryName.values()) {
 	    if (!budgets.keySet().contains(cat)) {
@@ -110,6 +111,7 @@ public class BankBudget {
 
     private void put(Budget budget) {
 	budgets.put(budget.getCategory(), budget);
+	BankContainer.me().category(budget.getCategory()).setBudget(budget);
     }
 
     private void checkBudget() {

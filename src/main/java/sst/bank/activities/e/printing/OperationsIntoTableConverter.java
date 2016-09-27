@@ -1,8 +1,7 @@
 package sst.bank.activities.e.printing;
 
-import java.time.format.DateTimeFormatter;
-
-import sst.bank.config.BankUtils;
+import sst.bank.components.AmountCellInfo;
+import sst.bank.components.DateCellInfo;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
@@ -23,8 +22,6 @@ class OperationsIntoTableConverter implements IntoTableConverter {
 
     @Override
     public CellInfo[] convert() {
-	DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
 	CellInfo[] cells = new CellInfo[headers.length];
 	int i = 0;
 	cells[i++] = new CellInfo(operation.getId(), "id");
@@ -34,9 +31,9 @@ class OperationsIntoTableConverter implements IntoTableConverter {
 	} else {
 	    cells[i++] = new CellInfo("&nbsp;");
 	}
-	cells[i++] = new CellInfo(operation.getExecutionDate().format(fmt), "date");
-	cells[i++] = new CellInfo(operation.getValueDate().format(fmt), "date");
-	cells[i++] = new CellInfo(BankUtils.format(operation.getAmount()), "amount");
+	cells[i++] = new DateCellInfo(operation.getExecutionDate());
+	cells[i++] = new DateCellInfo(operation.getValueDate());
+	cells[i++] = new AmountCellInfo(operation.getAmount());
 	cells[i++] = new CellInfo(operation.getCurrency(), "currency");
 	cells[i++] = new CellInfo(operation.getCounterparty(), "counterparty");
 	cells[i++] = new CellInfo(operation.getDetail(), "detail");
