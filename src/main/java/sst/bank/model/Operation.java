@@ -7,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import sst.bank.model.container.BankContainer;
-import sst.bank.model.container.BankContainer.CategoryName;
 import sst.common.file.parser.Parser;
 
 @ToString(exclude = "dtf")
@@ -37,7 +35,6 @@ public class Operation implements Comparable<Operation> {
     private Category category;
 
     public Operation() {
-	BankContainer.me().category(CategoryName.UNKNOWN);
     }
 
     @Parser(position = 0)

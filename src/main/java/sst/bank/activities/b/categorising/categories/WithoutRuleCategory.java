@@ -12,6 +12,6 @@ public class WithoutRuleCategory implements CategoryActivity {
     public void process() {
 	BankContainer.me().operations().stream()
 		.filter(o -> ids.map(o.getId()) != null)
-		.forEach(o -> o.setCategory(BankContainer.me().category(ids.map(o.getId()))));
+		.forEach(o -> o.setCategory(ids.map(o.getId())));
     }
 }

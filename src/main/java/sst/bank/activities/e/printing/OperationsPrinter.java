@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import sst.bank.activities.Activity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.BankSummary;
-import sst.bank.model.container.BankBudget;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.output.OutputFile;
 import sst.common.html.AbstractHTMLElement;
@@ -132,15 +131,16 @@ public class OperationsPrinter implements Activity {
     }
 
     private void printSummary(BankSummary bm, HTMLDiv div) {
+	TotalAmountSummers tas = new TotalAmountSummers();
 	List<IntoTableConverter> listConvert;
 	listConvert = bm.getSummary().keySet().stream()
 		.sorted()
-		.map(c -> new SummaryIntoTableConverter(c,
+		.map(c -> new SummaryIntoTableConverter(tas, c,
 			bm.getSummary().get(c),
-			BankBudget.me().get(c.getName()),
+			c.getBudget(),
 			bm.monthQuantity()))
 		.collect(Collectors.toList());
-	listConvert.add(new SummarySumRowIntoTableConverter(bm));
+	listConvert.add(new SummarySumRowIntoTableConverter(bm, tas));
 
 	HTMLDiv div2 = new HTMLDiv();
 	div2.style("overflow-x:auto;");

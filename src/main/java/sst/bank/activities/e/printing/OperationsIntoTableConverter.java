@@ -5,8 +5,6 @@ import sst.bank.components.CategoryCellInfo;
 import sst.bank.components.DateCellInfo;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
-import sst.bank.model.container.BankContainer;
-import sst.bank.model.container.BankContainer.CategoryName;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
@@ -27,7 +25,7 @@ class OperationsIntoTableConverter implements IntoTableConverter {
 	int i = 0;
 	cells[i++] = new CellInfo(operation.getId(), "id");
 	Category cat = operation.getCategory();
-	if (!BankContainer.me().category(CategoryName.UNKNOWN).equals(cat)) {
+	if (!cat.isDefaultCategory()) {
 	    cells[i++] = new CategoryCellInfo(cat);
 	} else {
 	    cells[i++] = new CellInfo("&nbsp;");

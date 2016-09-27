@@ -1,5 +1,6 @@
 package sst.bank.config;
 
+import java.io.File;
 import java.io.IOException;
 
 import lombok.Getter;
@@ -10,6 +11,11 @@ public class BankConfiguration {
     private static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
     private static final String DETAIL_PROPERTIES = "detail.properties";
     private static final String ID_PROPERTIES = "id.properties";
+
+    public static final String CATEGORIES_PROPERTIES = "src" + File.separator + "main" + File.separator + "resources"
+	    + File.separator + "categories.properties";
+    public static final String CATEGORIES_JSON = "src" + File.separator + "main" + File.separator + "resources"
+	    + File.separator + "categories.json";
 
     private static BankConfiguration me;
     static {

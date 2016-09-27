@@ -11,10 +11,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import sst.bank.model.container.BankContainer.CategoryName;
+import sst.bank.model.Category;
+import sst.bank.model.container.BankContainer;
 
 public class InvertedProperties {
-    private Map<String, CategoryName> mapping = new HashMap<String, CategoryName>();
+    private Map<String, Category> mapping = new HashMap<>();
 
     private InvertedProperties() {
 
@@ -25,9 +26,9 @@ public class InvertedProperties {
 	InvertedProperties inverted = new InvertedProperties();
 	ClassLoader classLoader = inverted.getClass().getClassLoader();
 	props.load(new FileInputStream(new File(classLoader.getResource(inputFile).getFile())));
-	System.out.println("******** props = " + props);
-	for (CategoryName category : CategoryName.values()) {
-	    List<String> counterparties = getCounterparties(props, category);
+	// System.out.println("******** props = " + props);
+	for (Category category : BankContainer.me().getCategories()) {
+	    List<String> counterparties = getCounterparties(props, category.getName());
 	    if (counterparties != null) {
 		counterparties.stream().forEach(c -> inverted.mapping_put(c, category));
 	    }
@@ -36,7 +37,7 @@ public class InvertedProperties {
 	return inverted;
     }
 
-    public CategoryName map(String counterparty) {
+    public Category map(String counterparty) {
 	return mapping.get(counterparty);
     }
 
@@ -44,13 +45,13 @@ public class InvertedProperties {
 	return mapping.keySet();
     }
 
-    private static List<String> getCounterparties(Properties props, CategoryName category) {
-	String counterpartyString = props.getProperty(category.name());
+    private static List<String> getCounterparties(Properties props, String category) {
+	String counterpartyString = props.getProperty(category);
 	return (counterpartyString != null) ? new ArrayList<String>(Arrays.asList(counterpartyString.split(",")))
 		: null;
     }
 
-    private void mapping_put(String counterparty, CategoryName category) {
+    private void mapping_put(String counterparty, Category category) {
 	mapping.put(counterparty, category);
     }
 

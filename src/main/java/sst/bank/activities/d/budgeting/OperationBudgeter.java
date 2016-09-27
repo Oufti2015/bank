@@ -3,21 +3,33 @@ package sst.bank.activities.d.budgeting;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import sst.bank.activities.Activity;
 import sst.bank.config.BankUtils;
 import sst.bank.model.Budget;
 import sst.bank.model.Budget.BudgetFrequencyType;
-import sst.bank.model.container.BankBudget;
-import sst.bank.model.container.BankContainer.CategoryName;
+import sst.bank.model.Budget.BudgetType;
+import sst.bank.model.Category;
+import sst.bank.model.container.BankContainer;
 
 public class OperationBudgeter implements Activity {
 
     @Override
     public void run() {
-	Budget spendingBudget = BankBudget.me().get(CategoryName.EPARGNE);
+	Optional<Category> optcat = BankContainer.me().getCategories().stream()
+		.filter(c -> c.getBudget().getBudgetType().equals(BudgetType.SAVING)).findFirst();
+	Budget spendingBudget = null;
+	if (optcat.isPresent()) {
+	    spendingBudget = optcat.get().getBudget();
+	} else {
+	    System.err.println("Cannot found EPARGNE");
+	    System.exit(-1);
+	}
 
-	List<Budget> budgets = BankBudget.me().budgets();
+	List<Budget> budgets = BankContainer.me().getCategories().stream().map(c -> c.getBudget())
+		.collect(Collectors.toList());
 	double yearlyAmount = budgets
 		.stream()
 		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import lombok.Getter;
 import lombok.Setter;
-import sst.bank.model.container.BankBudget;
+import sst.bank.model.container.BankContainer;
 
 public class BankSummary {
     @Getter
@@ -28,13 +28,11 @@ public class BankSummary {
     @Getter
     @Setter
     private Map<Category, BigDecimal> summary = new HashMap<>();
-    @Getter
-    @Setter
-    private BankBudget budget = BankBudget.me();
 
     public BankSummary(List<Operation> list) {
 	super();
 	this.list = list;
+	BankContainer.me().getCategories().stream().forEach(c -> summary.put(c, BigDecimal.ZERO));
 	init();
     }
 

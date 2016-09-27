@@ -2,6 +2,7 @@ package sst.bank.activities.e.printing;
 
 import java.math.BigDecimal;
 
+import sst.bank.activities.e.printing.TotalAmountSummers.SummerType;
 import sst.bank.components.AmountCellInfo;
 import sst.bank.components.NegatifAmountCellInfo;
 import sst.bank.components.PositifAmountCellInfo;
@@ -18,12 +19,16 @@ class SummaryIntoTableConverter implements IntoTableConverter {
     private Budget budget;
     private int monthQuantity;
 
-    public SummaryIntoTableConverter(Category category, BigDecimal amount, Budget budget, int monthQuantity) {
+    private TotalAmountSummers summers;
+
+    public SummaryIntoTableConverter(TotalAmountSummers summers, Category category, BigDecimal amount, Budget budget,
+	    int monthQuantity) {
 	super();
 	this.category = category;
 	this.amount = amount;
 	this.budget = budget;
 	this.monthQuantity = monthQuantity;
+	this.summers = summers;
     }
 
     @Override
@@ -32,15 +37,23 @@ class SummaryIntoTableConverter implements IntoTableConverter {
 	cells[0] = new CellInfo(category.getLabel(), category.getStyle());
 	cells[1] = new AmountCellInfo(amount);
 	if (1 == monthQuantity) {
-	    cells[2] = new AmountCellInfo(budget.monthlyControlledAmount());
+	    BigDecimal budgetMonthlyControlledAmount = budget.monthlyControlledAmount();
+	    cells[2] = new AmountCellInfo(budgetMonthlyControlledAmount);
+	    summers.add(SummerType.BUDGET, budgetMonthlyControlledAmount.doubleValue());
+	    BigDecimal subtractDiff = amount.subtract(budgetMonthlyControlledAmount);
 	    if (category.isNegatif()) {
-		cells[3] = new PositifAmountCellInfo(amount.subtract(budget.monthlyControlledAmount()));
+		cells[3] = new PositifAmountCellInfo(subtractDiff);
 	    } else {
-		cells[3] = new NegatifAmountCellInfo(amount.subtract(budget.monthlyControlledAmount()));
+		cells[3] = new NegatifAmountCellInfo(subtractDiff);
 	    }
+	    summers.add(SummerType.DIFF, subtractDiff.doubleValue());
 	} else {
-	    cells[2] = new AmountCellInfo(budget.yearlyControlledAmount(monthQuantity));
-	    cells[3] = new AmountCellInfo(amount.subtract(budget.yearlyControlledAmount(monthQuantity)));
+	    BigDecimal budgetYearlyControlledAmount = budget.yearlyControlledAmount(monthQuantity);
+	    cells[2] = new AmountCellInfo(budgetYearlyControlledAmount);
+	    summers.add(SummerType.BUDGET, budgetYearlyControlledAmount.doubleValue());
+	    BigDecimal subtractDiff = amount.subtract(budgetYearlyControlledAmount);
+	    cells[3] = new AmountCellInfo(subtractDiff);
+	    summers.add(SummerType.DIFF, subtractDiff.doubleValue());
 	}
 	return cells;
     }

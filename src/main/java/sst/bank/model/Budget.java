@@ -6,7 +6,6 @@ import java.math.MathContext;
 import lombok.Getter;
 import lombok.Setter;
 import sst.bank.config.BankUtils;
-import sst.bank.model.container.BankContainer.CategoryName;
 
 public class Budget {
     private static final int MONTHS_COUNT = 12;
@@ -21,7 +20,7 @@ public class Budget {
 
     @Getter
     @Setter
-    private CategoryName category;
+    private String category;
     @Getter
     @Setter
     private BigDecimal amount;
@@ -35,7 +34,10 @@ public class Budget {
     @Setter
     private BigDecimal controlledAmount;
 
-    public Budget(CategoryName category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType) {
+    public Budget() {
+    }
+    
+    public Budget(String category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType) {
 	super();
 	this.category = category;
 	this.amount = amount;
@@ -44,7 +46,7 @@ public class Budget {
 	this.controlledAmount = monthlyAmount();
     }
 
-    public Budget(CategoryName category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType,
+    public Budget(String category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType,
 	    BudgetType budgetType) {
 	super();
 	this.category = category;

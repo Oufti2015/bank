@@ -1,33 +1,56 @@
 package sst.bank.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
-import sst.bank.model.container.BankContainer.CategoryName;
 
 @Data
-public class Category implements Comparable<Category> {
+public class Category implements Comparable<Category>, Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public enum CategoryType {
 	POSITIF, NEGATIF
     };
 
-    private CategoryName name;
+    private String name;
     private String label;
     private String style;
     private CategoryType type = CategoryType.POSITIF;
     private Budget budget;
+    @SuppressWarnings("unused")
+    private boolean negatif;
+    private boolean defaultCategory;
 
-    public Category(CategoryName name, String label, String style) {
+    public Category() {
+	super();
+    }
+    
+    public Category(String name, String label, String style) {
 	super();
 	this.label = label;
 	this.style = style;
 	this.name = name;
     }
 
-    public Category(CategoryName name, String label, String style, CategoryType type) {
+    public Category(String name, String label, String style, CategoryType type) {
 	super();
 	this.name = name;
 	this.label = label;
 	this.style = style;
 	this.type = type;
+    }
+
+    public Category(String name, String label, String style, CategoryType type, Budget budget, boolean defaultCategory) {
+	super();
+	this.name = name;
+	this.label = label;
+	this.style = style;
+	this.type = type;
+	this.budget = budget;
+	this.defaultCategory = defaultCategory;
     }
 
     @Override
