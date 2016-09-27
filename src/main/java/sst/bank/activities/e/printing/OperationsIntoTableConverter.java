@@ -1,6 +1,7 @@
 package sst.bank.activities.e.printing;
 
 import sst.bank.components.AmountCellInfo;
+import sst.bank.components.CategoryCellInfo;
 import sst.bank.components.DateCellInfo;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
@@ -27,7 +28,7 @@ class OperationsIntoTableConverter implements IntoTableConverter {
 	cells[i++] = new CellInfo(operation.getId(), "id");
 	Category cat = operation.getCategory();
 	if (!BankContainer.me().category(CategoryName.UNKNOWN).equals(cat)) {
-	    cells[i++] = new CellInfo(cat.getLabel(), cat.getStyle());
+	    cells[i++] = new CategoryCellInfo(cat);
 	} else {
 	    cells[i++] = new CellInfo("&nbsp;");
 	}

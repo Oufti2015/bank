@@ -84,7 +84,9 @@ public class BankContainer {
 	CAR_FUEL,
 	HEALTH,
 	TAX,
-	HOUSE_HOT
+	HOUSE_HOT,
+	HOUSE_FOOD,
+	BANK_RETRAIT
     };
 
     private static Map<CategoryName, Category> categories = new HashMap<>();
@@ -102,6 +104,7 @@ public class BankContainer {
 	addCategory(CategoryName.WATER, "Maison (Eau)", "house");
 	addCategory(CategoryName.MUTUELLE, "Mutuelle", "mutuelle");
 	addCategory(CategoryName.BANK, "Banque", "bank");
+	addCategory(CategoryName.BANK_RETRAIT, "Banque (Retrait)", "bank");
 	addCategory(CategoryName.CAR, "Voiture", "car");
 	addCategory(CategoryName.CAR_FUEL, "Voiture (Essence)", "car");
 	addCategory(CategoryName.HOUSE, "Maison", "house");
@@ -118,6 +121,7 @@ public class BankContainer {
 	addCategory(CategoryName.MOVE, "D&eacute;placements", "move");
 	addCategory(CategoryName.HEALTH, "Sant&eacute;", "water");
 	addCategory(CategoryName.TAX, "Taxes", "electricite");
+	addCategory(CategoryName.HOUSE_FOOD, "Food", "house");
     }
 
     private static void addCategory(CategoryName category, String label, String css) {
