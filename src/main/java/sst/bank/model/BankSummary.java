@@ -28,6 +28,9 @@ public class BankSummary {
     @Getter
     @Setter
     private Map<Category, BigDecimal> summary = new HashMap<>();
+    @Getter
+    @Setter
+    private Category category;
 
     public BankSummary(List<Operation> list) {
 	super();

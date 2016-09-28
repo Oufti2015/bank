@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import sst.bank.activities.Activity;
+import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
 import sst.bank.model.Budget;
 import sst.bank.model.Budget.BudgetFrequencyType;
@@ -14,7 +14,7 @@ import sst.bank.model.Budget.BudgetType;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
-public class OperationBudgeter implements Activity {
+public class OperationBudgeter implements BankActivity {
 
     @Override
     public void run() {

@@ -1,5 +1,5 @@
 package sst.bank.activities;
 
-public interface Activity {
+public interface BankActivity {
     public void run();
 }

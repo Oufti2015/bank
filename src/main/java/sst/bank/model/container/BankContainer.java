@@ -61,6 +61,16 @@ public class BankContainer {
 	operationsByYear.add(summary);
     }
 
+    private List<BankSummary> operationsByCategory = new ArrayList<>();
+
+    public List<BankSummary> operationsByCategory() {
+	return operationsByCategory;
+    }
+
+    public void addOperationsByCategory(BankSummary summary) {
+	operationsByCategory.add(summary);
+    }
+
     @Deprecated
     public enum CategoryName {
 	UNKNOWN,
@@ -100,54 +110,62 @@ public class BankContainer {
     static {
 	ObjectMapper mapper = new ObjectMapper();
 
-	//JSON from file to Object
+	// JSON from file to Object
 	try {
-	    categories = mapper.readValue(new File(BankConfiguration.CATEGORIES_JSON), new TypeReference<List<Category>>(){});
+	    categories = mapper.readValue(new File(BankConfiguration.CATEGORIES_JSON),
+		    new TypeReference<List<Category>>() {
+		    });
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
 
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
-	
-	//	addCategory(CategoryName.UNKNOWN, "", "");
-//
-//	addCategory(CategoryName.SALAIRE, "Salaire", "salaire");
-//	addCategory(CategoryName.ASSURANCES, "Assurances", "assurances");
-//	addCategory(CategoryName.ELECTRICITE, "Maison (&Eacute;lectr.)", "house");
-//	addCategory(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone", "phone");
-//	addCategory(CategoryName.DOG_AGILITY, "Chiens (Agility)", "dog");
-//	addCategory(CategoryName.SODEXHO, "Maison (Sodexho)", "house");
-//	addCategory(CategoryName.SPORT, "Sport", "sport");
-//	addCategory(CategoryName.WATER, "Maison (Eau)", "house");
-//	addCategory(CategoryName.MUTUELLE, "Mutuelle", "mutuelle");
-//	addCategory(CategoryName.BANK, "Banque", "bank");
-//	addCategory(CategoryName.BANK_RETRAIT, "Banque (Retrait)", "bank");
-//	addCategory(CategoryName.CAR, "Voiture", "car");
-//	addCategory(CategoryName.CAR_FUEL, "Voiture (Essence)", "car");
-//	addCategory(CategoryName.HOUSE, "Maison", "house");
-//	addCategory(CategoryName.HOUSE_HOT, "Maison (Chauffage)", "house");
-//	addCategory(CategoryName.DOG, "Chiens", "dog");
-//	addCategory(CategoryName.DOG_VET, "Chiens (Soins)", "dog");
-//	addCategory(CategoryName.DOG_FOOD, "Chiens (Food)", "dog");
-//	addCategory(CategoryName.VISA, "Visa", "bank");
-//	addCategory(CategoryName.EPARGNE, "&Eacute;pargne", "bank", CategoryType.NEGATIF);
-//	addCategory(CategoryName.ANNE, "Anne", "anne");
-//	addCategory(CategoryName.DRESSING, "V&ecirc;tements", "house");
-//	addCategory(CategoryName.LEISURE, "Loisirs", "loisirs");
-//	addCategory(CategoryName.LEISURE_HOL, "Loisirs (Vacances)", "loisirs");
-//	addCategory(CategoryName.MOVE, "D&eacute;placements", "move");
-//	addCategory(CategoryName.HEALTH, "Sant&eacute;", "water");
-//	addCategory(CategoryName.TAX, "Taxes", "electricite");
-//	addCategory(CategoryName.HOUSE_FOOD, "Food", "house");
+
+	// addCategory(CategoryName.UNKNOWN, "", "");
+	//
+	// addCategory(CategoryName.SALAIRE, "Salaire", "salaire");
+	// addCategory(CategoryName.ASSURANCES, "Assurances", "assurances");
+	// addCategory(CategoryName.ELECTRICITE, "Maison (&Eacute;lectr.)",
+	// "house");
+	// addCategory(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone",
+	// "phone");
+	// addCategory(CategoryName.DOG_AGILITY, "Chiens (Agility)", "dog");
+	// addCategory(CategoryName.SODEXHO, "Maison (Sodexho)", "house");
+	// addCategory(CategoryName.SPORT, "Sport", "sport");
+	// addCategory(CategoryName.WATER, "Maison (Eau)", "house");
+	// addCategory(CategoryName.MUTUELLE, "Mutuelle", "mutuelle");
+	// addCategory(CategoryName.BANK, "Banque", "bank");
+	// addCategory(CategoryName.BANK_RETRAIT, "Banque (Retrait)", "bank");
+	// addCategory(CategoryName.CAR, "Voiture", "car");
+	// addCategory(CategoryName.CAR_FUEL, "Voiture (Essence)", "car");
+	// addCategory(CategoryName.HOUSE, "Maison", "house");
+	// addCategory(CategoryName.HOUSE_HOT, "Maison (Chauffage)", "house");
+	// addCategory(CategoryName.DOG, "Chiens", "dog");
+	// addCategory(CategoryName.DOG_VET, "Chiens (Soins)", "dog");
+	// addCategory(CategoryName.DOG_FOOD, "Chiens (Food)", "dog");
+	// addCategory(CategoryName.VISA, "Visa", "bank");
+	// addCategory(CategoryName.EPARGNE, "&Eacute;pargne", "bank",
+	// CategoryType.NEGATIF);
+	// addCategory(CategoryName.ANNE, "Anne", "anne");
+	// addCategory(CategoryName.DRESSING, "V&ecirc;tements", "house");
+	// addCategory(CategoryName.LEISURE, "Loisirs", "loisirs");
+	// addCategory(CategoryName.LEISURE_HOL, "Loisirs (Vacances)",
+	// "loisirs");
+	// addCategory(CategoryName.MOVE, "D&eacute;placements", "move");
+	// addCategory(CategoryName.HEALTH, "Sant&eacute;", "water");
+	// addCategory(CategoryName.TAX, "Taxes", "electricite");
+	// addCategory(CategoryName.HOUSE_FOOD, "Food", "house");
     }
 
-//    private static void addCategory(CategoryName category, String label, String css) {
-//	categories.put(category, new Category(category, label, css));
-//    }
-//
-//    private static void addCategory(CategoryName category, String label, String css, CategoryType type) {
-//	categories.put(category, new Category(category, label, css, type));
-//    }
+    // private static void addCategory(CategoryName category, String label,
+    // String css) {
+    // categories.put(category, new Category(category, label, css));
+    // }
+    //
+    // private static void addCategory(CategoryName category, String label,
+    // String css, CategoryType type) {
+    // categories.put(category, new Category(category, label, css, type));
+    // }
 
     public Category category(String categoryName) {
 	return categoryByName.get(categoryName);
@@ -161,8 +179,8 @@ public class BankContainer {
 
 	return new BankSummary(result);
     }
-    
+
     public Collection<Category> getCategories() {
-    	return categories;
+	return categories;
     }
 }

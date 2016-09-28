@@ -2,7 +2,7 @@ package sst.bank.activities.e.printing;
 
 public class TotalAmountSummers {
 
-    enum SummerType {
+    public enum SummerType {
 	TOTAL(0), BUDGET(1), DIFF(2);
 
 	int indice;

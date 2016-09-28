@@ -8,13 +8,13 @@ import sst.bank.model.Operation;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
-class OperationsIntoTableConverter implements IntoTableConverter {
-    static final String[] headers = { "ID", "CATEGORY", "EXEC.DATE", "VALUE DATE", "AMOUNT", "CURR",
+public class OperationsIntoTableConverter implements IntoTableConverter {
+    public static final String[] headers = { "ID", "CATEGORY", "EXEC.DATE", "VALUE DATE", "AMOUNT", "CURR",
 	    "COUNTERPARTY", "DETAIL" };
 
     private Operation operation = null;
 
-    OperationsIntoTableConverter(Operation operation) {
+    public OperationsIntoTableConverter(Operation operation) {
 	super();
 	this.operation = operation;
     }

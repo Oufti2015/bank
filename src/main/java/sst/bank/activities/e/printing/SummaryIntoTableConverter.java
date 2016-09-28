@@ -11,8 +11,8 @@ import sst.bank.model.Category;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
-class SummaryIntoTableConverter implements IntoTableConverter {
-    static final String[] headers = { "CATEGORY", "AMOUNT", "BUDGET", "DIFF." };
+public class SummaryIntoTableConverter implements IntoTableConverter {
+    public static final String[] headers = { "CATEGORY", "AMOUNT", "BUDGET", "DIFF." };
 
     private Category category;
     private BigDecimal amount;

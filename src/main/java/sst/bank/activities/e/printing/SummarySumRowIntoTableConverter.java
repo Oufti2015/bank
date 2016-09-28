@@ -6,12 +6,12 @@ import sst.bank.model.BankSummary;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
-class SummarySumRowIntoTableConverter implements IntoTableConverter {
+public class SummarySumRowIntoTableConverter implements IntoTableConverter {
 
     private BankSummary summary;
     private TotalAmountSummers tas;
 
-    SummarySumRowIntoTableConverter(BankSummary summary, TotalAmountSummers tas) {
+    public SummarySumRowIntoTableConverter(BankSummary summary, TotalAmountSummers tas) {
 	super();
 	this.summary = summary;
 	this.tas = tas;

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sst.bank.activities.Activity;
+import sst.bank.activities.BankActivity;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.exceptions.ParserExceptions;
@@ -14,7 +14,7 @@ import sst.common.file.loader.interfaces.RecordFormatter;
 import sst.common.file.loader.interfaces.RecordSelector;
 import sst.common.file.parser.GenericParser;
 
-public class OperationsParser implements RecordSelector, RecordFormatter, Activity {
+public class OperationsParser implements RecordSelector, RecordFormatter, BankActivity {
     private List<Operation> list = new ArrayList<>();
 
     private List<Operation> parseFile(File file) {

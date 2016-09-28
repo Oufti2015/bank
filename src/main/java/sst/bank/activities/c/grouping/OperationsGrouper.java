@@ -4,12 +4,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import sst.bank.activities.Activity;
+import sst.bank.activities.BankActivity;
 import sst.bank.model.BankSummary;
+import sst.bank.model.Category;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 
-public class OperationsGrouper implements Activity {
+public class OperationsGrouper implements BankActivity {
     private DateTimeFormatter dtf_month = DateTimeFormatter.ofPattern("yyyy-MM");
     private DateTimeFormatter dtf_year = DateTimeFormatter.ofPattern("yyyy");
 
@@ -31,6 +32,8 @@ public class OperationsGrouper implements Activity {
 		.collect(Collectors.toList());
 
 	years.stream().forEach(y -> groupOperationsByYear(y));
+
+	BankContainer.me().getCategories().stream().forEach(c -> groupOperationsByCategory(c));
     }
 
     private void groupOperationsByMonth(String m) {
@@ -49,5 +52,19 @@ public class OperationsGrouper implements Activity {
 		.collect(Collectors.toList());
 	BankSummary bm = new BankSummary(collect);
 	BankContainer.me().addYear(bm);
+    }
+
+    private void groupOperationsByCategory(Category c) {
+	for (BankSummary bmYear : BankContainer.me().operationsByYear()) {
+	    List<Operation> collect = bmYear.getList().stream()
+		    .filter(o -> o.getCategory().equals(c))
+		    .sorted()
+		    .collect(Collectors.toList());
+	    if (!collect.isEmpty()) {
+		BankSummary bm = new BankSummary(collect);
+		bm.setCategory(c);
+		BankContainer.me().addOperationsByCategory(bm);
+	    }
+	}
     }
 }

@@ -8,11 +8,11 @@ import sst.common.html.HTML;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
-class SumRowIntoTableConverter implements IntoTableConverter {
+public class SumRowIntoTableConverter implements IntoTableConverter {
 
     private List<Operation> list;
 
-    SumRowIntoTableConverter(List<Operation> list) {
+    public SumRowIntoTableConverter(List<Operation> list) {
 	super();
 	this.list = list;
     }

@@ -1,4 +1,4 @@
-package sst.bank.activities.e.printing;
+package sst.bank.activities.e.printing.bydate;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,12 @@ import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import sst.bank.activities.Activity;
+import sst.bank.activities.BankActivity;
+import sst.bank.activities.e.printing.OperationsIntoTableConverter;
+import sst.bank.activities.e.printing.SumRowIntoTableConverter;
+import sst.bank.activities.e.printing.SummaryIntoTableConverter;
+import sst.bank.activities.e.printing.SummarySumRowIntoTableConverter;
+import sst.bank.activities.e.printing.TotalAmountSummers;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.BankSummary;
 import sst.bank.model.container.BankContainer;
@@ -26,7 +31,7 @@ import sst.common.html.head.HTMLHead;
 import sst.common.html.table.builders.IntoTableConverter;
 import sst.common.html.table.builders.TableBuilder;
 
-public class OperationsPrinter implements Activity {
+public class OperationsPrinterByDate implements BankActivity {
 
     private TableBuilder operationsTableBuilder = new TableBuilder(OperationsIntoTableConverter.headers);
     private TableBuilder summaryTableBuilder = new TableBuilder(SummaryIntoTableConverter.headers);
