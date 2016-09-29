@@ -69,11 +69,10 @@ public class OperationsPrinterByCategory implements BankActivity {
 	    body.addChild(div);
 
 	    div = new HTMLDiv();
+	    div.classId("backtotop");
+	    div.addChild(new HTMLThemeBreak());
+	    div.addChild(new HTMLHyperlinks().href("#").textContent("Back to Top"));
 	    body.addChild(div);
-	    BankSummary yearlySummary = BankContainer.me().yearlySummary(Year.from(bm.getEndDate()), bm.getEndDate());
-	    if (bm.operationsCount() < yearlySummary.operationsCount()) {
-		printSummary(yearlySummary, div);
-	    }
 	}
 	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
 	// " + LocalDate.now()));
