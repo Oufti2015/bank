@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import sst.bank.model.container.BankContainer;
 
-public class BankSummary {
+public class BankSummary implements Comparable<BankSummary> {
     @Getter
     @Setter
     private LocalDate startDate;
@@ -85,5 +85,14 @@ public class BankSummary {
 
     public int operationsCount() {
 	return list.size();
+    }
+
+    @Override
+    public int compareTo(BankSummary bankSummary) {
+	int result = getStartDate().compareTo(bankSummary.getStartDate());
+	if (result == 0 && getCategory() != null) {
+	    result = getCategory().compareTo(bankSummary.getCategory());
+	}
+	return result;
     }
 }

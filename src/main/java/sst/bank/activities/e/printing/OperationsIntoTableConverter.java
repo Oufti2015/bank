@@ -35,7 +35,7 @@ public class OperationsIntoTableConverter implements IntoTableConverter {
 	cells[i++] = new AmountCellInfo(operation.getAmount());
 	cells[i++] = new CellInfo(operation.getCurrency(), "currency");
 	cells[i++] = new CellInfo(operation.getCounterparty(), "counterparty");
-	cells[i++] = new CellInfo(operation.getDetail(), "detail");
+	cells[i++] = new CellInfo(operation.getDetail(), "details");
 	return cells;
     }
 

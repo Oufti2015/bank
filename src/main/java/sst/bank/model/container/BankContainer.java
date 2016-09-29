@@ -64,45 +64,12 @@ public class BankContainer {
     private List<BankSummary> operationsByCategory = new ArrayList<>();
 
     public List<BankSummary> operationsByCategory() {
-	return operationsByCategory;
+	return operationsByCategory.stream().sorted().collect(Collectors.toList());
     }
 
     public void addOperationsByCategory(BankSummary summary) {
 	operationsByCategory.add(summary);
     }
-
-    @Deprecated
-    public enum CategoryName {
-	UNKNOWN,
-	SALAIRE,
-	ASSURANCES,
-	ELECTRICITE,
-	TELEPHONE,
-	DOG_AGILITY,
-	SODEXHO,
-	SPORT,
-	WATER,
-	MUTUELLE,
-	BANK,
-	CAR,
-	HOUSE,
-	DOG,
-	VISA,
-	ANNE,
-	EPARGNE,
-	DRESSING,
-	LEISURE,
-	LEISURE_HOL,
-	MOVE,
-	DOG_VET,
-	DOG_FOOD,
-	CAR_FUEL,
-	HEALTH,
-	TAX,
-	HOUSE_HOT,
-	HOUSE_FOOD,
-	BANK_RETRAIT
-    };
 
     private static List<Category> categories = new ArrayList<>();
     private static HashMap<String, Category> categoryByName = new HashMap<>();
@@ -121,51 +88,7 @@ public class BankContainer {
 
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
 
-	// addCategory(CategoryName.UNKNOWN, "", "");
-	//
-	// addCategory(CategoryName.SALAIRE, "Salaire", "salaire");
-	// addCategory(CategoryName.ASSURANCES, "Assurances", "assurances");
-	// addCategory(CategoryName.ELECTRICITE, "Maison (&Eacute;lectr.)",
-	// "house");
-	// addCategory(CategoryName.TELEPHONE, "T&eacute;l&eacute;phone",
-	// "phone");
-	// addCategory(CategoryName.DOG_AGILITY, "Chiens (Agility)", "dog");
-	// addCategory(CategoryName.SODEXHO, "Maison (Sodexho)", "house");
-	// addCategory(CategoryName.SPORT, "Sport", "sport");
-	// addCategory(CategoryName.WATER, "Maison (Eau)", "house");
-	// addCategory(CategoryName.MUTUELLE, "Mutuelle", "mutuelle");
-	// addCategory(CategoryName.BANK, "Banque", "bank");
-	// addCategory(CategoryName.BANK_RETRAIT, "Banque (Retrait)", "bank");
-	// addCategory(CategoryName.CAR, "Voiture", "car");
-	// addCategory(CategoryName.CAR_FUEL, "Voiture (Essence)", "car");
-	// addCategory(CategoryName.HOUSE, "Maison", "house");
-	// addCategory(CategoryName.HOUSE_HOT, "Maison (Chauffage)", "house");
-	// addCategory(CategoryName.DOG, "Chiens", "dog");
-	// addCategory(CategoryName.DOG_VET, "Chiens (Soins)", "dog");
-	// addCategory(CategoryName.DOG_FOOD, "Chiens (Food)", "dog");
-	// addCategory(CategoryName.VISA, "Visa", "bank");
-	// addCategory(CategoryName.EPARGNE, "&Eacute;pargne", "bank",
-	// CategoryType.NEGATIF);
-	// addCategory(CategoryName.ANNE, "Anne", "anne");
-	// addCategory(CategoryName.DRESSING, "V&ecirc;tements", "house");
-	// addCategory(CategoryName.LEISURE, "Loisirs", "loisirs");
-	// addCategory(CategoryName.LEISURE_HOL, "Loisirs (Vacances)",
-	// "loisirs");
-	// addCategory(CategoryName.MOVE, "D&eacute;placements", "move");
-	// addCategory(CategoryName.HEALTH, "Sant&eacute;", "water");
-	// addCategory(CategoryName.TAX, "Taxes", "electricite");
-	// addCategory(CategoryName.HOUSE_FOOD, "Food", "house");
     }
-
-    // private static void addCategory(CategoryName category, String label,
-    // String css) {
-    // categories.put(category, new Category(category, label, css));
-    // }
-    //
-    // private static void addCategory(CategoryName category, String label,
-    // String css, CategoryType type) {
-    // categories.put(category, new Category(category, label, css, type));
-    // }
 
     public Category category(String categoryName) {
 	return categoryByName.get(categoryName);
