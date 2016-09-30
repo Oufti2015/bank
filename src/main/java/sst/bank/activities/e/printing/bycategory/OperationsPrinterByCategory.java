@@ -28,6 +28,7 @@ import sst.common.html.HTMLUnorderedList;
 import sst.common.html.head.HTMLHead;
 import sst.common.html.table.builders.IntoTableConverter;
 import sst.common.html.table.builders.TableBuilder;
+import sst.common.html.util.HTMLOneRowTable;
 
 public class OperationsPrinterByCategory implements BankActivity {
 
@@ -71,7 +72,8 @@ public class OperationsPrinterByCategory implements BankActivity {
 	    div = new HTMLDiv();
 	    div.classId("backtotop");
 	    div.addChild(new HTMLThemeBreak());
-	    div.addChild(new HTMLHyperlinks().href("#").textContent("Back to Top"));
+	    div.addChild(new HTMLOneRowTable(new HTMLHyperlinks().href("#").textContent("Back to Top"),
+		    new HTMLHyperlinks().href("../index.html").textContent("Back to Home")));
 	    body.addChild(div);
 	}
 	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
