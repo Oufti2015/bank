@@ -32,6 +32,7 @@ import sst.common.html.HTMLUnorderedList;
 import sst.common.html.head.HTMLHead;
 import sst.common.html.table.builders.IntoTableConverter;
 import sst.common.html.table.builders.TableBuilder;
+import sst.common.html.util.HTMLOneRowTable;
 
 public class OperationsPrinterByDate implements BankActivity {
     private static Logger logger = Logger.getLogger(OperationsPrinterByDate.class);
@@ -60,12 +61,19 @@ public class OperationsPrinterByDate implements BankActivity {
 	html.addChild(body);
 	body.addChild(tabMenu());
 
+	HTMLDiv div = new HTMLDiv();
+	div.classId("backtotop");
+	div.addChild(new HTMLThemeBreak());
+	div.addChild(new HTMLOneRowTable(new HTMLHyperlinks().href("#").textContent("Back to Top"),
+		new HTMLHyperlinks().href("index.html").textContent("Back to Home")));
+	body.addChild(div);
+
 	List<IntoTableConverter> listConvert = bm.getList().stream()
 		.map(p -> new OperationsIntoTableConverter(p))
 		.collect(Collectors.toList());
 	listConvert.add(new SumRowIntoTableConverter(bm.getList()));
 
-	HTMLDiv div = new HTMLDiv();
+	div = new HTMLDiv();
 	div.style("overflow-x:auto;");
 	div.addChild(new HTMLThemeBreak());
 	div.addChild(printHeader("Operations", bm));
@@ -81,6 +89,13 @@ public class OperationsPrinterByDate implements BankActivity {
 	if (bm.operationsCount() < yearlySummary.operationsCount()) {
 	    printSummary(yearlySummary, div);
 	}
+
+	div = new HTMLDiv();
+	div.classId("backtotop");
+	div.addChild(new HTMLThemeBreak());
+	div.addChild(new HTMLOneRowTable(new HTMLHyperlinks().href("#").textContent("Back to Top"),
+		new HTMLHyperlinks().href("index.html").textContent("Back to Home")));
+	body.addChild(div);
 
 	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
 	// " + LocalDate.now()));
