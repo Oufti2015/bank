@@ -29,7 +29,7 @@ public class PCBankingParser implements RecordFormatter, RecordSelector {
 	op.setExecutionDate(pcBoperation.getExecutionDate());
 	op.setFortisId(pcBoperation.getFortisId());
 	op.setValueDate(pcBoperation.getValueDate());
-	System.out.println("PCBanking Operation = " + op);
+
 	if (!BankContainer.me().operations().contains(op)) {
 	    System.out.println("  ===> Insert in the list");
 	    op.setBankId(BankContainer.me().newId());

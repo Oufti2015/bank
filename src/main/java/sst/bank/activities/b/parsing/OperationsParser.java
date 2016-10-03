@@ -45,11 +45,18 @@ public class OperationsParser implements BankActivity {
 	File[] fileList = readInputDir();
 	if (fileList != null) {
 	    for (int i = 0; i < fileList.length; i++) {
-		System.out.println("Reading " + fileList[i] + "...");
-		List<Operation> parseFile = parseFile(fileList[i]);
+		File file = fileList[i];
+		System.out.println("Reading " + file + "...");
+		List<Operation> parseFile = parseFile(file);
 		BankContainer.me().addOperations(parseFile);
+		file.renameTo(new File(archiveFileName(file)));
 	    }
 	}
+    }
+
+    private String archiveFileName(File file) {
+	return file.getParentFile() + File.separator + "archive" + File.separator
+		+ file.getName();
     }
 
     private File[] readInputDir() {

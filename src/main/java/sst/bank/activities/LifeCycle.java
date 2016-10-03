@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import sst.bank.activities.a.loading.OperationsLoader;
+import sst.bank.activities.b.parsing.OperationFiller;
 import sst.bank.activities.b.parsing.OperationsParser;
 import sst.bank.activities.c.categorising.OperationCategoriser;
 import sst.bank.activities.d.grouping.OperationsGrouper;
@@ -16,6 +17,7 @@ public class LifeCycle {
     private static List<BankActivity> activities = Arrays.asList(
 	    new OperationsLoader(),
 	    new OperationsParser(),
+	    new OperationFiller(),
 	    new OperationCategoriser(),
 	    new OperationsGrouper(),
 	    new OperationBudgeter(),
