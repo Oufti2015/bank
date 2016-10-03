@@ -7,6 +7,11 @@ import lombok.Data;
 
 @Data
 public class Operation implements Comparable<Operation> {
+    public enum OperationType {
+	CASUAL, VISA
+    };
+
+    private OperationType operationType = OperationType.CASUAL;
     private Integer bankId;
     private String fortisId;
     private LocalDate executionDate;

@@ -12,6 +12,10 @@ import sst.bank.activities.b.parsing.easyBanking.EasyBankingOperation;
 import sst.bank.activities.b.parsing.easyBanking.EasyBankingParser;
 import sst.bank.activities.b.parsing.pcBanking.PCBankingOperation;
 import sst.bank.activities.b.parsing.pcBanking.PCBankingParser;
+import sst.bank.activities.b.parsing.visa.VISAFirstLine;
+import sst.bank.activities.b.parsing.visa.VISAFirstLineParser;
+import sst.bank.activities.b.parsing.visa.VISASecondLine;
+import sst.bank.activities.b.parsing.visa.VISASecondLineParser;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.exceptions.ParserExceptions;
@@ -39,12 +43,9 @@ public class OperationsParser implements BankActivity {
     @Override
     public void run() {
 	FileLoader fl = FileLoader.getInstance();
-	PCBankingParser parser = new PCBankingParser();
-	fl.addRecordFormat(parser,
-		new GenericParser(PCBankingOperation.class).delimiter(";").removeQuotes(true).trim(true), parser);
-	EasyBankingParser parserEasy = new EasyBankingParser();
-	fl.addRecordFormat(parserEasy,
-		new GenericParser(EasyBankingOperation.class).delimiter(";").removeQuotes(true).trim(true), parserEasy);
+	addPCBankingParser(fl);
+	addEasyBankingParser(fl);
+	addVISAParsers(fl);
 
 	File[] fileList = readInputDir();
 	if (fileList != null) {
@@ -56,6 +57,27 @@ public class OperationsParser implements BankActivity {
 		file.renameTo(new File(archiveFileName(file)));
 	    }
 	}
+    }
+
+    private void addVISAParsers(FileLoader fl) {
+	VISAFirstLineParser visaParser1 = new VISAFirstLineParser();
+	VISASecondLineParser visaParser2 = new VISASecondLineParser();
+	fl.addRecordFormat(visaParser1,
+		new GenericParser(VISAFirstLine.class).delimiter(";").removeQuotes(true).trim(true), visaParser1);
+	fl.addRecordFormat(visaParser2,
+		new GenericParser(VISASecondLine.class).delimiter(";").removeQuotes(true).trim(true), visaParser1);
+    }
+
+    private void addEasyBankingParser(FileLoader fl) {
+	EasyBankingParser parserEasy = new EasyBankingParser();
+	fl.addRecordFormat(parserEasy,
+		new GenericParser(EasyBankingOperation.class).delimiter(";").removeQuotes(true).trim(true), parserEasy);
+    }
+
+    private void addPCBankingParser(FileLoader fl) {
+	PCBankingParser parser = new PCBankingParser();
+	fl.addRecordFormat(parser,
+		new GenericParser(PCBankingOperation.class).delimiter(";").removeQuotes(true).trim(true), parser);
     }
 
     private String archiveFileName(File file) {

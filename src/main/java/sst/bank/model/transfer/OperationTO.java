@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import lombok.Data;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
+import sst.bank.model.Operation.OperationType;
 
 @Data
 public class OperationTO implements Serializable {
@@ -21,6 +22,7 @@ public class OperationTO implements Serializable {
     private String detail;
     private String account;
     private Category category;
+    private OperationType operationType;
 
     public OperationTO() {
 	super();
@@ -40,12 +42,16 @@ public class OperationTO implements Serializable {
 	operation.setExecutionDate(LocalDate.parse(executionDate, dtf));
 	operation.setFortisId(fortisId);
 	operation.setValueDate(LocalDate.parse(valueDate, dtf));
+	if (operationType != null) {
+	    operation.setOperationType(operationType);
+	}
 
 	return operation;
     }
 
     public static OperationTO fromOperation(Operation operation) {
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 	OperationTO to = new OperationTO();
 	to.account = operation.getAccount();
 	to.amount = operation.getAmount();
@@ -54,10 +60,10 @@ public class OperationTO implements Serializable {
 	to.counterparty = operation.getCounterparty();
 	to.currency = operation.getCurrency();
 	to.detail = operation.getDetail();
-
 	to.executionDate = dtf.format(operation.getExecutionDate());
 	to.fortisId = operation.getFortisId();
 	to.valueDate = dtf.format(operation.getValueDate());
+	to.operationType = operation.getOperationType();
 
 	return to;
     }

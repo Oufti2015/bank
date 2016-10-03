@@ -120,4 +120,10 @@ public class BankContainer {
     public Collection<Category> getCategories() {
 	return categories;
     }
+
+    private List<Operation> visaOperations = new ArrayList<>();
+
+    public void addVISAOperations(Operation operation) {
+	visaOperations.add(operation);
+    }
 }

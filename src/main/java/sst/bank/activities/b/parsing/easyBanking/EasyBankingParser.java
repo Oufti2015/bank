@@ -1,5 +1,7 @@
 package sst.bank.activities.b.parsing.easyBanking;
 
+import com.google.common.base.Strings;
+
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.loader.interfaces.RecordFormatter;
@@ -10,7 +12,8 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
     @Override
     public boolean select(String record) {
 	String[] array = record.split(";", -2);
-	return array.length == 6 && !record.contains("cution;Date valeur;Montant;Devise du compte;D");
+	return array.length == 6 && !record.contains("cution;Date valeur;Montant;Devise du compte;D")
+		&& !Strings.isNullOrEmpty(array[5]);
     }
 
     @Override
