@@ -3,21 +3,25 @@ package sst.bank.activities;
 import java.util.Arrays;
 import java.util.List;
 
-import sst.bank.activities.a.parsing.OperationsParser;
-import sst.bank.activities.b.categorising.OperationCategoriser;
-import sst.bank.activities.c.grouping.OperationsGrouper;
-import sst.bank.activities.d.budgeting.OperationBudgeter;
-import sst.bank.activities.e.printing.bycategory.OperationsPrinterByCategory;
-import sst.bank.activities.e.printing.bydate.OperationsPrinterByDate;
+import sst.bank.activities.a.loading.OperationsLoader;
+import sst.bank.activities.b.parsing.OperationsParser;
+import sst.bank.activities.c.categorising.OperationCategoriser;
+import sst.bank.activities.d.grouping.OperationsGrouper;
+import sst.bank.activities.e.budgeting.OperationBudgeter;
+import sst.bank.activities.f.printing.bycategory.OperationsPrinterByCategory;
+import sst.bank.activities.f.printing.bydate.OperationsPrinterByDate;
+import sst.bank.activities.g.saving.OperationsSaver;
 
 public class LifeCycle {
     private static List<BankActivity> activities = Arrays.asList(
+	    new OperationsLoader(),
 	    new OperationsParser(),
 	    new OperationCategoriser(),
 	    new OperationsGrouper(),
 	    new OperationBudgeter(),
 	    new OperationsPrinterByDate(),
-	    new OperationsPrinterByCategory());
+	    new OperationsPrinterByCategory(),
+	    new OperationsSaver());
 
     public LifeCycle() {
     }

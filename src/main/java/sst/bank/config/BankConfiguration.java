@@ -16,6 +16,8 @@ public class BankConfiguration {
 	    + File.separator + "categories.properties";
     public static final String CATEGORIES_JSON = "src" + File.separator + "main" + File.separator + "resources"
 	    + File.separator + "categories.json";
+    public static final String OPERATIONS_JSON = "data" + File.separator + "operations.json";
+    public static final String OPERATIONS_TXT = "data" + File.separator + "operations.txt";
 
     private static BankConfiguration me;
     static {

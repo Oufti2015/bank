@@ -2,99 +2,65 @@ package sst.bank.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import sst.common.file.parser.Parser;
+import lombok.Data;
 
-@ToString(exclude = "dtf")
+@Data
 public class Operation implements Comparable<Operation> {
-    @Getter
-    private String id;
-    @Getter
-    @Setter
+    private Integer bankId;
+    private String fortisId;
     private LocalDate executionDate;
-    @Getter
-    @Setter
     private LocalDate valueDate;
-    @Getter
-    @Setter
     private BigDecimal amount;
-    @Getter
     private String currency;
-    @Getter
     private String counterparty;
-    @Getter
     private String detail;
-    @Getter
     private String account;
-    @Getter
-    @Setter
     private Category category;
 
     public Operation() {
     }
 
-    @Parser(position = 0)
-    public void setId(String id) {
-	this.id = id;
-    }
+    @Override
+    public int compareTo(Operation o) {
 
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-    @Parser(position = 1)
-    public void setExecutionDateString(String executionDate) {
-	setExecutionDate(LocalDate.parse(executionDate, dtf));
-    }
-
-    @Parser(position = 2)
-    public void setValueDateString(String valueDate) {
-	setValueDate(LocalDate.parse(valueDate, dtf));
-    }
-
-    @Parser(position = 3)
-    public void setAmountString(String amount) {
-	setAmount(new BigDecimal(amount.replaceAll(",", ".")));
-	// // Create a DecimalFormat that fits your requirements
-	// DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-	// symbols.setGroupingSeparator('.');
-	// symbols.setDecimalSeparator(',');
-	// String pattern = "+#,##0.0#";
-	// DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
-	// decimalFormat.setParseBigDecimal(true);
-	//
-	// try {
-	// setAmount((BigDecimal) decimalFormat.parse(amount));
-	// } catch (ParseException e) {
-	// e.printStackTrace();
-	// setAmount(null);
-	// }
-    }
-
-    @Parser(position = 4)
-    public void setCurrency(String currency) {
-	this.currency = currency;
-    }
-
-    @Parser(position = 5)
-    public void setCounterparty(String counterparty) {
-	this.counterparty = counterparty;
-    }
-
-    @Parser(position = 6)
-    public void setDetail(String detail) {
-	this.detail = detail;
-    }
-
-    @Parser(position = 7)
-    public void setAccount(String account) {
-	this.account = account;
+	if (o.getFortisId() != null && getFortisId() != null) {
+	    return o.getFortisId().compareTo(getFortisId());
+	}
+	int c = o.getExecutionDate().compareTo(getExecutionDate());
+	if (c == 0) {
+	    return o.getValueDate().compareTo(o.getValueDate());
+	}
+	return c;
     }
 
     @Override
-    public int compareTo(Operation o) {
-	return getId().compareTo(o.getId());
+    public boolean equals(Object obj) {
+	Operation second = (Operation) obj;
+
+	if (second.getFortisId() != null && getFortisId() != null) {
+	    return second.getFortisId().equals(getFortisId());
+	}
+	return second.getAmount().equals(getAmount())
+		&& second.getExecutionDate().equals(getExecutionDate())
+		&& second.getValueDate().equals(getValueDate());
+    }
+
+    @Override
+    public int hashCode() {
+	final int PRIME = 59;
+	int result = bankId;
+
+	result = (result * PRIME) + (this.fortisId == null ? 43 : this.fortisId.hashCode());
+	result = (result * PRIME) + (this.executionDate == null ? 43 : this.executionDate.hashCode());
+	result = (result * PRIME) + (this.valueDate == null ? 43 : this.valueDate.hashCode());
+	result = (result * PRIME) + (this.amount == null ? 43 : this.amount.hashCode());
+	result = (result * PRIME) + (this.currency == null ? 43 : this.currency.hashCode());
+	result = (result * PRIME) + (this.counterparty == null ? 43 : this.counterparty.hashCode());
+	result = (result * PRIME) + (this.detail == null ? 43 : this.detail.hashCode());
+	result = (result * PRIME) + (this.account == null ? 43 : this.account.hashCode());
+	result = (result * PRIME) + (this.category == null ? 43 : this.category.hashCode());
+
+	return result;
     }
 }

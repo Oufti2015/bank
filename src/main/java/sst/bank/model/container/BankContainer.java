@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.Getter;
+import lombok.Setter;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Category;
@@ -29,6 +31,14 @@ public class BankContainer {
 
     public static BankContainer me() {
 	return me;
+    }
+
+    @Getter
+    @Setter
+    private Integer lastId = 0;
+
+    public Integer newId() {
+	return lastId++;
     }
 
     private List<Operation> operations = new ArrayList<>();
