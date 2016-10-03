@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +23,8 @@ import sst.bank.model.Category;
 import sst.bank.model.Operation;
 
 public class BankContainer {
+    private static Logger logger = Logger.getLogger(BankContainer.class);
+
     private static BankContainer me = null;
     static {
 	me = new BankContainer();
@@ -93,7 +97,7 @@ public class BankContainer {
 		    new TypeReference<List<Category>>() {
 		    });
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot read file " + BankConfiguration.CATEGORIES_JSON, e);
 	}
 
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));

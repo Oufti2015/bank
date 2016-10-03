@@ -3,10 +3,14 @@ package sst.bank.config;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import lombok.Getter;
 import lombok.Setter;
 
 public class BankConfiguration {
+    private static Logger logger = Logger.getLogger(BankConfiguration.class);
+
     private static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
     private static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
     private static final String DETAIL_PROPERTIES = "detail.properties";
@@ -31,7 +35,7 @@ public class BankConfiguration {
 	    positifCounterpartiesMapping = InvertedProperties.load(POSITIF_COUNTERPARTY_PROPERTIES);
 	    idMapping = InvertedProperties.load(ID_PROPERTIES);
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot read property file", e);
 	}
     }
 

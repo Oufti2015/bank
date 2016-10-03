@@ -6,6 +6,8 @@ import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.f.printing.OperationsIntoTableConverter;
 import sst.bank.activities.f.printing.SumRowIntoTableConverter;
@@ -31,6 +33,7 @@ import sst.common.html.table.builders.TableBuilder;
 import sst.common.html.util.HTMLOneRowTable;
 
 public class OperationsPrinterByCategory implements BankActivity {
+    private static Logger logger = Logger.getLogger(OperationsPrinterByCategory.class);
 
     private TableBuilder operationsTableBuilder = new TableBuilder(OperationsIntoTableConverter.headers);
 
@@ -81,7 +84,7 @@ public class OperationsPrinterByCategory implements BankActivity {
 	try (OutputFile output = new OutputFile(constructPathName())) {
 	    output.println(html.toString());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot write to " + constructPathName(), e);
 	}
     }
 

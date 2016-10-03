@@ -3,6 +3,8 @@ package sst.bank.activities.g.saving;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sst.bank.activities.BankActivity;
@@ -12,6 +14,7 @@ import sst.bank.model.transfer.OperationTO;
 import sst.bank.model.transfer.TransferObject;
 
 public class OperationsSaver implements BankActivity {
+    private static Logger logger = Logger.getLogger(OperationsSaver.class);
 
     @Override
     public void run() {
@@ -31,15 +34,18 @@ public class OperationsSaver implements BankActivity {
     }
 
     private void save(TransferObject to) {
+	ObjectMapper mapper = new ObjectMapper();
 	try {
-	    ObjectMapper mapper = new ObjectMapper();
-
 	    // Object to JSON in file
 	    mapper.writeValue(new File(BankConfiguration.OPERATIONS_JSON), to);
+	} catch (IOException e) {
+	    logger.error("Cannot write file " + BankConfiguration.OPERATIONS_JSON, e);
+	}
+	try {
 	    // Object to JSON in file
 	    mapper.writeValue(new File(BankConfiguration.OPERATIONS_TXT), to);
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot write file " + BankConfiguration.OPERATIONS_TXT, e);
 	}
     }
 }

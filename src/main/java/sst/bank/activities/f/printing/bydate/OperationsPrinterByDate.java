@@ -8,6 +8,8 @@ import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.f.printing.OperationsIntoTableConverter;
 import sst.bank.activities.f.printing.SumRowIntoTableConverter;
@@ -32,6 +34,7 @@ import sst.common.html.table.builders.IntoTableConverter;
 import sst.common.html.table.builders.TableBuilder;
 
 public class OperationsPrinterByDate implements BankActivity {
+    private static Logger logger = Logger.getLogger(OperationsPrinterByDate.class);
 
     private TableBuilder operationsTableBuilder = new TableBuilder(OperationsIntoTableConverter.headers);
     private TableBuilder summaryTableBuilder = new TableBuilder(SummaryIntoTableConverter.headers);
@@ -84,7 +87,7 @@ public class OperationsPrinterByDate implements BankActivity {
 	try (OutputFile output = new OutputFile(constructPathName(bm))) {
 	    output.println(html.toString());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot write file " + constructPathName(bm), e);
 	}
     }
 

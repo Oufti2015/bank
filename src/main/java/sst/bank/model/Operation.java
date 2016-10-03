@@ -25,11 +25,11 @@ public class Operation implements Comparable<Operation> {
     public int compareTo(Operation o) {
 
 	if (o.getFortisId() != null && getFortisId() != null) {
-	    return o.getFortisId().compareTo(getFortisId());
+	    return getFortisId().compareTo(o.getFortisId());
 	}
-	int c = o.getExecutionDate().compareTo(getExecutionDate());
+	int c = getExecutionDate().compareTo(o.getExecutionDate());
 	if (c == 0) {
-	    return o.getValueDate().compareTo(o.getValueDate());
+	    return getValueDate().compareTo(o.getValueDate());
 	}
 	return c;
     }

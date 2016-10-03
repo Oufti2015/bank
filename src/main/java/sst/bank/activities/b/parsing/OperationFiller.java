@@ -10,10 +10,10 @@ import sst.bank.model.container.BankContainer;
 public class OperationFiller implements BankActivity {
 
     private Pattern[] patternDetails = { Pattern.compile(".*((BE)\\d{14}).*"), Pattern.compile(".*((LU)\\d{18}).*"),
-	    Pattern.compile(".*((FR)\\d{18}).*") };
+	    Pattern.compile(".*((FR)\\d{27}).*") };
     private Pattern[] patternFormatted = { Pattern.compile(".*((BE)\\d{2} \\d{4} \\d{4} \\d{4}).*"),
 	    Pattern.compile(".*((LU)\\d{2} \\d{4} \\d{4} \\d{4} \\d{4}).*"),
-	    Pattern.compile(".*((FR)\\d{2} \\d{4} \\d{4} \\d{4} \\d{4}).*") };
+	    Pattern.compile(".*((FR)\\d{2} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{3}).*") };
     private String[] countries = { "BE", "LU", "FR}" };
 
     @Override

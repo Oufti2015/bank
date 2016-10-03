@@ -51,7 +51,6 @@ public class EasyBankingOperation {
     @Parser(position = 2)
     public void setAmountString(String amount) {
 	String replaceAll = amount.replaceAll("\\.", "").replaceAll(",", "\\.");
-	// System.out.println("amount=" + amount + "replaceAll=" + replaceAll);
 	setAmount(new BigDecimal(replaceAll));
     }
 

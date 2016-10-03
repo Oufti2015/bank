@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
 import sst.bank.model.Budget;
@@ -15,6 +17,7 @@ import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
 public class OperationBudgeter implements BankActivity {
+    private static Logger logger = Logger.getLogger(OperationBudgeter.class);
 
     @Override
     public void run() {
@@ -24,7 +27,7 @@ public class OperationBudgeter implements BankActivity {
 	if (optcat.isPresent()) {
 	    spendingBudget = optcat.get().getBudget();
 	} else {
-	    System.err.println("Cannot found EPARGNE");
+	    logger.fatal("Cannot found EPARGNE");
 	    System.exit(-1);
 	}
 
@@ -39,12 +42,12 @@ public class OperationBudgeter implements BankActivity {
 	spendingBudget.setControlledAmount(spendingBudget.monthlyAmount().subtract(BigDecimal.valueOf(yearlyAmount),
 		MathContext.DECIMAL64));
 
-	System.out.println("------------------------------------------------------------------------------");
+	logger.debug("------------------------------------------------------------------------------");
 
-	budgets.stream().forEach(b -> System.out.println(b.toString()));
+	budgets.stream().forEach(b -> logger.debug(b.toString()));
 
-	System.out.println("------------------------------------------------------------------------------");
-	System.out.println(
+	logger.debug("------------------------------------------------------------------------------");
+	logger.debug(
 		String.format("%-15s : %10s %10s %10s %10s", "Total Budget",
 			BankUtils.format(budgets
 				.stream()
@@ -62,6 +65,6 @@ public class OperationBudgeter implements BankActivity {
 				.stream()
 				.mapToDouble(b -> b.yearlyControlledAmount(12).doubleValue())
 				.sum())));
-	System.out.println("------------------------------------------------------------------------------");
+	logger.debug("------------------------------------------------------------------------------");
     }
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sst.bank.activities.BankActivity;
@@ -12,6 +14,8 @@ import sst.bank.model.container.BankContainer;
 import sst.bank.model.transfer.TransferObject;
 
 public class OperationsLoader implements BankActivity {
+
+    private static Logger logger = Logger.getLogger(OperationsLoader.class);
 
     @Override
     public void run() {
@@ -24,7 +28,7 @@ public class OperationsLoader implements BankActivity {
 			    .map(o -> o.toOperation())
 			    .collect(Collectors.toList()));
 
-	    System.out.println("" + to.getOperations().size() + " operations loaded.");
+	    logger.info("" + to.getOperations().size() + " operations loaded.");
 	}
     }
 
@@ -36,7 +40,7 @@ public class OperationsLoader implements BankActivity {
 	try {
 	    to = mapper.readValue(new File(BankConfiguration.OPERATIONS_JSON), TransferObject.class);
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("Cannot read file " + BankConfiguration.OPERATIONS_JSON, e);
 	}
 
 	return to;
