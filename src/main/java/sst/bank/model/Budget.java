@@ -36,7 +36,7 @@ public class Budget {
 
     public Budget() {
     }
-    
+
     public Budget(String category, BigDecimal amount, BudgetFrequencyType budgetFrequencyType) {
 	super();
 	this.category = category;
@@ -78,7 +78,7 @@ public class Budget {
 
     @Override
     public String toString() {
-	return String.format("%-15s : %10s %10s %10s %10s %7s %8s",
+	return String.format("%-15s : %10s %10s %10s %10s %-7s %-8s",
 		category,
 		BankUtils.format(monthlyAmount()),
 		BankUtils.format(monthlyControlledAmount()),

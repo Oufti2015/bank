@@ -12,10 +12,10 @@ import lombok.Setter;
 public class BankConfiguration {
     private static Logger logger = Logger.getLogger(BankConfiguration.class);
 
-    private static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
-    private static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
+    public static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
+    public static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
     public static final String DETAIL_PROPERTIES = "detail.properties";
-    private static final String ID_PROPERTIES = "id.properties";
+    public static final String ID_PROPERTIES = "id.properties";
 
     public static final String CATEGORIES_PROPERTIES = "src" + File.separator + "main" + File.separator + "resources"
 	    + File.separator + "categories.properties";
