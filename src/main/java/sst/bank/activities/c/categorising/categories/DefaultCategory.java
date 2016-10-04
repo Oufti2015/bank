@@ -9,5 +9,4 @@ public class DefaultCategory implements CategoryActivity {
 	BankContainer.me().operations().stream()
 		.forEach(o -> o.setCategory(BankContainer.me().category("DEFAULT")));
     }
-
 }

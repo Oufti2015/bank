@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import sst.bank.activities.a.loading.CategoriesLoader;
 import sst.bank.activities.a.loading.OperationsLoader;
 import sst.bank.activities.b.parsing.OperationFiller;
 import sst.bank.activities.b.parsing.OperationsParser;
@@ -15,12 +16,14 @@ import sst.bank.activities.d.grouping.OperationsGrouper;
 import sst.bank.activities.e.budgeting.OperationBudgeter;
 import sst.bank.activities.f.printing.bycategory.OperationsPrinterByCategory;
 import sst.bank.activities.f.printing.bydate.OperationsPrinterByDate;
+import sst.bank.activities.g.saving.CategoriesSaver;
 import sst.bank.activities.g.saving.OperationsSaver;
 
 public class LifeCycle {
     private static Logger logger = Logger.getLogger(LifeCycle.class);
 
     private static List<BankActivity> activities = Arrays.asList(
+	    new CategoriesLoader(),
 	    new OperationsLoader(),
 	    new OperationsParser(),
 	    new OperationFiller(),
@@ -29,7 +32,8 @@ public class LifeCycle {
 	    new OperationBudgeter(),
 	    new OperationsPrinterByDate(),
 	    new OperationsPrinterByCategory(),
-	    new OperationsSaver());
+	    new OperationsSaver(),
+	    new CategoriesSaver());
 
     public LifeCycle() {
     }
@@ -39,6 +43,7 @@ public class LifeCycle {
     }
 
     private void startActivity(BankActivity activity) {
+	logger.info("+----------------------------------------------------------------------------------------------+");
 	logger.info(">>>>> Starting " + activity.getClass().getSimpleName() + "...");
 	Instant start = Instant.now();
 	activity.run();

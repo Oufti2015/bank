@@ -24,6 +24,7 @@ public class VISAFirstLineParser implements RecordFormatter, RecordSelector {
 	if (recordParsed instanceof VISAFirstLine) {
 	    VISAFirstLine visa = (VISAFirstLine) recordParsed;
 	    operation = new Operation();
+	    operation.setBankId(BankContainer.me().newId());
 	    operation.setOperationType(OperationType.VISA);
 	    operation.setExecutionDate(visa.getExecutionDate());
 	    operation.setValueDate(visa.getValueDate());
@@ -32,7 +33,7 @@ public class VISAFirstLineParser implements RecordFormatter, RecordSelector {
 	} else {
 	    VISASecondLine visa = (VISASecondLine) recordParsed;
 	    operation.setDetail(visa.getDetail());
-	    BankContainer.me().addVISAOperations(operation);
+	    BankContainer.me().addOperation(operation);
 	    operation = null;
 	}
     }

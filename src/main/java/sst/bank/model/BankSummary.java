@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import lombok.Getter;
 import lombok.Setter;
+import sst.bank.model.Operation.OperationType;
 import sst.bank.model.container.BankContainer;
 
 public class BankSummary implements Comparable<BankSummary> {
@@ -67,11 +68,19 @@ public class BankSummary implements Comparable<BankSummary> {
     }
 
     private void summary(Category category, BigDecimal amount) {
+	if (category.isVisa() && operationsContainVISA()) {
+	    return;
+	}
 	BigDecimal sum = summary.get(category);
 	if (null == sum) {
 	    sum = BigDecimal.ZERO;
 	}
 	summary.put(category, sum.add(amount));
+    }
+
+    private boolean operationsContainVISA() {
+	long op = list.stream().filter(o -> o.getOperationType().equals(OperationType.VISA)).count();
+	return op > 0;
     }
 
     private void computeSummary() {

@@ -1,3 +1,4 @@
+
 package sst.bank.main;
 
 import java.time.Instant;
@@ -38,8 +39,8 @@ public class OuftiBank { // NO_UCD (unused code)
 	LifeCycle lifecycle = new LifeCycle();
 	lifecycle.run();
 
-	logger.info(BankContainer.me().operations().size() + " operations read.");
-	logger.info(BankContainer.me().operationsByMonth().size() + " month(s) sections created.");
-	logger.info(BankContainer.me().operationsByYear().size() + " year(s) sections created.");
+	logger.info("OPERATIONS : " + BankContainer.me().operations().size());
+	logger.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
+	logger.info("YEARS      : " + BankContainer.me().operationsByYear().size());
     }
 }

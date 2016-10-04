@@ -23,11 +23,12 @@ public class Category implements Comparable<Category>, Serializable {
     @SuppressWarnings("unused")
     private boolean negatif;
     private boolean defaultCategory;
+    public boolean visa = false;
 
     public Category() {
 	super();
     }
-    
+
     public Category(String name, String label, String style) {
 	super();
 	this.label = label;
@@ -43,7 +44,8 @@ public class Category implements Comparable<Category>, Serializable {
 	this.type = type;
     }
 
-    public Category(String name, String label, String style, CategoryType type, Budget budget, boolean defaultCategory) {
+    public Category(String name, String label, String style, CategoryType type, Budget budget,
+	    boolean defaultCategory) {
 	super();
 	this.name = name;
 	this.label = label;

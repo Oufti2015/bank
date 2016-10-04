@@ -1,7 +1,5 @@
 package sst.bank.model.container;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
@@ -10,20 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.Getter;
 import lombok.Setter;
-import sst.bank.config.BankConfiguration;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 
 public class BankContainer {
-    private static Logger logger = Logger.getLogger(BankContainer.class);
 
     private static BankContainer me = null;
     static {
@@ -85,23 +76,12 @@ public class BankContainer {
 	operationsByCategory.add(summary);
     }
 
-    private static List<Category> categories = new ArrayList<>();
-    private static HashMap<String, Category> categoryByName = new HashMap<>();
+    private List<Category> categories = new ArrayList<>();
+    private HashMap<String, Category> categoryByName = new HashMap<>();
 
-    static {
-	ObjectMapper mapper = new ObjectMapper();
-
-	// JSON from file to Object
-	try {
-	    categories = mapper.readValue(new File(BankConfiguration.CATEGORIES_JSON),
-		    new TypeReference<List<Category>>() {
-		    });
-	} catch (IOException e) {
-	    logger.error("Cannot read file " + BankConfiguration.CATEGORIES_JSON, e);
-	}
-
+    public void setCategories(List<Category> categories) {
+	this.categories = categories;
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
-
     }
 
     public Category category(String categoryName) {
@@ -125,5 +105,9 @@ public class BankContainer {
 
     public void addVISAOperations(Operation operation) {
 	visaOperations.add(operation);
+    }
+
+    public void addOperation(Operation operation) {
+	operations.add(operation);
     }
 }
