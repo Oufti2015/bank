@@ -28,6 +28,7 @@ public class UpdateCategories {
 		if (budget.getControlledAmount().compareTo(BigDecimal.ZERO) > 0) {
 		    budget.setControlledAmount(budget.getControlledAmount().multiply(BigDecimal.valueOf(-1.00)));
 		}
+		category.setStyle("loisirs");
 	    }
 	} else {
 	    BankContainer.me().getCategories().add(category);
@@ -38,9 +39,9 @@ public class UpdateCategories {
 
     private static Category createCategory() {
 	Category category = new Category();
-	category.setName("RESTO");
-	category.setLabel("Restaurant");
-	category.setStyle("resto");
+	category.setName("CAR_PARK");
+	category.setLabel("Voiture (Parking)");
+	category.setStyle("car");
 	category.setType(CategoryType.POSITIF);
 	category.setDefaultCategory(false);
 	category.setNegatif(false);
@@ -48,7 +49,7 @@ public class UpdateCategories {
 
 	Budget budget = new Budget();
 	budget.setCategory(category.getName());
-	budget.setAmount(BigDecimal.valueOf(-150.0));
+	budget.setAmount(BigDecimal.valueOf(-15.0));
 	budget.setBudgetFrequencyType(BudgetFrequencyType.MONTHLY);
 	budget.setBudgetType(BudgetType.SPENDING);
 	budget.setControlledAmount(budget.getAmount());
