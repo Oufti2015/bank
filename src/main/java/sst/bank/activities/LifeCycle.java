@@ -7,39 +7,65 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import sst.bank.activities.a.loading.CategoriesLoader;
-import sst.bank.activities.a.loading.OperationsLoader;
-import sst.bank.activities.b.parsing.OperationFiller;
-import sst.bank.activities.b.parsing.OperationsParser;
-import sst.bank.activities.c.categorising.OperationCategoriser;
-import sst.bank.activities.d.grouping.OperationsGrouper;
-import sst.bank.activities.e.budgeting.OperationBudgeter;
-import sst.bank.activities.f.printing.bycategory.OperationsPrinterByCategory;
-import sst.bank.activities.f.printing.bydate.OperationsPrinterByDate;
-import sst.bank.activities.g.saving.CategoriesSaver;
-import sst.bank.activities.g.saving.OperationsSaver;
+import sst.bank.activities.a.config.CategoriesLoader;
+import sst.bank.activities.a.config.Configurator;
+import sst.bank.activities.b.loading.OperationsLoader;
+import sst.bank.activities.c.parsing.OperationFiller;
+import sst.bank.activities.c.parsing.OperationsParser;
+import sst.bank.activities.d.categorising.OperationCategoriser;
+import sst.bank.activities.e.grouping.OperationsGrouper;
+import sst.bank.activities.f.budgeting.OperationBudgeter;
+import sst.bank.activities.g.printing.bycategory.OperationsPrinterByCategory;
+import sst.bank.activities.g.printing.bydate.OperationsPrinterByDate;
+import sst.bank.activities.h.saving.CategoriesSaver;
+import sst.bank.activities.h.saving.OperationsSaver;
 
 public class LifeCycle {
     private static Logger logger = Logger.getLogger(LifeCycle.class);
 
-    private static List<BankActivity> activities = Arrays.asList(
-	    new CategoriesLoader(),
-	    new OperationsLoader(),
-	    new OperationsParser(),
-	    new OperationFiller(),
-	    new OperationCategoriser(),
-	    new OperationsGrouper(),
-	    new OperationBudgeter(),
-	    new OperationsPrinterByDate(),
-	    new OperationsPrinterByCategory(),
-	    new OperationsSaver(),
-	    new CategoriesSaver());
+    public enum Phase {
+	CONFIG("Configuration"),
+	LOADING("Loading"),
+	PARSING("Parsing"),
+	CATEGORISING("Categorising"),
+	GROUPING("Grouping"),
+	BUDGETING("Budgeting"),
+	PRINTING("Printing"),
+	SAVING("Saving");
+
+	String name;
+
+	Phase(String name) {
+	    this.name = name;
+	}
+
+	public String getName() {
+	    return name;
+	}
+    }
+
+    private static List<ActivityPhase> phases = Arrays.asList(
+	    new ActivityPhase(Phase.CONFIG, new CategoriesLoader(), new Configurator()),
+	    new ActivityPhase(Phase.LOADING, new OperationsLoader()),
+	    new ActivityPhase(Phase.PARSING, new OperationsParser(), new OperationFiller()),
+	    new ActivityPhase(Phase.CATEGORISING, new OperationCategoriser()),
+	    new ActivityPhase(Phase.GROUPING, new OperationsGrouper()),
+	    new ActivityPhase(Phase.BUDGETING, new OperationBudgeter()),
+	    new ActivityPhase(Phase.PRINTING, new OperationsPrinterByDate(), new OperationsPrinterByCategory()),
+	    new ActivityPhase(Phase.SAVING, new OperationsSaver(), new CategoriesSaver()));
 
     public LifeCycle() {
     }
 
     public void run() {
-	activities.stream().forEach(a -> startActivity(a));
+	phases.stream().forEach(p -> startPhase(p));
+    }
+
+    private void startPhase(ActivityPhase phase) {
+	logger.info("+----------------------------------------------------------------------------------------------+");
+	logger.info("| Phase " + phase.getPhase().name);
+	logger.info("+----------------------------------------------------------------------------------------------+");
+	phase.getActivities().stream().forEach(a -> startActivity(a));
     }
 
     private void startActivity(BankActivity activity) {

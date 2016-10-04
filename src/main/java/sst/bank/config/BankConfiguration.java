@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class BankConfiguration {
 
     private static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
     private static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
-    private static final String DETAIL_PROPERTIES = "detail.properties";
+    public static final String DETAIL_PROPERTIES = "detail.properties";
     private static final String ID_PROPERTIES = "id.properties";
 
     public static final String CATEGORIES_PROPERTIES = "src" + File.separator + "main" + File.separator + "resources"
@@ -29,11 +30,21 @@ public class BankConfiguration {
     }
 
     private BankConfiguration() {
+    }
+
+    public void init() {
 	try {
 	    counterpartiesMapping = InvertedProperties.load(COUNTERPARTY_PROPERTIES);
+	    Assert.assertTrue(COUNTERPARTY_PROPERTIES, !counterpartiesMapping.keySet().isEmpty());
+
 	    detailsMapping = InvertedProperties.load(DETAIL_PROPERTIES);
+	    Assert.assertTrue(DETAIL_PROPERTIES, !detailsMapping.keySet().isEmpty());
+
 	    positifCounterpartiesMapping = InvertedProperties.load(POSITIF_COUNTERPARTY_PROPERTIES);
+	    Assert.assertTrue(POSITIF_COUNTERPARTY_PROPERTIES, !positifCounterpartiesMapping.keySet().isEmpty());
+
 	    idMapping = InvertedProperties.load(ID_PROPERTIES);
+	    Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
 	} catch (IOException e) {
 	    logger.error("Cannot read property file", e);
 	}
