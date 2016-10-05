@@ -1,6 +1,6 @@
 package sst.bank.activities.d.categorising.categories;
 
-public interface CategoryActivity {
+import sst.bank.activities.BankActivity;
 
-    public void process();
+public interface CategoryActivity extends BankActivity {
 }

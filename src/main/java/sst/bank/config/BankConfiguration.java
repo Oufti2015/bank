@@ -39,6 +39,7 @@ public class BankConfiguration {
 
 	    detailsMapping = InvertedProperties.load(DETAIL_PROPERTIES);
 	    Assert.assertTrue(DETAIL_PROPERTIES, !detailsMapping.keySet().isEmpty());
+	    Assert.assertNotNull(DETAIL_PROPERTIES, detailsMapping.map("LAURENT MURIEL"));
 
 	    positifCounterpartiesMapping = InvertedProperties.load(POSITIF_COUNTERPARTY_PROPERTIES);
 	    Assert.assertTrue(POSITIF_COUNTERPARTY_PROPERTIES, !positifCounterpartiesMapping.keySet().isEmpty());

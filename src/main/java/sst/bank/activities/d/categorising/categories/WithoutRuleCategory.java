@@ -9,7 +9,7 @@ public class WithoutRuleCategory implements CategoryActivity {
     private static InvertedProperties ids = null;
 
     @Override
-    public void process() {
+    public void run() {
 	ids = BankConfiguration.me().getIdMapping();
 	BankContainer.me().operations().stream()
 		.filter(o -> o.getFortisId() != null)

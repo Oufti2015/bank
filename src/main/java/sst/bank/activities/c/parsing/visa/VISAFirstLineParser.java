@@ -32,6 +32,7 @@ public class VISAFirstLineParser implements RecordFormatter, RecordSelector {
 	    operation.setCurrency(visa.getCurrency());
 	} else {
 	    VISASecondLine visa = (VISASecondLine) recordParsed;
+	    operation.setCounterparty("RELEVE VISA");
 	    operation.setDetail(visa.getDetail());
 	    BankContainer.me().addOperation(operation);
 	    operation = null;

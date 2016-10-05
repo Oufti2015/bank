@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import sst.bank.activities.BankActivity;
 import sst.bank.model.Operation;
+import sst.bank.model.Operation.OperationType;
 import sst.bank.model.container.BankContainer;
 
 public class OperationFiller implements BankActivity {
@@ -48,6 +49,10 @@ public class OperationFiller implements BankActivity {
 	    if (o.getCounterparty() != null) {
 		o.setCounterparty(formatCounterparty(o.getCounterparty(), countries[i], patternFormatted[i]));
 	    }
+	}
+
+	if (o.getCounterparty() == null && OperationType.VISA.equals(o.getOperationType())) {
+	    o.setCounterparty("CARTE VISA");
 	}
     }
 

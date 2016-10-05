@@ -39,9 +39,9 @@ public class UpdateCategories {
 
     private static Category createCategory() {
 	Category category = new Category();
-	category.setName("CAR_PARK");
-	category.setLabel("Voiture (Parking)");
-	category.setStyle("car");
+	category.setName("FOOD");
+	category.setLabel("Alimentation");
+	category.setStyle("house");
 	category.setType(CategoryType.POSITIF);
 	category.setDefaultCategory(false);
 	category.setNegatif(false);
@@ -49,7 +49,7 @@ public class UpdateCategories {
 
 	Budget budget = new Budget();
 	budget.setCategory(category.getName());
-	budget.setAmount(BigDecimal.valueOf(-15.0));
+	budget.setAmount(BigDecimal.valueOf(0.0));
 	budget.setBudgetFrequencyType(BudgetFrequencyType.MONTHLY);
 	budget.setBudgetType(BudgetType.SPENDING);
 	budget.setControlledAmount(budget.getAmount());
