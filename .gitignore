@@ -11,3 +11,6 @@ data/
 output/
 *.properties
 *.log
+*.iml
+*.csv
+/out/

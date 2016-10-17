@@ -62,11 +62,19 @@ public class Category implements Comparable<Category>, Serializable {
 
     @Override
     public boolean equals(Object o) {
-	Category c = (Category) o;
-	return this.name.equals(c.name);
+	if (o != null) {
+	    Category c = (Category) o;
+	    return this.name.equals(c.name);
+	}
+	return false;
     }
 
     public boolean isNegatif() {
 	return getType().equals(CategoryType.NEGATIF);
+    }
+
+    @Override
+    public String toString() {
+	return this.getLabel();
     }
 }

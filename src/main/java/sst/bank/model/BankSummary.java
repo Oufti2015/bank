@@ -104,4 +104,8 @@ public class BankSummary implements Comparable<BankSummary> {
 	}
 	return result;
     }
+
+    public String getId() {
+	return Month.from(getStartDate()) + " " + Year.from(getStartDate());
+    }
 }

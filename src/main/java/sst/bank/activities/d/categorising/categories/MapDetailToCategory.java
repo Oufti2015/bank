@@ -19,7 +19,7 @@ public class MapDetailToCategory implements CategoryActivity {
 	    BankContainer.me().operations().stream()
 		    .filter(o -> o.getCategory().isDefaultCategory())
 		    .filter(o -> o.getDetail().contains(key))
-		    .forEach(o -> setCategory(o, details.map(key)));
+		    .forEach(o -> setCategory(o, key, details.map(key)));
 	}
 	// BankContainer.me().operations().stream()
 	// .filter(o -> o.getCategory().isDefaultCategory())
@@ -27,9 +27,11 @@ public class MapDetailToCategory implements CategoryActivity {
 	// .forEach(o -> System.out.println(o));
     }
 
-    private void setCategory(Operation o, Category map) {
+    private void setCategory(Operation o, String key, Category map) {
 	// System.out.println("Set " + map.getName() + " on " + o.getDetail());
 	o.setCategory(map);
+	if (o.getCounterparty() == null) {
+	    o.setCounterparty(key);
+	}
     }
-
 }
