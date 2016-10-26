@@ -1,10 +1,15 @@
 package sst.bank.config;
 
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import sst.bank.activities.BankActivity;
+import sst.bank.activities.LifeCycleInterface;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
 import sst.bank.model.container.BankContainer;
@@ -19,7 +24,7 @@ public class TestConfigurator {
     }
 
     @Test
-    public void test() {
+    public void testConfigurator() {
 	BankActivity activity = new Configurator();
 	activity.run();
 
@@ -34,6 +39,22 @@ public class TestConfigurator {
 
 	Assert.assertTrue(BankConfiguration.ID_PROPERTIES, !BankConfiguration.me().getIdMapping().keySet().isEmpty());
 
+    }
+
+    @Test
+    public void testInvertedProperties() {
+	try {
+	    InvertedProperties detailsMapping = InvertedProperties.load(BankConfiguration.DETAIL_PROPERTIES);
+	    Assert.assertTrue("Not loaded", !detailsMapping.keySet().isEmpty());
+	} catch (IOException e) {
+	    fail("" + e.getMessage() + " : " + e);
+	}
+    }
+
+    @Test
+    public void testReadOnlyLifeCycle() {
+	LifeCycleInterface.runReadOnlyLifeCyle();
+	Assert.assertFalse(BankContainer.me().getCategories().isEmpty());
     }
 
 }

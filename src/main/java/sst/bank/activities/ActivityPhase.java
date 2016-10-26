@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
-import sst.bank.activities.LifeCycle.Phase;
+import sst.bank.activities.lifecycle.LifeCycle.Phase;
 
 @Data
 public class ActivityPhase {

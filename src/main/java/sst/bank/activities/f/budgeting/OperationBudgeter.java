@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
-
+import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
 import sst.bank.model.Budget;
@@ -16,9 +15,8 @@ import sst.bank.model.Budget.BudgetType;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
+@Log4j
 public class OperationBudgeter implements BankActivity {
-    private static Logger logger = Logger.getLogger(OperationBudgeter.class);
-
     @Override
     public void run() {
 	Optional<Category> optcat = BankContainer.me().getCategories().stream()
@@ -27,7 +25,7 @@ public class OperationBudgeter implements BankActivity {
 	if (optcat.isPresent()) {
 	    spendingBudget = optcat.get().getBudget();
 	} else {
-	    logger.fatal("Cannot found EPARGNE");
+	    log.fatal("Cannot found EPARGNE");
 	    System.exit(-1);
 	}
 
@@ -42,12 +40,12 @@ public class OperationBudgeter implements BankActivity {
 	spendingBudget.setControlledAmount(spendingBudget.monthlyAmount().subtract(BigDecimal.valueOf(yearlyAmount),
 		MathContext.DECIMAL64));
 
-	logger.debug("------------------------------------------------------------------------------");
+	log.debug("------------------------------------------------------------------------------");
 
-	budgets.stream().forEach(b -> logger.debug(b.toString()));
+	budgets.stream().forEach(b -> log.debug(b.toString()));
 
-	logger.debug("------------------------------------------------------------------------------");
-	logger.debug(
+	log.debug("------------------------------------------------------------------------------");
+	log.debug(
 		String.format("%-15s : %10s %10s %10s %10s", "Total Budget",
 			BankUtils.format(budgets
 				.stream()
@@ -65,6 +63,6 @@ public class OperationBudgeter implements BankActivity {
 				.stream()
 				.mapToDouble(b -> b.yearlyControlledAmount(12).doubleValue())
 				.sum())));
-	logger.debug("------------------------------------------------------------------------------");
+	log.debug("------------------------------------------------------------------------------");
     }
 }

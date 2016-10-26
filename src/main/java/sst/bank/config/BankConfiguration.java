@@ -3,15 +3,14 @@ package sst.bank.config;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class BankConfiguration {
-    private static Logger logger = Logger.getLogger(BankConfiguration.class);
-
     public static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
     public static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
     public static final String DETAIL_PROPERTIES = "detail.properties";
@@ -21,7 +20,7 @@ public class BankConfiguration {
 	    + File.separator + "categories.properties";
     public static final String CATEGORIES_JSON = "src" + File.separator + "main" + File.separator + "resources"
 	    + File.separator + "categories.json";
-    public static final String OPERATIONS_JSON = "/Users/steph/Documents/Bank/operations.json";
+    public static final String OPERATIONS_JSON = "../bank/data/operations.json";
     public static final String OPERATIONS_TXT = "data" + File.separator + "operations.txt";
 
     private static BankConfiguration me;
@@ -47,7 +46,7 @@ public class BankConfiguration {
 	    idMapping = InvertedProperties.load(ID_PROPERTIES);
 	    Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
 	} catch (IOException e) {
-	    logger.error("Cannot read property file", e);
+	    log.error("Cannot read property file", e);
 	}
     }
 

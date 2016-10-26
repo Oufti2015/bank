@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
+import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.c.parsing.easyBanking.EasyBankingOperation;
 import sst.bank.activities.c.parsing.easyBanking.EasyBankingParser;
@@ -22,9 +21,8 @@ import sst.common.file.exceptions.ParserExceptions;
 import sst.common.file.loader.FileLoader;
 import sst.common.file.parser.GenericParser;
 
+@Log4j
 public class OperationsParser implements BankActivity {
-    private static Logger logger = Logger.getLogger(OperationsParser.class);
-
     private List<Operation> list = new ArrayList<>();
 
     private List<Operation> parseFile(File file) {
@@ -33,7 +31,7 @@ public class OperationsParser implements BankActivity {
 	    list = new ArrayList<>();
 	    fl.process(file);
 	} catch (IOException | ParserExceptions e) {
-	    logger.error("Cannot read " + file, e);
+	    log.error("Cannot read " + file, e);
 	    return null;
 	}
 
@@ -51,7 +49,7 @@ public class OperationsParser implements BankActivity {
 	if (fileList != null) {
 	    for (int i = 0; i < fileList.length; i++) {
 		File file = fileList[i];
-		logger.info("Reading " + file + "...");
+		log.info("Reading " + file + "...");
 		List<Operation> parseFile = parseFile(file);
 		BankContainer.me().addOperations(parseFile);
 		file.renameTo(new File(archiveFileName(file)));
