@@ -1,13 +1,15 @@
-package sst.bank.activities;
+package sst.bank.activities.lifecycle;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+import sst.bank.activities.ActivityPhase;
+import sst.bank.activities.BankActivity;
 
+@Log4j
 public abstract class LifeCycle {
-    private static Logger logger = Logger.getLogger(LifeCycle.class);
 
     public enum Phase {
 	CONFIG("Configuration"),
@@ -40,19 +42,19 @@ public abstract class LifeCycle {
     protected abstract List<ActivityPhase> createLifeCycle();
 
     private void startPhase(ActivityPhase phase) {
-	logger.info("+----------------------------------------------------------------------------------------------+");
-	logger.info("| Phase " + phase.getPhase().name);
-	logger.info("+----------------------------------------------------------------------------------------------+");
+	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info("| Phase " + phase.getPhase().name);
+	log.info("+----------------------------------------------------------------------------------------------+");
 	phase.getActivities().stream().forEach(a -> startActivity(a));
     }
 
     private void startActivity(BankActivity activity) {
-	logger.info("+----------------------------------------------------------------------------------------------+");
-	logger.info(">>>>> Starting " + activity.getClass().getSimpleName() + "...");
+	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info(">>>>> Starting " + activity.getClass().getSimpleName() + "...");
 	Instant start = Instant.now();
 	activity.run();
 	Instant stop = Instant.now();
-	logger.info("<<<<< " + activity.getClass().getSimpleName() + " finished in "
+	log.info("<<<<< " + activity.getClass().getSimpleName() + " finished in "
 		+ ChronoUnit.MILLIS.between(start, stop) + " ms.");
     }
 }

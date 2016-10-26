@@ -1,8 +1,9 @@
-package sst.bank.activities;
+package sst.bank.activities.lifecycle;
 
 import java.util.Arrays;
 import java.util.List;
 
+import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
 import sst.bank.activities.b.loading.OperationsLoader;

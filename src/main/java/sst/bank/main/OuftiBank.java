@@ -3,31 +3,29 @@ package sst.bank.main;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import org.apache.log4j.Logger;
-
-import sst.bank.activities.CompleteLifeCycle;
-import sst.bank.activities.LifeCycle;
+import lombok.extern.log4j.Log4j;
+import sst.bank.activities.LifeCycleInterface;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.container.BankContainer;
 
+@Log4j
 public class OuftiBank { // NO_UCD (unused code)
-    private static Logger logger = Logger.getLogger(OuftiBank.class);
 
     public static void main(String[] args) {
 	Instant start = Instant.now();
 
-	logger.info("+----------------------------------------------------------------------------------------------+");
-	logger.info("|----O-U-F-T-I----B-A-N-K----------------------------------------------------------------------|");
-	logger.info("+----------------------------------------------------------------------------------------------+");
+	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info("|----O-U-F-T-I----B-A-N-K----------------------------------------------------------------------|");
+	log.info("+----------------------------------------------------------------------------------------------+");
 
 	OuftiBank bank = new OuftiBank();
 	bank.init();
 	bank.run();
 	Instant stop = Instant.now();
 
-	logger.info("Oufti Bank finished in "
+	log.info("Oufti Bank finished in "
 		+ ChronoUnit.MILLIS.between(start, stop) + " ms.");
-	logger.info("+----------------------------------------------------------------------------------------------+");
+	log.info("+----------------------------------------------------------------------------------------------+");
     }
 
     private void init() {
@@ -36,11 +34,10 @@ public class OuftiBank { // NO_UCD (unused code)
     }
 
     private void run() {
-	LifeCycle lifecycle = new CompleteLifeCycle();
-	lifecycle.run();
+	LifeCycleInterface.runCompleteLifeCyle();
 
-	logger.info("OPERATIONS : " + BankContainer.me().operations().size());
-	logger.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
-	logger.info("YEARS      : " + BankContainer.me().operationsByYear().size());
+	log.info("OPERATIONS : " + BankContainer.me().operations().size());
+	log.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
+	log.info("YEARS      : " + BankContainer.me().operationsByYear().size());
     }
 }
