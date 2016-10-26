@@ -1,44 +1,46 @@
 package sst.bank.main;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import org.apache.log4j.Logger;
+
+import sst.bank.activities.CompleteLifeCycle;
 import sst.bank.activities.LifeCycle;
 import sst.bank.config.BankConfiguration;
 import sst.bank.model.container.BankContainer;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 public class OuftiBank { // NO_UCD (unused code)
     private static Logger logger = Logger.getLogger(OuftiBank.class);
 
     public static void main(String[] args) {
-        Instant start = Instant.now();
+	Instant start = Instant.now();
 
-        logger.info("+----------------------------------------------------------------------------------------------+");
-        logger.info("|----O-U-F-T-I----B-A-N-K----------------------------------------------------------------------|");
-        logger.info("+----------------------------------------------------------------------------------------------+");
+	logger.info("+----------------------------------------------------------------------------------------------+");
+	logger.info("|----O-U-F-T-I----B-A-N-K----------------------------------------------------------------------|");
+	logger.info("+----------------------------------------------------------------------------------------------+");
 
-        OuftiBank bank = new OuftiBank();
-        bank.init();
-        bank.run();
-        Instant stop = Instant.now();
+	OuftiBank bank = new OuftiBank();
+	bank.init();
+	bank.run();
+	Instant stop = Instant.now();
 
-        logger.info("Oufti Bank finished in "
-                + ChronoUnit.MILLIS.between(start, stop) + " ms.");
-        logger.info("+----------------------------------------------------------------------------------------------+");
+	logger.info("Oufti Bank finished in "
+		+ ChronoUnit.MILLIS.between(start, stop) + " ms.");
+	logger.info("+----------------------------------------------------------------------------------------------+");
     }
 
     private void init() {
-        BankConfiguration.me().setInputFileName("data/COURANT.CSV");
-        BankConfiguration.me().setOutputFileDir("output");
+	BankConfiguration.me().setInputFileName("data/COURANT.CSV");
+	BankConfiguration.me().setOutputFileDir("output");
     }
 
     private void run() {
-        LifeCycle lifecycle = new LifeCycle();
-        lifecycle.run();
+	LifeCycle lifecycle = new CompleteLifeCycle();
+	lifecycle.run();
 
-        logger.info("OPERATIONS : " + BankContainer.me().operations().size());
-        logger.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
-        logger.info("YEARS      : " + BankContainer.me().operationsByYear().size());
+	logger.info("OPERATIONS : " + BankContainer.me().operations().size());
+	logger.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
+	logger.info("YEARS      : " + BankContainer.me().operationsByYear().size());
     }
 }
