@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -74,6 +75,17 @@ public class BankContainer {
 
     public void addOperationsByCategory(BankSummary summary) {
 	operationsByCategory.add(summary);
+    }
+
+    public BankSummary getBankSummaryByCategory(Category category) {
+	Optional<BankSummary> result = operationsByCategory
+		.stream()
+		.filter(o -> o.getCategory().equals(category))
+		.findFirst();
+	if (result.isPresent()) {
+	    return result.get();
+	}
+	return null;
     }
 
     private List<Category> categories = new ArrayList<>();
