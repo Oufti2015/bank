@@ -93,7 +93,9 @@ public class BankSummary implements Comparable<BankSummary> {
     }
 
     private void computeSummary() {
-	list.stream().filter(o -> null != o.getCategory()).forEach(o -> summary(o.getCategory(), o.getAmount()));
+	list.stream()
+		.filter(o -> null != o.getCategory())
+		.forEach(o -> summary(o.getCategory(), o.getAmount()));
     }
 
     public int monthQuantity() {
