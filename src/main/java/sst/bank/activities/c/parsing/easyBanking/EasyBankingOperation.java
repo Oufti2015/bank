@@ -10,6 +10,8 @@ import sst.common.file.parser.Parser;
 
 public class EasyBankingOperation {
     @Getter
+    private String fortisId;
+    @Getter
     @Setter
     private LocalDate executionDate;
     @Getter
@@ -31,11 +33,16 @@ public class EasyBankingOperation {
     public DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Parser(position = 0)
+    public void setFortisId(String fortisId) {
+	this.fortisId = fortisId;
+    }
+
+    @Parser(position = 1)
     public void setExecutionDateString(String executionDate) {
 	setExecutionDate(LocalDate.parse(executionDate, dtf));
     }
 
-    @Parser(position = 1)
+    @Parser(position = 2)
     public void setValueDateString(String valueDate) {
 	setValueDate(LocalDate.parse(valueDate, dtf));
     }
@@ -48,23 +55,23 @@ public class EasyBankingOperation {
 	return dtf.format(valueDate);
     }
 
-    @Parser(position = 2)
+    @Parser(position = 3)
     public void setAmountString(String amount) {
 	String replaceAll = amount.replaceAll("\\.", "").replaceAll(",", "\\.");
 	setAmount(new BigDecimal(replaceAll));
     }
 
-    @Parser(position = 3)
+    @Parser(position = 4)
     public void setCurrency(String currency) {
 	this.currency = currency;
     }
 
-    @Parser(position = 4)
+    @Parser(position = 5)
     public void setDetail(String detail) {
 	this.detail = detail;
     }
 
-    @Parser(position = 5)
+    @Parser(position = 6)
     public void setAccount(String account) {
 	this.account = account;
     }

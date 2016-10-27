@@ -12,8 +12,8 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
     @Override
     public boolean select(String record) {
 	String[] array = record.split(";", -2);
-	return array.length == 6 && !record.contains("cution;Date valeur;Montant;Devise du compte;D")
-		&& !Strings.isNullOrEmpty(array[5]);
+	return array.length == 7 && !record.contains("cution;Date valeur;Montant;Devise du compte;D")
+		&& !Strings.isNullOrEmpty(array[6]);
     }
 
     @Override
@@ -21,6 +21,7 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	EasyBankingOperation op = (EasyBankingOperation) recordParsed;
 
 	Operation operation = new Operation();
+	operation.setFortisId(op.getFortisId());
 	operation.setAmount(op.getAmount());
 	operation.setCurrency(op.getCurrency());
 	operation.setDetail(op.getDetail());
@@ -30,6 +31,11 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	if (!BankContainer.me().operations().contains(operation)) {
 	    operation.setBankId(BankContainer.me().newId());
 	    BankContainer.me().operations().add(operation);
+	} else {
+	    BankContainer.me().operations()
+		    .stream()
+		    .filter(o -> o.equals(operation))
+		    .forEach(o -> o.setFortisId(operation.getFortisId()));
 	}
     }
 }
