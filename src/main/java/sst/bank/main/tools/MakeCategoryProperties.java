@@ -2,18 +2,25 @@ package sst.bank.main.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import sst.bank.activities.LifeCycleInterface;
 import sst.bank.config.BankConfiguration;
+import sst.bank.model.Budget;
+import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
+import sst.common.file.output.OutputFile;
 
 public class MakeCategoryProperties {
 
     public static void main(String[] args) {
 	BankContainer.me();
 	MakeCategoryProperties tool = new MakeCategoryProperties();
-	// tool.exportToPropertyFile();
+	LifeCycleInterface.runReadOnlyLifeCyle();
+	tool.exportToPropertyFile();
 	tool.exportToJSON();
     }
 
@@ -28,52 +35,48 @@ public class MakeCategoryProperties {
 	}
     }
 
-    // private void exportToPropertyFile() {
-    // try (OutputFile output = new OutputFile(CATEGORIES_PROPERTIES)) {
-    // ArrayList<String> catList = new ArrayList<>();
-    // ArrayList<CategoryName> catListEnum = new ArrayList<>();
-    // CategoryName[] categories = CategoryName.values();
-    // for (int i = 0; i < categories.length; i++) {
-    // catList.add(categories[i].name());
-    // catListEnum.add(categories[i]);
-    // }
-    // output.println("CATEGORIES=" + String.join(",", catList));
-    //
-    // catListEnum.stream().forEach(c -> {
-    // printCategory(output, c);
-    // });
-    // output.println("");
-    //
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // System.exit(-1);
-    // }
-    // }
-    //
-    // private Object printCategory(OutputFile output, CategoryName c) {
-    // try {
-    // output.println("");
-    // Category category = BankContainer.me().category(c);
-    //
-    // output.println(category.getName().name() + ".NAME=" +
-    // category.getName().name());
-    // output.println(category.getName().name() + ".LABEL=" +
-    // category.getLabel());
-    // output.println(category.getName().name() + ".STYLE=" +
-    // category.getStyle());
-    // output.println(category.getName().name() + ".TYPE=" +
-    // category.getType());
-    //
-    // Budget bb = BankBudget.me().get(c);
-    // output.println(category.getName().name() + ".BUDGET.AMOUT=" +
-    // bb.getAmount());
-    // output.println(category.getName().name() + ".BUDGET.FREQUENCYTYPE=" +
-    // bb.getBudgetFrequencyType().name());
-    // output.println(category.getName().name() + ".BUDGET.TYPE=" +
-    // bb.getBudgetType().name());
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
-    // return null;
-    // }
+    private void exportToPropertyFile() {
+	try (OutputFile output = new OutputFile(BankConfiguration.CATEGORIES_PROPERTIES)) {
+	    Collection<Category> catList = BankContainer.me().getCategories();
+	    output.println("CATEGORIES="
+		    + String.join(",", catList.stream().map(c -> c.getName()).collect(Collectors.toList())));
+
+	    catList.stream().forEach(c -> {
+		printCategory(output, c);
+	    });
+	    output.println("");
+
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    System.exit(-1);
+	}
+    }
+
+    private void printCategory(OutputFile output, Category category) {
+	try {
+	    output.println("");
+
+	    output.println(category.getName() + ".NAME=" +
+		    category.getName());
+	    output.println(category.getName() + ".LABEL=" +
+		    category.getLabel());
+	    output.println(category.getName() + ".FXNAME=" +
+		    category.getFxName());
+	    output.println(category.getName() + ".STYLE=" +
+		    category.getStyle());
+	    output.println(category.getName() + ".TYPE=" +
+		    category.getType());
+
+	    Budget bb = category.getBudget();
+	    output.println(category.getName() + ".BUDGET.AMOUT=" +
+		    bb.getAmount());
+	    output.println(category.getName() + ".BUDGET.FREQUENCYTYPE=" +
+		    bb.getBudgetFrequencyType().name());
+	    output.println(category.getName() + ".BUDGET.TYPE=" +
+		    bb.getBudgetType().name());
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return;
+    }
 }

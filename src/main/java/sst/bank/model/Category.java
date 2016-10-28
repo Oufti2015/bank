@@ -24,6 +24,7 @@ public class Category implements Comparable<Category>, Serializable {
     private boolean negatif;
     private boolean defaultCategory;
     public boolean visa = false;
+    private String fxName;
 
     public Category() {
 	super();
@@ -66,6 +67,10 @@ public class Category implements Comparable<Category>, Serializable {
 
     @Override
     public String toString() {
-	return this.getLabel();
+	return this.getFxName();
+    }
+
+    public String getFxName() {
+	return (null == fxName) ? this.getLabel() : this.fxName;
     }
 }
