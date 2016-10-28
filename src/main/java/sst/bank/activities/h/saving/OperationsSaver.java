@@ -2,6 +2,8 @@ package sst.bank.activities.h.saving;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,6 +25,7 @@ public class OperationsSaver implements BankActivity {
     private TransferObject fillTransferObject() {
 	TransferObject to = new TransferObject();
 	to.setLastId(BankContainer.me().getLastId());
+	to.setCreationDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
 	// to.setOperations(BankContainer.me().operations());
 	BankContainer.me().operations()
 		.stream()

@@ -19,12 +19,13 @@ public class OperationsLoader implements BankActivity {
     public void run() {
 	TransferObject to = load();
 	if (to != null) {
-	    BankContainer.me().setLastId(to.getLastId());
-	    BankContainer.me()
-		    .addOperations(to.getOperations()
-			    .stream()
-			    .map(o -> o.toOperation())
-			    .collect(Collectors.toList()));
+	    BankContainer container = BankContainer.me();
+	    container.setCreationDate(to.getCreationDate());
+	    container.setLastId(to.getLastId());
+	    container.addOperations(to.getOperations()
+		    .stream()
+		    .map(o -> o.toOperation())
+		    .collect(Collectors.toList()));
 
 	    log.info("" + to.getOperations().size() + " operations loaded.");
 	}

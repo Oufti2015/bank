@@ -122,4 +122,8 @@ public class BankContainer {
     public void addOperation(Operation operation) {
 	operations.add(operation);
     }
+
+    @Getter
+    @Setter
+    private String creationDate;
 }
