@@ -37,9 +37,10 @@ public class OperationsLoader implements BankActivity {
 
 	// JSON from file to Object
 	try {
-	    to = mapper.readValue(new File(BankConfiguration.OPERATIONS_JSON), TransferObject.class);
+	    to = mapper.readValue(new File(BankConfiguration.me().getOperationsJson()), TransferObject.class);
 	} catch (IOException e) {
-	    log.error("Cannot read file " + BankConfiguration.OPERATIONS_JSON, e);
+	    log.fatal("Cannot read file " + BankConfiguration.me().getOperationsJson(), e);
+	    System.exit(-1);
 	}
 
 	return to;

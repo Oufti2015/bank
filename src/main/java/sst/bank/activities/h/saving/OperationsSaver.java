@@ -38,15 +38,10 @@ public class OperationsSaver implements BankActivity {
 	ObjectMapper mapper = new ObjectMapper();
 	try {
 	    // Object to JSON in file
-	    mapper.writeValue(new File(BankConfiguration.OPERATIONS_JSON), to);
+	    mapper.writeValue(new File(BankConfiguration.me().getOperationsJson()), to);
 	} catch (IOException e) {
-	    log.error("Cannot write file " + BankConfiguration.OPERATIONS_JSON, e);
-	}
-	try {
-	    // Object to JSON in file
-	    mapper.writeValue(new File(BankConfiguration.OPERATIONS_TXT), to);
-	} catch (IOException e) {
-	    log.error("Cannot write file " + BankConfiguration.OPERATIONS_TXT, e);
+	    log.fatal("Cannot write file " + BankConfiguration.me().getOperationsJson(), e);
+	    System.exit(-1);
 	}
     }
 }

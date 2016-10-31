@@ -23,12 +23,13 @@ public class CategoriesLoader implements BankActivity {
 
 	// JSON from file to Object
 	try {
-	    categories = mapper.readValue(new File(BankConfiguration.CATEGORIES_JSON),
+	    categories = mapper.readValue(new File(BankConfiguration.me().getCategoriesJson()),
 		    new TypeReference<List<Category>>() {
 		    });
 	    BankContainer.me().setCategories(categories);
 	} catch (IOException e) {
-	    log.error("Cannot read file " + BankConfiguration.CATEGORIES_JSON, e);
+	    log.fatal("Cannot read file " + BankConfiguration.me().getCategoriesJson(), e);
+	    System.exit(-1);
 	}
     }
 }

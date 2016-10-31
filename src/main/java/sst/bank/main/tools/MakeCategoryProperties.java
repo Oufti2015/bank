@@ -29,7 +29,7 @@ public class MakeCategoryProperties {
 	    ObjectMapper mapper = new ObjectMapper();
 
 	    // Object to JSON in file
-	    mapper.writeValue(new File(BankConfiguration.CATEGORIES_JSON), BankContainer.me().getCategories());
+	    mapper.writeValue(new File(BankConfiguration.me().getCategoriesJson()), BankContainer.me().getCategories());
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}

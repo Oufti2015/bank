@@ -11,14 +11,32 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import lombok.extern.log4j.Log4j;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
+@Log4j
 public class InvertedProperties {
     private Map<String, Category> mapping = new HashMap<>();
 
     private InvertedProperties() {
 
+    }
+
+    public static InvertedProperties load(File inputFile) throws IOException {
+	Properties props = new Properties();
+	InvertedProperties inverted = new InvertedProperties();
+	props.load(new FileInputStream(inputFile));
+	log.debug("******** props = " + props);
+	for (Category category : BankContainer.me().getCategories()) {
+	    log.debug("*********************   Category=" + category);
+	    List<String> counterparties = getCounterparties(props, category.getName());
+	    if (counterparties != null) {
+		counterparties.stream().forEach(c -> inverted.mapping_put(c, category));
+	    }
+	}
+
+	return inverted;
     }
 
     public static InvertedProperties load(String inputFile) throws IOException {
