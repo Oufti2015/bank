@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.transfer.TransferObject;
 
@@ -40,7 +41,7 @@ public class OperationsLoader implements BankActivity {
 	    to = mapper.readValue(new File(BankConfiguration.me().getOperationsJson()), TransferObject.class);
 	} catch (IOException e) {
 	    log.fatal("Cannot read file " + BankConfiguration.me().getOperationsJson(), e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
 
 	return to;

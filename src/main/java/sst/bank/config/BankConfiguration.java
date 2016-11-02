@@ -8,11 +8,13 @@ import java.util.Properties;
 import org.junit.Assert;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import sst.bank.main.OuftiBank;
 
 @Log4j
 public class BankConfiguration {
+    private static final String INPUT_DIR = "INPUT_DIR";
+    private static final String OUTPUT_DIR = "OUTPUT_DIR";
     public final Properties properties = new Properties();
     public static final String PATH = "src" + File.separator + "main" + File.separator + "resources";
     public static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
@@ -36,14 +38,14 @@ public class BankConfiguration {
 	    properties.load(new FileInputStream(new File(classLoader.getResource("oufti.properties").getFile())));
 	} catch (IOException e) {
 	    log.fatal("Cannot read " + "oufti.properties", e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 
     public void init() {
 	try {
 
-	    String pathname = properties.getProperty("INPUT_DIR") + File.separator;
+	    String pathname = getInputDir() + File.separator;
 	    File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
 	    counterpartiesMapping = InvertedProperties.load(inputFile);
 	    Assert.assertTrue(COUNTERPARTY_PROPERTIES, !counterpartiesMapping.keySet().isEmpty());
@@ -62,7 +64,7 @@ public class BankConfiguration {
 	    Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
 	} catch (IOException e) {
 	    log.fatal("Cannot read property file", e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 
@@ -78,18 +80,20 @@ public class BankConfiguration {
     private InvertedProperties positifCounterpartiesMapping = null;
     @Getter
     private InvertedProperties idMapping = null;
-    @Setter
-    @Getter
-    private String inputFileName;
-    @Setter
-    @Getter
-    private String outputFileDir;
+
+    public String getInputDir() {
+	return properties.getProperty(INPUT_DIR);
+    }
+
+    public String getOutputDir() {
+	return properties.getProperty(OUTPUT_DIR);
+    }
 
     public String getOperationsJson() {
-	return properties.getProperty("INPUT_DIR") + File.separator + OPERATIONS_JSON;
+	return getInputDir() + File.separator + OPERATIONS_JSON;
     }
 
     public String getCategoriesJson() {
-	return properties.getProperty("INPUT_DIR") + File.separator + CATEGORIES_JSON;
+	return getInputDir() + File.separator + CATEGORIES_JSON;
     }
 }

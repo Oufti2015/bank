@@ -3,13 +3,18 @@ package sst.bank.main;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import com.google.common.eventbus.DeadEvent;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.LifeCycleInterface;
-import sst.bank.config.BankConfiguration;
+import sst.bank.events.CategoryChangeEvent;
 import sst.bank.model.container.BankContainer;
 
 @Log4j
 public class OuftiBank { // NO_UCD (unused code)
+    public static EventBus eventBus = new EventBus();
 
     public static void main(String[] args) {
 	Instant start = Instant.now();
@@ -28,9 +33,12 @@ public class OuftiBank { // NO_UCD (unused code)
 	log.info("+----------------------------------------------------------------------------------------------+");
     }
 
+    public OuftiBank() {
+	eventBus.register(this);
+    }
+
     private void init() {
-	BankConfiguration.me().setInputFileName("data/COURANT.CSV");
-	BankConfiguration.me().setOutputFileDir("output");
+	// eventBus.post(new Exception("Test"));
     }
 
     private void run() {
@@ -39,5 +47,23 @@ public class OuftiBank { // NO_UCD (unused code)
 	log.info("OPERATIONS : " + BankContainer.me().operations().size());
 	log.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
 	log.info("YEARS      : " + BankContainer.me().operationsByYear().size());
+    }
+
+    @Subscribe
+    public void handleEvent(CategoryChangeEvent e) {
+	log.info("" + e.getCategory() + " has changed.");
+	LifeCycleInterface.saveCategories();
+	LifeCycleInterface.runCompleteLifeCyle();
+    }
+
+    @Subscribe
+    public void deadEvents(DeadEvent e) {
+	log.info("Event " + e.getEvent() + " not subscribed...");
+    }
+
+    @Subscribe
+    public void fatalError(Exception e) {
+	log.fatal("FATAL error detected", e);
+	System.exit(-1);
     }
 }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
 
 @Log4j
@@ -22,7 +23,7 @@ public class CategoriesSaver implements BankActivity {
 	    mapper.writeValue(new File(BankConfiguration.me().getCategoriesJson()), BankContainer.me().getCategories());
 	} catch (IOException e) {
 	    log.fatal("Cannot save " + BankConfiguration.me().getCategoriesJson(), e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 
