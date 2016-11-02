@@ -14,6 +14,7 @@ import sst.bank.activities.g.printing.SummaryIntoTableConverter;
 import sst.bank.activities.g.printing.SummarySumRowIntoTableConverter;
 import sst.bank.activities.g.printing.TotalAmountSummers;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.BankSummary;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.output.OutputFile;
@@ -79,15 +80,17 @@ public class OperationsPrinterByCategory implements BankActivity {
 	}
 	// html.addChild(new HTMLFooter("Oufti Bank - St&eacute;phane Stiennon -
 	// " + LocalDate.now()));
+
 	try (OutputFile output = new OutputFile(constructPathName())) {
 	    output.println(html.toString());
 	} catch (IOException e) {
-	    log.error("Cannot write to " + constructPathName(), e);
+	    log.fatal("Cannot write to " + constructPathName(), e);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 
     private String constructPathName() {
-	return BankConfiguration.me().getOutputFileDir() + File.separator + "category" + File.separator + "index.html";
+	return BankConfiguration.me().getOutputDir() + File.separator + "category" + File.separator + "index.html";
     }
 
     private void printSummary(BankSummary bm, HTMLDiv div) {

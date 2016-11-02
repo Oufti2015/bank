@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sst.bank.activities.LifeCycleInterface;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.Budget;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
@@ -48,7 +49,7 @@ public class MakeCategoryProperties {
 
 	} catch (IOException e) {
 	    e.printStackTrace();
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 

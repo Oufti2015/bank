@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.transfer.OperationTO;
 import sst.bank.model.transfer.TransferObject;
@@ -41,7 +42,7 @@ public class OperationsSaver implements BankActivity {
 	    mapper.writeValue(new File(BankConfiguration.me().getOperationsJson()), to);
 	} catch (IOException e) {
 	    log.fatal("Cannot write file " + BankConfiguration.me().getOperationsJson(), e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 }

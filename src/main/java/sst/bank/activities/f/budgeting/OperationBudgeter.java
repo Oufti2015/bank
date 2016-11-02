@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.Budget;
 import sst.bank.model.Budget.BudgetFrequencyType;
 import sst.bank.model.Budget.BudgetType;
@@ -26,7 +27,7 @@ public class OperationBudgeter implements BankActivity {
 	    spendingBudget = optcat.get().getBudget();
 	} else {
 	    log.fatal("Cannot found EPARGNE");
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(new Exception("Cannot found EPARGNE"));
 	}
 
 	List<Budget> budgets = BankContainer.me().getCategories().stream().map(c -> c.getBudget())

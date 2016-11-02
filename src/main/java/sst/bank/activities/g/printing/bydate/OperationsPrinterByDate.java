@@ -148,7 +148,7 @@ public class OperationsPrinterByDate implements BankActivity {
     }
 
     private String constructPathName(BankSummary bm) {
-	return BankConfiguration.me().getOutputFileDir() + File.separator + constructFileName(bm);
+	return BankConfiguration.me().getOutputDir() + File.separator + constructFileName(bm);
     }
 
     private void printSummary(BankSummary bm, HTMLDiv div) {

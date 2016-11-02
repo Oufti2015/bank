@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.main.OuftiBank;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
@@ -29,7 +30,7 @@ public class CategoriesLoader implements BankActivity {
 	    BankContainer.me().setCategories(categories);
 	} catch (IOException e) {
 	    log.fatal("Cannot read file " + BankConfiguration.me().getCategoriesJson(), e);
-	    System.exit(-1);
+	    OuftiBank.eventBus.post(e);
 	}
     }
 }
