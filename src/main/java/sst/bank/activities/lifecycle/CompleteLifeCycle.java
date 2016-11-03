@@ -9,6 +9,7 @@ import sst.bank.activities.a.config.Configurator;
 import sst.bank.activities.b.loading.OperationsLoader;
 import sst.bank.activities.c.parsing.OperationFiller;
 import sst.bank.activities.c.parsing.OperationsParser;
+import sst.bank.activities.d.categorising.OperationsDefaulter;
 import sst.bank.activities.d.categorising.categories.DefaultCategory;
 import sst.bank.activities.d.categorising.categories.MapCounterpartyToCategory;
 import sst.bank.activities.d.categorising.categories.MapDetailToCategory;
@@ -44,7 +45,8 @@ public class CompleteLifeCycle extends LifeCycle {
 			new WithoutRuleCategory(),
 			new SalaireCategory(),
 			new MapCounterpartyToCategory(),
-			new MapDetailToCategory()),
+			new MapDetailToCategory(),
+			new OperationsDefaulter()),
 		new ActivityPhase(Phase.GROUPING,
 			new OperationsGrouper()),
 		new ActivityPhase(Phase.BUDGETING,
