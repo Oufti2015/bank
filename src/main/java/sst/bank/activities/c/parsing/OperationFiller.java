@@ -1,5 +1,7 @@
 package sst.bank.activities.c.parsing;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +27,16 @@ public class OperationFiller implements BankActivity {
     private void fillOperation(Operation o) {
 
 	defaultCounterparty(o);
+	correctVISADate(o);
 	return;
+    }
+
+    private void correctVISADate(Operation o) {
+	if ("CARTE VISA".equals(o.getCounterparty())) {
+	    o.setExecutionDate(LocalDate.of(2016, Month.SEPTEMBER, 4));
+	    o.setValueDate(LocalDate.of(2016, Month.SEPTEMBER, 4));
+	    o.setCounterparty("RELEVE VISA");
+	}
     }
 
     private void defaultCounterparty(Operation o) {

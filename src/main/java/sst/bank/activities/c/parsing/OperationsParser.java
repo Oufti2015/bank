@@ -15,6 +15,7 @@ import sst.bank.activities.c.parsing.visa.VISAFirstLine;
 import sst.bank.activities.c.parsing.visa.VISAFirstLineParser;
 import sst.bank.activities.c.parsing.visa.VISASecondLine;
 import sst.bank.activities.c.parsing.visa.VISASecondLineParser;
+import sst.bank.config.BankConfiguration;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.exceptions.ParserExceptions;
@@ -84,7 +85,7 @@ public class OperationsParser implements BankActivity {
     }
 
     private File[] readInputDir() {
-	File folder = new File("data");
+	File folder = new File(BankConfiguration.me().getInputDir());
 	return folder.listFiles(new CsvFileFilter());
     }
 }

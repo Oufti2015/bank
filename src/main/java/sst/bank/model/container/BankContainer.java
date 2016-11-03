@@ -32,12 +32,17 @@ public class BankContainer {
     @Getter
     @Setter
     private Integer lastId = 0;
+    private List<Operation> operations = new ArrayList<>();
+    private List<BankSummary> operationsByMonth = new ArrayList<>();
+    private List<BankSummary> operationsByYear = new ArrayList<>();
+    private List<BankSummary> operationsByCategory = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
+    private HashMap<String, Category> categoryByName = new HashMap<>();
+    private List<Operation> visaOperations = new ArrayList<>();
 
     public Integer newId() {
 	return lastId++;
     }
-
-    private List<Operation> operations = new ArrayList<>();
 
     public List<Operation> operations() {
 	return operations;
@@ -47,8 +52,6 @@ public class BankContainer {
 	operations.addAll(list);
     }
 
-    private List<BankSummary> operationsByMonth = new ArrayList<>();
-
     public List<BankSummary> operationsByMonth() {
 	return operationsByMonth;
     }
@@ -57,8 +60,6 @@ public class BankContainer {
 	operationsByMonth.add(summary);
     }
 
-    private List<BankSummary> operationsByYear = new ArrayList<>();
-
     public List<BankSummary> operationsByYear() {
 	return operationsByYear;
     }
@@ -66,8 +67,6 @@ public class BankContainer {
     public void addYear(BankSummary summary) {
 	operationsByYear.add(summary);
     }
-
-    private List<BankSummary> operationsByCategory = new ArrayList<>();
 
     public List<BankSummary> operationsByCategory() {
 	return operationsByCategory.stream().sorted().collect(Collectors.toList());
@@ -87,9 +86,6 @@ public class BankContainer {
 	}
 	return null;
     }
-
-    private List<Category> categories = new ArrayList<>();
-    private HashMap<String, Category> categoryByName = new HashMap<>();
 
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
@@ -112,8 +108,6 @@ public class BankContainer {
     public Collection<Category> getCategories() {
 	return categories;
     }
-
-    private List<Operation> visaOperations = new ArrayList<>();
 
     public void addVISAOperations(Operation operation) {
 	visaOperations.add(operation);
