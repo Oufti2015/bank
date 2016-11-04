@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import sst.bank.model.BankSummary;
+import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 
@@ -32,6 +33,9 @@ public class BankContainer {
     @Getter
     @Setter
     private Integer lastId = 0;
+    @Getter
+    @Setter
+    private String creationDate;
     private List<Operation> operations = new ArrayList<>();
     private List<BankSummary> operationsByMonth = new ArrayList<>();
     private List<BankSummary> operationsByYear = new ArrayList<>();
@@ -39,6 +43,7 @@ public class BankContainer {
     private List<Category> categories = new ArrayList<>();
     private HashMap<String, Category> categoryByName = new HashMap<>();
     private List<Operation> visaOperations = new ArrayList<>();
+    private HashMap<String, Beneficiary> benefiaries = new HashMap<>();
 
     public Integer newId() {
 	return lastId++;
@@ -117,7 +122,19 @@ public class BankContainer {
 	operations.add(operation);
     }
 
-    @Getter
-    @Setter
-    private String creationDate;
+    public void addAllBeneficiaries(Collection<Beneficiary> list) {
+	list.stream().forEach(b -> benefiaries.put(b.getId(), b));
+    }
+
+    public Collection<Beneficiary> beneficiaries() {
+	return benefiaries.values();
+    }
+
+    public void addBeneficiary(Beneficiary beneficiary) {
+	benefiaries.put(beneficiary.getId(), beneficiary);
+    }
+
+    public Beneficiary getBeneficiary(String id) {
+	return benefiaries.get(id);
+    }
 }

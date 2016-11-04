@@ -27,8 +27,10 @@ public class OperationsLoader implements BankActivity {
 		    .stream()
 		    .map(o -> o.toOperation())
 		    .collect(Collectors.toList()));
+	    container.addAllBeneficiaries(to.getBeneficiaries());
 
 	    log.info("" + to.getOperations().size() + " operations loaded.");
+	    log.info("" + to.getBeneficiaries().size() + " beneficiariess loaded.");
 	}
     }
 
