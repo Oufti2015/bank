@@ -13,6 +13,8 @@ import sst.bank.main.OuftiBank;
 
 @Log4j
 public class BankConfiguration {
+    public static final String EURO_CHAR = "\u20ac";
+
     private static final String INPUT_DIR = "INPUT_DIR";
     private static final String OUTPUT_DIR = "OUTPUT_DIR";
     public final Properties properties = new Properties();
