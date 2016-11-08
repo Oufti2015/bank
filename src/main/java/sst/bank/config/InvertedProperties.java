@@ -27,9 +27,9 @@ public class InvertedProperties {
 	Properties props = new Properties();
 	InvertedProperties inverted = new InvertedProperties();
 	props.load(new FileInputStream(inputFile));
-	log.debug("******** props = " + props);
+	// log.debug("******** props = " + props);
 	for (Category category : BankContainer.me().getCategories()) {
-	    log.debug("*********************   Category=" + category);
+	    // log.debug("********************* Category=" + category);
 	    List<String> counterparties = getCounterparties(props, category.getName());
 	    if (counterparties != null) {
 		counterparties.stream().forEach(c -> inverted.mapping_put(c, category));

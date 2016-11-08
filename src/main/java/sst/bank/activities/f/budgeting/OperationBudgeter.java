@@ -29,18 +29,21 @@ public class OperationBudgeter implements BankActivity {
 	    log.fatal("Cannot found EPARGNE");
 	    OuftiBank.eventBus.post(new Exception("Cannot found EPARGNE"));
 	}
-
-	List<Budget> budgets = BankContainer.me().getCategories().stream().map(c -> c.getBudget())
+	List<Budget> budgets = BankContainer.me().getCategories()
+		.stream().map(c -> c.getBudget())
 		.collect(Collectors.toList());
-	double yearlyAmount = budgets
-		.stream()
-		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
-		.mapToDouble(b -> b.monthlyAmount().doubleValue())
-		.sum();
 
-	spendingBudget.setControlledAmount(spendingBudget.monthlyAmount().subtract(BigDecimal.valueOf(yearlyAmount),
-		MathContext.DECIMAL64));
+	BigDecimal spendingControlledAmountBudget = calculateSpendingControlledAmountBudget(budgets);
+	BigDecimal subtractAmount = spendingBudget.monthlyAmount().subtract(spendingControlledAmountBudget,
+		MathContext.DECIMAL64);
+	spendingBudget.setControlledAmount(subtractAmount);
 
+	setControlledAmountOnYearlyCategories(budgets);
+
+	printDebugInfo(budgets);
+    }
+
+    private void printDebugInfo(List<Budget> budgets) {
 	log.debug("------------------------------------------------------------------------------");
 
 	budgets.stream().forEach(b -> log.debug(b.toString()));
@@ -65,5 +68,22 @@ public class OperationBudgeter implements BankActivity {
 				.mapToDouble(b -> b.yearlyControlledAmount(12).doubleValue())
 				.sum())));
 	log.debug("------------------------------------------------------------------------------");
+    }
+
+    private BigDecimal calculateSpendingControlledAmountBudget(List<Budget> budgets) {
+	double yearlyAmount = budgets
+		.stream()
+		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
+		.mapToDouble(b -> b.monthlyAmount().doubleValue())
+		.sum();
+
+	return BigDecimal.valueOf(yearlyAmount);
+    }
+
+    private void setControlledAmountOnYearlyCategories(List<Budget> budgets) {
+	budgets
+		.stream()
+		.filter(b -> BudgetFrequencyType.YEARLY.equals(b.getBudgetFrequencyType()))
+		.forEach(b -> b.setControlledAmount(b.monthlyAmount()));
     }
 }
