@@ -44,9 +44,10 @@ public class OuftiBank { // NO_UCD (unused code)
     private void run() {
 	LifeCycleInterface.runCompleteLifeCyle();
 
-	log.info("OPERATIONS : " + BankContainer.me().operations().size());
-	log.info("MONTHS     : " + BankContainer.me().operationsByMonth().size());
-	log.info("YEARS      : " + BankContainer.me().operationsByYear().size());
+	log.info("OPERATIONS    : " + BankContainer.me().operations().size());
+	log.info("MONTHS        : " + BankContainer.me().operationsByMonth().size());
+	log.info("YEARS         : " + BankContainer.me().operationsByYear().size());
+	log.info("BENEFICIARIES : " + BankContainer.me().beneficiaries().size());
     }
 
     @Subscribe

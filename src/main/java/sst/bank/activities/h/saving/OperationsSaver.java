@@ -32,6 +32,10 @@ public class OperationsSaver implements BankActivity {
 		.stream()
 		.map(o -> OperationTO.fromOperation(o))
 		.forEach(t -> to.getOperations().add(t));
+	BankContainer.me().beneficiaries()
+		.stream()
+		.forEach(t -> to.getBeneficiaries().add(t));
+
 	return to;
     }
 

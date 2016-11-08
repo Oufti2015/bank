@@ -11,10 +11,13 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import sst.bank.model.BankSummary;
+import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 
+@Log4j
 public class BankContainer {
 
     private static BankContainer me = null;
@@ -32,12 +35,22 @@ public class BankContainer {
     @Getter
     @Setter
     private Integer lastId = 0;
+    @Getter
+    @Setter
+    private String creationDate;
+    private List<Operation> operations = new ArrayList<>();
+    private List<BankSummary> operationsByMonth = new ArrayList<>();
+    private List<BankSummary> operationsByYear = new ArrayList<>();
+    private List<BankSummary> operationsByCategory = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
+    private HashMap<String, Category> categoryByName = new HashMap<>();
+    private List<Operation> visaOperations = new ArrayList<>();
+    private HashMap<String, Beneficiary> benefiaries = new HashMap<>();
+    private HashMap<String, Beneficiary> benefiariesByCounterpartyDetails = new HashMap<>();
 
     public Integer newId() {
 	return lastId++;
     }
-
-    private List<Operation> operations = new ArrayList<>();
 
     public List<Operation> operations() {
 	return operations;
@@ -47,8 +60,6 @@ public class BankContainer {
 	operations.addAll(list);
     }
 
-    private List<BankSummary> operationsByMonth = new ArrayList<>();
-
     public List<BankSummary> operationsByMonth() {
 	return operationsByMonth;
     }
@@ -57,8 +68,6 @@ public class BankContainer {
 	operationsByMonth.add(summary);
     }
 
-    private List<BankSummary> operationsByYear = new ArrayList<>();
-
     public List<BankSummary> operationsByYear() {
 	return operationsByYear;
     }
@@ -66,8 +75,6 @@ public class BankContainer {
     public void addYear(BankSummary summary) {
 	operationsByYear.add(summary);
     }
-
-    private List<BankSummary> operationsByCategory = new ArrayList<>();
 
     public List<BankSummary> operationsByCategory() {
 	return operationsByCategory.stream().sorted().collect(Collectors.toList());
@@ -87,9 +94,6 @@ public class BankContainer {
 	}
 	return null;
     }
-
-    private List<Category> categories = new ArrayList<>();
-    private HashMap<String, Category> categoryByName = new HashMap<>();
 
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
@@ -113,8 +117,6 @@ public class BankContainer {
 	return categories;
     }
 
-    private List<Operation> visaOperations = new ArrayList<>();
-
     public void addVISAOperations(Operation operation) {
 	visaOperations.add(operation);
     }
@@ -123,7 +125,48 @@ public class BankContainer {
 	operations.add(operation);
     }
 
-    @Getter
-    @Setter
-    private String creationDate;
+    public void addAllBeneficiaries(Collection<Beneficiary> list) {
+	list.stream().forEach(b -> addBeneficiary(b));
+    }
+
+    public Collection<Beneficiary> beneficiaries() {
+	return benefiaries.values();
+    }
+
+    public void addBeneficiary(Beneficiary beneficiary) {
+	if (checkDuplicate(beneficiary)) {
+	    benefiaries.put(beneficiary.getId(), beneficiary);
+	    beneficiary.getCounterparties()
+		    .stream()
+		    .forEach(s -> benefiariesByCounterpartyDetails.put(s, beneficiary));
+	    beneficiary.getDetails()
+		    .stream()
+		    .forEach(s -> benefiariesByCounterpartyDetails.put(s, beneficiary));
+	}
+    }
+
+    private boolean checkDuplicate(Beneficiary beneficiary) {
+	boolean result = true;
+	for (String cpty : beneficiary.getCounterparties()) {
+	    if (benefiariesByCounterpartyDetails.get(cpty) != null) {
+		log.error("Beneficiary <" + beneficiary + "> is duplicate on counterparty <" + cpty + ">");
+		result = false;
+	    }
+	}
+	for (String detail : beneficiary.getDetails()) {
+	    if (benefiariesByCounterpartyDetails.get(detail) != null) {
+		log.error("Beneficiary <" + beneficiary + "> is duplicate on detail <" + detail + ">");
+		result = false;
+	    }
+	}
+	return result;
+    }
+
+    public Beneficiary getBeneficiaryByCounterpartyDetails(String id) {
+	return benefiariesByCounterpartyDetails.get(id);
+    }
+
+    public Beneficiary getBeneficiary(String id) {
+	return benefiaries.get(id);
+    }
 }

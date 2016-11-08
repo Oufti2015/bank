@@ -30,8 +30,6 @@ public class MapDetailToCategory implements CategoryActivity {
     private void setCategory(Operation o, String key, Category map) {
 	// System.out.println("Set " + map.getName() + " on " + o.getDetail());
 	o.setCategory(map);
-	if (o.getCounterparty() == null) {
-	    o.setCounterparty(key);
-	}
+	o.setCounterparty(key);
     }
 }

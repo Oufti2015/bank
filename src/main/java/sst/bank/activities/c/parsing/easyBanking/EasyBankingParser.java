@@ -2,17 +2,22 @@ package sst.bank.activities.c.parsing.easyBanking;
 
 import com.google.common.base.Strings;
 
+import lombok.extern.log4j.Log4j;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.loader.interfaces.RecordFormatter;
 import sst.common.file.loader.interfaces.RecordSelector;
 
+@Log4j
 public class EasyBankingParser implements RecordFormatter, RecordSelector {
 
     @Override
     public boolean select(String record) {
 	String[] array = record.split(";", -2);
-	return array.length == 7 && !record.contains("cution;Date valeur;Montant;Devise du compte;D")
+	return array.length == 7
+		&& !Strings.isNullOrEmpty(array[0])
+		&& array[0].length() == 9
+		&& !record.contains("cution;Date valeur;Montant;Devise du compte;D")
 		&& !Strings.isNullOrEmpty(array[6]);
     }
 
@@ -27,6 +32,15 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	operation.setDetail(op.getDetail());
 	operation.setExecutionDate(op.getExecutionDate());
 	operation.setValueDate(op.getValueDate());
+
+	log.info("Operation " + operation);
+	log.info("Operation.getExecutionDate() = [" + operation.getExecutionDate() + "]");
+	log.info("Operation.getValueDate()     = [" + operation.getValueDate() + "]");
+	log.info("Operation.getAmount()        = [" + operation.getAmount() + "]");
+
+	if (operation.getAmount() == null || operation.getExecutionDate() == null || operation.getValueDate() == null) {
+	    System.exit(-1);
+	}
 
 	if (!BankContainer.me().operations().contains(operation)) {
 	    operation.setBankId(BankContainer.me().newId());

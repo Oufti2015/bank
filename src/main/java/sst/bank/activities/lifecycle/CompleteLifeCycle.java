@@ -6,9 +6,12 @@ import java.util.List;
 import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
+import sst.bank.activities.b.loading.BeneficiaryCreator;
+import sst.bank.activities.b.loading.BeneficiaryValidator;
 import sst.bank.activities.b.loading.OperationsLoader;
 import sst.bank.activities.c.parsing.OperationFiller;
 import sst.bank.activities.c.parsing.OperationsParser;
+import sst.bank.activities.d.categorising.OperationsDefaulter;
 import sst.bank.activities.d.categorising.categories.DefaultCategory;
 import sst.bank.activities.d.categorising.categories.MapCounterpartyToCategory;
 import sst.bank.activities.d.categorising.categories.MapDetailToCategory;
@@ -25,7 +28,6 @@ import sst.bank.activities.h.saving.OperationsSaver;
 public class CompleteLifeCycle extends LifeCycle {
 
     public CompleteLifeCycle() {
-	// TODO Auto-generated constructor stub
     }
 
     @Override
@@ -35,7 +37,9 @@ public class CompleteLifeCycle extends LifeCycle {
 			new CategoriesLoader(),
 			new Configurator()),
 		new ActivityPhase(Phase.LOADING,
-			new OperationsLoader()),
+			new OperationsLoader(),
+			new BeneficiaryCreator(),
+			new BeneficiaryValidator()),
 		new ActivityPhase(Phase.PARSING,
 			new OperationsParser(),
 			new OperationFiller()),
@@ -44,7 +48,8 @@ public class CompleteLifeCycle extends LifeCycle {
 			new WithoutRuleCategory(),
 			new SalaireCategory(),
 			new MapCounterpartyToCategory(),
-			new MapDetailToCategory()),
+			new MapDetailToCategory(),
+			new OperationsDefaulter()),
 		new ActivityPhase(Phase.GROUPING,
 			new OperationsGrouper()),
 		new ActivityPhase(Phase.BUDGETING,
