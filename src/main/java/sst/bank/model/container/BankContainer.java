@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
 
+@Log4j
 public class BankContainer {
 
     private static BankContainer me = null;
@@ -44,6 +46,7 @@ public class BankContainer {
     private HashMap<String, Category> categoryByName = new HashMap<>();
     private List<Operation> visaOperations = new ArrayList<>();
     private HashMap<String, Beneficiary> benefiaries = new HashMap<>();
+    private HashMap<String, Beneficiary> benefiariesByCounterpartyDetails = new HashMap<>();
 
     public Integer newId() {
 	return lastId++;
@@ -123,7 +126,7 @@ public class BankContainer {
     }
 
     public void addAllBeneficiaries(Collection<Beneficiary> list) {
-	list.stream().forEach(b -> benefiaries.put(b.getId(), b));
+	list.stream().forEach(b -> addBeneficiary(b));
     }
 
     public Collection<Beneficiary> beneficiaries() {
@@ -131,7 +134,36 @@ public class BankContainer {
     }
 
     public void addBeneficiary(Beneficiary beneficiary) {
-	benefiaries.put(beneficiary.getId(), beneficiary);
+	if (checkDuplicate(beneficiary)) {
+	    benefiaries.put(beneficiary.getId(), beneficiary);
+	    beneficiary.getCounterparties()
+		    .stream()
+		    .forEach(s -> benefiariesByCounterpartyDetails.put(s, beneficiary));
+	    beneficiary.getDetails()
+		    .stream()
+		    .forEach(s -> benefiariesByCounterpartyDetails.put(s, beneficiary));
+	}
+    }
+
+    private boolean checkDuplicate(Beneficiary beneficiary) {
+	boolean result = true;
+	for (String cpty : beneficiary.getCounterparties()) {
+	    if (benefiariesByCounterpartyDetails.get(cpty) != null) {
+		log.error("Beneficiary <" + beneficiary + "> is duplicate on counterparty <" + cpty + ">");
+		result = false;
+	    }
+	}
+	for (String detail : beneficiary.getDetails()) {
+	    if (benefiariesByCounterpartyDetails.get(detail) != null) {
+		log.error("Beneficiary <" + beneficiary + "> is duplicate on detail <" + detail + ">");
+		result = false;
+	    }
+	}
+	return result;
+    }
+
+    public Beneficiary getBeneficiaryByCounterpartyDetails(String id) {
+	return benefiariesByCounterpartyDetails.get(id);
     }
 
     public Beneficiary getBeneficiary(String id) {

@@ -15,8 +15,14 @@ public class MergeBeneficiary {
     private void run() {
 	LifeCycleInterface.loadLifeCyle();
 
-	if (merge("LU11 0028 2100 0293 3700", "STEPHANE STIENNON")) {
-	    LifeCycleInterface.saveBeneficiaries();
+	String[] idFrom = { "MULLER PNE CONTERN" };
+	String idInto = "Muller Pneus";
+	for (int i = 0; i < idFrom.length; i++) {
+	    if (merge(idFrom[i], idInto)) {
+		LifeCycleInterface.saveBeneficiaries();
+		log.info("Beneficiary merged <" + idFrom[i] + "> into <" + idInto + ">.");
+	    }
+
 	}
     }
 

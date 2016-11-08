@@ -12,11 +12,11 @@ public class BeneficiaryCreator implements BankActivity {
 	// BankContainer.me().beneficiaries().removeAll(BankContainer.me().beneficiaries());
 	BankConfiguration.me().getCounterpartiesMapping().keySet()
 		.stream()
-		.filter(s -> null == BankContainer.me().getBeneficiary(s))
+		.filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
 		.forEach(s -> createCounterpartyBeneficiary(s));
 	BankConfiguration.me().getDetailsMapping().keySet()
 		.stream()
-		.filter(s -> null == BankContainer.me().getBeneficiary(s))
+		.filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
 		.forEach(s -> createDetailBeneficiary(s));
     }
 
