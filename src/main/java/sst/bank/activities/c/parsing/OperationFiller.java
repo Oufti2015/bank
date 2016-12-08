@@ -17,7 +17,8 @@ public class OperationFiller implements BankActivity {
     private Pattern[] patternFormatted = { Pattern.compile(".*((BE)\\d{2} \\d{4} \\d{4} \\d{4}).*"),
 	    Pattern.compile(".*((LU)\\d{2} \\d{4} \\d{4} \\d{4} \\d{4}).*"),
 	    Pattern.compile(".*((FR)\\d{2} \\d{4} \\d{4} \\d{4} \\d{4} \\d{4} \\d{3}).*") };
-    private String[] countries = { "BE", "LU", "FR}" };
+    private String[] countries = { "BE", "LU", "FR" };
+    private String[] countriesForb = { "BEL", "LUX", "FRA" };
 
     @Override
     public void run() {
@@ -58,7 +59,8 @@ public class OperationFiller implements BankActivity {
 	    }
 
 	    if (o.getCounterparty() != null) {
-		o.setCounterparty(formatCounterparty(o.getCounterparty(), countries[i], patternFormatted[i]));
+		o.setCounterparty(
+			formatCounterparty(o.getCounterparty(), countries[i], countriesForb[i], patternFormatted[i]));
 	    }
 	}
 
@@ -67,9 +69,10 @@ public class OperationFiller implements BankActivity {
 	}
     }
 
-    private String formatCounterparty(String group, String country, Pattern pattern) {
+    private String formatCounterparty(String group, String country, String countryForb, Pattern pattern) {
+	System.out.println("group=" + group);
 	Matcher matcher = pattern.matcher(group);
-	if (!matcher.find() && group.startsWith(country)) {
+	if (!matcher.find() && group.startsWith(country) && !group.startsWith(countryForb)) {
 	    int i = 0;
 	    String result = "";
 	    while (i < group.length()) {
