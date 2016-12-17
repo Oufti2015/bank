@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
@@ -20,18 +23,26 @@ import sst.bank.model.Operation;
 @Log4j
 public class BankContainer {
 
+    private static final String CACHE_CATEGORIES_BY_NAME = "CategoriesByName";
     private static BankContainer me = null;
     static {
-	me = new BankContainer();
+	me = new BankContainer(true);
     }
 
-    private BankContainer() {
+    private BankContainer(boolean usingCache) {
+	this.usingCache = usingCache;
+	if (this.usingCache) {
+	    // 1. Create a cache manager
+	    cacheManager = CacheManager.newInstance();
+	}
     }
 
     public static BankContainer me() {
 	return me;
     }
 
+    private boolean usingCache = false;
+    CacheManager cacheManager;
     @Getter
     @Setter
     private Integer lastId = 0;
@@ -53,6 +64,9 @@ public class BankContainer {
     }
 
     public List<Operation> operations() {
+	// // 2. Get a cache called "cache1", declared in ehcache.xml
+	// Cache cache = cacheManager.getCache("operationsCache");
+	// Map<String, V>cache.getAll(cache.getKeys());
 	return operations;
     }
 
@@ -97,11 +111,43 @@ public class BankContainer {
 
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
+
+	if (usingCache) {
+	    setCategoriesUsingCache(categories);
+	} else {
+	    setCategoriesUsingHashMap(categories);
+	}
+    }
+
+    private void setCategoriesUsingHashMap(List<Category> categories) {
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
     }
 
+    private void setCategoriesUsingCache(List<Category> categories) {
+	// 2. Get a cache called "CategoriesByName", declared in ehcache.xml
+	Cache cache = cacheManager.getCache(CACHE_CATEGORIES_BY_NAME);
+
+	// 3. Put elements in cache
+	categories.stream().forEach(c -> cache.put(new Element(c.getName(), c)));
+    }
+
     public Category category(String categoryName) {
+	return usingCache
+		? categoryUsingCache(categoryName)
+		: categoryUsingHashMap(categoryName);
+    }
+
+    private Category categoryUsingHashMap(String categoryName) {
 	return categoryByName.get(categoryName);
+    }
+
+    private Category categoryUsingCache(String categoryName) {
+	// 2. Get a cache called "CategoriesByName", declared in ehcache.xml
+	Cache cache = cacheManager.getCache(CACHE_CATEGORIES_BY_NAME);
+
+	// 4. Get element from cache
+	Element e = cache.get(categoryName);
+	return (e != null) ? (Category) e.getObjectValue() : null;
     }
 
     public BankSummary yearlySummary(Year year, LocalDate endDate) {

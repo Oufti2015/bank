@@ -31,8 +31,22 @@ public class BankSummary implements Comparable<BankSummary> {
 
     @Override
     public String toString() {
-	return Month.from(startDate).getDisplayName(TextStyle.FULL, Locale.FRENCH) + " "
-		+ Year.from(startDate);
+	if (monthQuantity() == 1) {
+	    return Month.from(startDate).getDisplayName(TextStyle.FULL, Locale.FRENCH)
+		    + " "
+		    + Year.from(startDate);
+	} else if (monthQuantity() == 12) {
+	    return Year.from(startDate).toString();
+	} else {
+	    return "De "
+		    + Month.from(startDate).getDisplayName(TextStyle.FULL, Locale.FRENCH)
+		    + " "
+		    + Year.from(startDate)
+		    + " à "
+		    + Month.from(endDate).getDisplayName(TextStyle.FULL, Locale.FRENCH)
+		    + " "
+		    + Year.from(endDate);
+	}
     }
 
     @Getter
