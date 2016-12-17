@@ -23,7 +23,7 @@ public class SummarySumRowIntoTableConverter implements IntoTableConverter {
 	cells[0] = new CellInfo("Total", "date");
 	double sum = summary.getSummary().values()
 		.stream()
-		.mapToDouble(o -> o.doubleValue())
+		.mapToDouble(o -> o.amount.doubleValue())
 		.sum();
 	cells[1] = new AmountCellInfo(sum);
 	cells[2] = new AmountCellInfo(tas.get(SummerType.BUDGET));

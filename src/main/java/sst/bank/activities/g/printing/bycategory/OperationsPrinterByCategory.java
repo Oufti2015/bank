@@ -99,7 +99,7 @@ public class OperationsPrinterByCategory implements BankActivity {
 	listConvert = bm.getSummary().keySet().stream()
 		.sorted()
 		.map(c -> new SummaryIntoTableConverter(tas, c,
-			bm.getSummary().get(c),
+			bm.getSummary().get(c).amount,
 			c.getBudget(),
 			bm.monthQuantity()))
 		.collect(Collectors.toList());

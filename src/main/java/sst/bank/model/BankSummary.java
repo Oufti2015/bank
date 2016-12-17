@@ -49,9 +49,20 @@ public class BankSummary implements Comparable<BankSummary> {
 	}
     }
 
+    public class Summary {
+	public Category category;
+	public BigDecimal amount;
+
+	public Summary(Category category, BigDecimal amount) {
+	    super();
+	    this.category = category;
+	    this.amount = amount;
+	}
+    }
+
     @Getter
     @Setter
-    private Map<Category, BigDecimal> summary = new HashMap<>();
+    private Map<Category, Summary> summary = new HashMap<>();
     @Getter
     @Setter
     private Category category;
@@ -59,7 +70,7 @@ public class BankSummary implements Comparable<BankSummary> {
     public BankSummary(List<Operation> list) {
 	super();
 	this.list = list;
-	BankContainer.me().getCategories().stream().forEach(c -> summary.put(c, BigDecimal.ZERO));
+	BankContainer.me().getCategories().stream().forEach(c -> summary.put(c, new Summary(c, BigDecimal.ZERO)));
 	init();
     }
 
@@ -94,11 +105,12 @@ public class BankSummary implements Comparable<BankSummary> {
 	if (category.isVisa() && operationsContainVISA()) {
 	    return;
 	}
-	BigDecimal sum = summary.get(category);
+	Summary sum = summary.get(category);
 	if (null == sum) {
-	    sum = BigDecimal.ZERO;
+	    sum = new Summary(category, BigDecimal.ZERO);
+	    summary.put(category, sum);
 	}
-	summary.put(category, sum.add(amount));
+	sum.amount = sum.amount.add(amount);
     }
 
     private boolean operationsContainVISA() {
