@@ -19,6 +19,7 @@ import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
+import sst.bank.model.OperationLabel;
 
 @Log4j
 public class BankContainer {
@@ -54,7 +55,9 @@ public class BankContainer {
     private List<BankSummary> operationsByYear = new ArrayList<>();
     private List<BankSummary> operationsByCategory = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
+    private List<OperationLabel> labels = new ArrayList<>();
     private HashMap<String, Category> categoryByName = new HashMap<>();
+    private HashMap<String, OperationLabel> labelByName = new HashMap<>();
     private List<Operation> visaOperations = new ArrayList<>();
     private HashMap<String, Beneficiary> benefiaries = new HashMap<>();
     private HashMap<String, Beneficiary> benefiariesByCounterpartyDetails = new HashMap<>();
@@ -131,6 +134,11 @@ public class BankContainer {
 	categories.stream().forEach(c -> cache.put(new Element(c.getName(), c)));
     }
 
+    public void setLabels(List<OperationLabel> labels) {
+	this.labels = labels;
+	labels.stream().forEach(c -> labelByName.put(c.getName(), c));
+    }
+
     public Category category(String categoryName) {
 	return usingCache
 		? categoryUsingCache(categoryName)
@@ -150,6 +158,10 @@ public class BankContainer {
 	return (e != null) ? (Category) e.getObjectValue() : null;
     }
 
+    public OperationLabel label(String labelName) {
+	return labelByName.get(labelName);
+    }
+
     public BankSummary yearlySummary(Year year, LocalDate endDate) {
 	List<Operation> result = operations.stream()
 		.filter(o -> year.equals(Year.from(o.getValueDate())))
@@ -161,6 +173,10 @@ public class BankContainer {
 
     public Collection<Category> getCategories() {
 	return categories;
+    }
+
+    public Collection<OperationLabel> getLabels() {
+	return labels;
     }
 
     public void addVISAOperations(Operation operation) {

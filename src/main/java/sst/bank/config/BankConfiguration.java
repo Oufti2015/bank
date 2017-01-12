@@ -27,6 +27,7 @@ public class BankConfiguration {
     public static final String CATEGORIES_PROPERTIES = PATH + File.separator + "categories.properties";
     private static final String CATEGORIES_JSON = "categories.json";
     private static final String OPERATIONS_JSON = "operations.json";
+    private static final String LABELS_JSON = "labels.json";
     public static final String OPERATIONS_TXT = "data" + File.separator + "operations.txt";
 
     private static BankConfiguration me;
@@ -97,5 +98,9 @@ public class BankConfiguration {
 
     public String getCategoriesJson() {
 	return getInputDir() + File.separator + CATEGORIES_JSON;
+    }
+
+    public String getLabelsJson() {
+	return getInputDir() + File.separator + LABELS_JSON;
     }
 }
