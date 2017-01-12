@@ -42,7 +42,7 @@ public class BankSummary implements Comparable<BankSummary> {
 		    + Month.from(startDate).getDisplayName(TextStyle.FULL, Locale.FRENCH)
 		    + " "
 		    + Year.from(startDate)
-		    + " à "
+		    + " \u00e0 "
 		    + Month.from(endDate).getDisplayName(TextStyle.FULL, Locale.FRENCH)
 		    + " "
 		    + Year.from(endDate);
