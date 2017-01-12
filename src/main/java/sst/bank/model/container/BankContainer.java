@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
@@ -31,19 +28,12 @@ public class BankContainer {
     }
 
     private BankContainer(boolean usingCache) {
-	this.usingCache = usingCache;
-	if (this.usingCache) {
-	    // 1. Create a cache manager
-	    cacheManager = CacheManager.newInstance();
-	}
     }
 
     public static BankContainer me() {
 	return me;
     }
 
-    private boolean usingCache = false;
-    CacheManager cacheManager;
     @Getter
     @Setter
     private Integer lastId = 0;
@@ -114,24 +104,7 @@ public class BankContainer {
 
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
-
-	if (usingCache) {
-	    setCategoriesUsingCache(categories);
-	} else {
-	    setCategoriesUsingHashMap(categories);
-	}
-    }
-
-    private void setCategoriesUsingHashMap(List<Category> categories) {
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
-    }
-
-    private void setCategoriesUsingCache(List<Category> categories) {
-	// 2. Get a cache called "CategoriesByName", declared in ehcache.xml
-	Cache cache = cacheManager.getCache(CACHE_CATEGORIES_BY_NAME);
-
-	// 3. Put elements in cache
-	categories.stream().forEach(c -> cache.put(new Element(c.getName(), c)));
     }
 
     public void setLabels(List<OperationLabel> labels) {
@@ -140,22 +113,7 @@ public class BankContainer {
     }
 
     public Category category(String categoryName) {
-	return usingCache
-		? categoryUsingCache(categoryName)
-		: categoryUsingHashMap(categoryName);
-    }
-
-    private Category categoryUsingHashMap(String categoryName) {
 	return categoryByName.get(categoryName);
-    }
-
-    private Category categoryUsingCache(String categoryName) {
-	// 2. Get a cache called "CategoriesByName", declared in ehcache.xml
-	Cache cache = cacheManager.getCache(CACHE_CATEGORIES_BY_NAME);
-
-	// 4. Get element from cache
-	Element e = cache.get(categoryName);
-	return (e != null) ? (Category) e.getObjectValue() : null;
     }
 
     public OperationLabel label(String labelName) {

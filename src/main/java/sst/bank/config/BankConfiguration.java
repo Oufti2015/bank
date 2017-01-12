@@ -19,10 +19,16 @@ public class BankConfiguration {
     private static final String OUTPUT_DIR = "OUTPUT_DIR";
     public final Properties properties = new Properties();
     public static final String PATH = "src" + File.separator + "main" + File.separator + "resources";
+
     public static final String COUNTERPARTY_PROPERTIES = "counterparty.properties";
     public static final String POSITIF_COUNTERPARTY_PROPERTIES = "positifcounterparty.properties";
     public static final String DETAIL_PROPERTIES = "detail.properties";
     public static final String ID_PROPERTIES = "id.properties";
+
+    public static final String COUNTERPARTY_LABEL_PROPERTIES = "counterparty.label.properties";
+    public static final String POSITIF_COUNTERPARTY_LABEL_PROPERTIES = "positifcounterparty.label.properties";
+    public static final String DETAIL_LABEL_PROPERTIES = "detail.label.properties";
+    public static final String ID_LABEL_PROPERTIES = "id.label.properties";
 
     public static final String CATEGORIES_PROPERTIES = PATH + File.separator + "categories.properties";
     private static final String CATEGORIES_JSON = "categories.json";
@@ -47,28 +53,55 @@ public class BankConfiguration {
 
     public void init() {
 	try {
-
 	    String pathname = getInputDir() + File.separator;
-	    File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
-	    counterpartiesMapping = InvertedProperties.load(inputFile);
-	    Assert.assertTrue(COUNTERPARTY_PROPERTIES, !counterpartiesMapping.keySet().isEmpty());
 
-	    inputFile = new File(pathname + DETAIL_PROPERTIES);
-	    detailsMapping = InvertedProperties.load(inputFile);
-	    Assert.assertTrue(DETAIL_PROPERTIES, !detailsMapping.keySet().isEmpty());
-	    Assert.assertNotNull(DETAIL_PROPERTIES, detailsMapping.map("LAURENT MURIEL"));
+	    initCategories(pathname);
 
-	    inputFile = new File(pathname + POSITIF_COUNTERPARTY_PROPERTIES);
-	    positifCounterpartiesMapping = InvertedProperties.load(inputFile);
-	    Assert.assertTrue(POSITIF_COUNTERPARTY_PROPERTIES, !positifCounterpartiesMapping.keySet().isEmpty());
-
-	    inputFile = new File(pathname + ID_PROPERTIES);
-	    idMapping = InvertedProperties.load(inputFile);
-	    Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
+	    initLabels(pathname);
 	} catch (IOException e) {
 	    log.fatal("Cannot read property file", e);
 	    OuftiBank.eventBus.post(e);
 	}
+    }
+
+    /**
+     * @param pathname
+     * @throws IOException
+     */
+    private void initCategories(String pathname) throws IOException {
+	File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
+	counterpartiesMapping = InvertedCategoryProperties.load(inputFile);
+	Assert.assertTrue(COUNTERPARTY_PROPERTIES, !counterpartiesMapping.keySet().isEmpty());
+
+	inputFile = new File(pathname + DETAIL_PROPERTIES);
+	detailsMapping = InvertedCategoryProperties.load(inputFile);
+	Assert.assertTrue(DETAIL_PROPERTIES, !detailsMapping.keySet().isEmpty());
+
+	inputFile = new File(pathname + POSITIF_COUNTERPARTY_PROPERTIES);
+	positifCounterpartiesMapping = InvertedCategoryProperties.load(inputFile);
+	Assert.assertTrue(POSITIF_COUNTERPARTY_PROPERTIES, !positifCounterpartiesMapping.keySet().isEmpty());
+
+	inputFile = new File(pathname + ID_PROPERTIES);
+	idMapping = InvertedCategoryProperties.load(inputFile);
+	Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
+    }
+
+    /**
+     * @param pathname
+     * @throws IOException
+     */
+    private void initLabels(String pathname) throws IOException {
+	File inputFile = new File(pathname + COUNTERPARTY_LABEL_PROPERTIES);
+	counterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
+
+	inputFile = new File(pathname + DETAIL_LABEL_PROPERTIES);
+	detailsLabelsMapping = InvertedLabelProperties.load(inputFile);
+
+	inputFile = new File(pathname + POSITIF_COUNTERPARTY_LABEL_PROPERTIES);
+	positifCounterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
+
+	inputFile = new File(pathname + ID_LABEL_PROPERTIES);
+	idLabelsMapping = InvertedLabelProperties.load(inputFile);
     }
 
     public static BankConfiguration me() {
@@ -76,13 +109,22 @@ public class BankConfiguration {
     }
 
     @Getter
-    private InvertedProperties counterpartiesMapping = null;
+    private InvertedCategoryProperties counterpartiesMapping = null;
     @Getter
-    private InvertedProperties detailsMapping = null;
+    private InvertedCategoryProperties detailsMapping = null;
     @Getter
-    private InvertedProperties positifCounterpartiesMapping = null;
+    private InvertedCategoryProperties positifCounterpartiesMapping = null;
     @Getter
-    private InvertedProperties idMapping = null;
+    private InvertedCategoryProperties idMapping = null;
+
+    @Getter
+    private InvertedLabelProperties counterpartiesLabelsMapping = null;
+    @Getter
+    private InvertedLabelProperties detailsLabelsMapping = null;
+    @Getter
+    private InvertedLabelProperties positifCounterpartiesLabelsMapping = null;
+    @Getter
+    private InvertedLabelProperties idLabelsMapping = null;
 
     public String getInputDir() {
 	return properties.getProperty(INPUT_DIR);

@@ -1,18 +1,18 @@
-package sst.bank.activities.d.categorising.categories;
+package sst.bank.activities.e.labelling.labels;
 
 import sst.bank.config.BankConfiguration;
-import sst.bank.config.InvertedCategoryProperties;
-import sst.bank.model.Category;
+import sst.bank.config.InvertedLabelProperties;
 import sst.bank.model.Operation;
+import sst.bank.model.OperationLabel;
 import sst.bank.model.container.BankContainer;
 
-public class MapDetailToCategory implements CategoryActivity {
+public class MapDetailToLabel implements LabelActivity {
 
-    private static InvertedCategoryProperties details = null;
+    private static InvertedLabelProperties details = null;
 
     @Override
     public void run() {
-	details = BankConfiguration.me().getDetailsMapping();
+	details = BankConfiguration.me().getDetailsLabelsMapping();
 	for (String key : details.keySet()) {
 	    // System.out.println(" ------> Key=" + key + " - " +
 	    // details.map(key));
@@ -27,9 +27,8 @@ public class MapDetailToCategory implements CategoryActivity {
 	// .forEach(o -> System.out.println(o));
     }
 
-    private void setCategory(Operation o, String key, Category map) {
+    private void setCategory(Operation o, String key, OperationLabel map) {
 	// System.out.println("Set " + map.getName() + " on " + o.getDetail());
-	o.setCategory(map);
-	o.setCounterparty(key);
+	o.getLabels().add(map);
     }
 }

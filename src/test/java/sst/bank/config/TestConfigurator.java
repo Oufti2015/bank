@@ -44,7 +44,7 @@ public class TestConfigurator {
     @Test
     public void testInvertedProperties() {
 	try {
-	    InvertedProperties detailsMapping = InvertedProperties.load(BankConfiguration.DETAIL_PROPERTIES);
+	    InvertedCategoryProperties detailsMapping = InvertedCategoryProperties.load(BankConfiguration.DETAIL_PROPERTIES);
 	    Assert.assertTrue("Not loaded", !detailsMapping.keySet().isEmpty());
 	} catch (IOException e) {
 	    fail("" + e.getMessage() + " : " + e);

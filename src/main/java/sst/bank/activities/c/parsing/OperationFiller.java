@@ -70,7 +70,7 @@ public class OperationFiller implements BankActivity {
     }
 
     private String formatCounterparty(String group, String country, String countryForb, Pattern pattern) {
-	System.out.println("group=" + group);
+	// System.out.println("group=" + group);
 	Matcher matcher = pattern.matcher(group);
 	if (!matcher.find() && group.startsWith(country) && !group.startsWith(countryForb)) {
 	    int i = 0;

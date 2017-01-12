@@ -1,4 +1,4 @@
-package sst.bank.activities.e.grouping;
+package sst.bank.activities.f.grouping;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;

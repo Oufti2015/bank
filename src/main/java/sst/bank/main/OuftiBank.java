@@ -47,6 +47,8 @@ public class OuftiBank { // NO_UCD (unused code)
 	log.info("OPERATIONS    : " + BankContainer.me().operations().size());
 	log.info("MONTHS        : " + BankContainer.me().operationsByMonth().size());
 	log.info("YEARS         : " + BankContainer.me().operationsByYear().size());
+	log.info("CATEGORIES    : " + BankContainer.me().getCategories().size());
+	log.info("LABELS        : " + BankContainer.me().getLabels().size());
 	log.info("BENEFICIARIES : " + BankContainer.me().beneficiaries().size());
     }
 

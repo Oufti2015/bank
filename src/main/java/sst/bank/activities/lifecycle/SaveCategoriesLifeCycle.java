@@ -4,15 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import sst.bank.activities.ActivityPhase;
-import sst.bank.activities.d.categorising.categories.DefaultCategory;
-import sst.bank.activities.d.categorising.categories.MapCounterpartyToCategory;
-import sst.bank.activities.d.categorising.categories.MapDetailToCategory;
-import sst.bank.activities.d.categorising.categories.SalaireCategory;
-import sst.bank.activities.d.categorising.categories.WithoutRuleCategory;
-import sst.bank.activities.e.grouping.OperationsGrouper;
-import sst.bank.activities.f.budgeting.OperationBudgeter;
-import sst.bank.activities.h.saving.CategoriesSaver;
-import sst.bank.activities.h.saving.OperationsSaver;
+import sst.bank.activities.d.categorising.OperationCategoriser;
+import sst.bank.activities.e.labelling.OperationLabeller;
+import sst.bank.activities.f.grouping.OperationsGrouper;
+import sst.bank.activities.g.budgeting.OperationBudgeter;
+import sst.bank.activities.i.saving.CategoriesSaver;
+import sst.bank.activities.i.saving.OperationsSaver;
 
 public class SaveCategoriesLifeCycle extends LifeCycle {
 
@@ -22,11 +19,9 @@ public class SaveCategoriesLifeCycle extends LifeCycle {
 		new ActivityPhase(Phase.SAVING,
 			new CategoriesSaver()),
 		new ActivityPhase(Phase.CATEGORISING,
-			new DefaultCategory(),
-			new WithoutRuleCategory(),
-			new SalaireCategory(),
-			new MapCounterpartyToCategory(),
-			new MapDetailToCategory()),
+			new OperationCategoriser()),
+		new ActivityPhase(Phase.LABELLING,
+			new OperationLabeller()),
 		new ActivityPhase(Phase.GROUPING,
 			new OperationsGrouper()),
 		new ActivityPhase(Phase.BUDGETING,

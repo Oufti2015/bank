@@ -1,15 +1,18 @@
-package sst.bank.activities.g.printing;
+package sst.bank.activities.h.printing;
+
+import java.util.List;
 
 import sst.bank.components.AmountCellInfo;
 import sst.bank.components.CategoryCellInfo;
 import sst.bank.components.DateCellInfo;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
+import sst.bank.model.OperationLabel;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
 public class OperationsIntoTableConverter implements IntoTableConverter {
-    public static final String[] headers = { "ID", "CATEGORY", "EXEC.DATE", "VALUE DATE", "AMOUNT", "CURR",
+    public static final String[] headers = { "ID", "CATEGORY", "LABELS", "EXEC.DATE", "VALUE DATE", "AMOUNT", "CURR",
 	    "COUNTERPARTY", "DETAIL" };
 
     private Operation operation = null;
@@ -30,6 +33,21 @@ public class OperationsIntoTableConverter implements IntoTableConverter {
 	    cells[i++] = new CategoryCellInfo(cat);
 	} else {
 	    cells[i++] = new CellInfo("&nbsp;");
+	}
+	List<OperationLabel> labels = operation.getLabels();
+	if (labels.isEmpty()) {
+	    cells[i++] = new CellInfo("&nbsp;");
+	} else {
+	    String cell = "";
+	    int j = 0;
+	    for (OperationLabel label : labels) {
+		j++;
+		cell += label.getName();
+		if (j < labels.size()) {
+		    cell += "<BR>";
+		}
+	    }
+	    cells[i++] = new CellInfo(cell);
 	}
 	cells[i++] = new DateCellInfo(operation.getExecutionDate());
 	cells[i++] = new DateCellInfo(operation.getValueDate());

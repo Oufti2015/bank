@@ -1,4 +1,4 @@
-package sst.bank.activities.d.categorising;
+package sst.bank.activities.e.labelling;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

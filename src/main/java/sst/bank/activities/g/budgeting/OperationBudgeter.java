@@ -1,4 +1,4 @@
-package sst.bank.activities.f.budgeting;
+package sst.bank.activities.g.budgeting;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

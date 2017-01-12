@@ -2,6 +2,8 @@ package sst.bank.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,6 +24,7 @@ public class Operation implements Comparable<Operation> {
     private String detail;
     private String account;
     private Category category;
+    private List<OperationLabel> labels = new ArrayList<>();
 
     public Operation() {
     }

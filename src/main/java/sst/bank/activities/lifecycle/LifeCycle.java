@@ -16,6 +16,7 @@ public abstract class LifeCycle {
 	LOADING("Loading"),
 	PARSING("Parsing"),
 	CATEGORISING("Categorising"),
+	LABELLING("Labelling"),
 	GROUPING("Grouping"),
 	BUDGETING("Budgeting"),
 	PRINTING("Printing"),
