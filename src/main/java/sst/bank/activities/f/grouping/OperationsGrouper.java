@@ -55,16 +55,15 @@ public class OperationsGrouper implements BankActivity {
     }
 
     private void groupOperationsByCategory(Category c) {
-	for (BankSummary bmYear : BankContainer.me().operationsByYear()) {
-	    List<Operation> collect = bmYear.getList().stream()
-		    .filter(o -> o.getCategory().equals(c))
-		    .sorted()
-		    .collect(Collectors.toList());
-	    if (!collect.isEmpty()) {
-		BankSummary bm = new BankSummary(collect);
-		bm.setCategory(c);
-		BankContainer.me().addOperationsByCategory(bm);
-	    }
+	List<Operation> collect = BankContainer.me().operations()
+		.stream()
+		.filter(o -> o.getCategory().equals(c))
+		.sorted()
+		.collect(Collectors.toList());
+	if (!collect.isEmpty()) {
+	    BankSummary bm = new BankSummary(collect);
+	    bm.setCategory(c);
+	    BankContainer.me().addOperationsByCategory(bm);
 	}
     }
 }

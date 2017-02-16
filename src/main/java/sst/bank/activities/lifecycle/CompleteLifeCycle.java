@@ -14,6 +14,7 @@ import sst.bank.activities.c.parsing.OperationFiller;
 import sst.bank.activities.c.parsing.OperationsParser;
 import sst.bank.activities.d.categorising.OperationCategoriser;
 import sst.bank.activities.e.labelling.OperationLabeller;
+import sst.bank.activities.e.labelling.OperationsDefaulter;
 import sst.bank.activities.f.grouping.OperationsGrouper;
 import sst.bank.activities.g.budgeting.OperationBudgeter;
 import sst.bank.activities.h.printing.DefaultCategoriesPrinter;
@@ -45,7 +46,8 @@ public class CompleteLifeCycle extends LifeCycle {
 		new ActivityPhase(Phase.CATEGORISING,
 			new OperationCategoriser()),
 		new ActivityPhase(Phase.LABELLING,
-			new OperationLabeller()),
+			new OperationLabeller(),
+			new OperationsDefaulter()),
 		new ActivityPhase(Phase.GROUPING,
 			new OperationsGrouper()),
 		new ActivityPhase(Phase.BUDGETING,

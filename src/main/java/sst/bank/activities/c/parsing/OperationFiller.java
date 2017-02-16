@@ -28,7 +28,7 @@ public class OperationFiller implements BankActivity {
     private void fillOperation(Operation o) {
 
 	defaultCounterparty(o);
-	correctVISADate(o);
+	// correctVISADate(o);
 	return;
     }
 
