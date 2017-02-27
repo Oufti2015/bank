@@ -33,11 +33,6 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	operation.setExecutionDate(op.getExecutionDate());
 	operation.setValueDate(op.getValueDate());
 
-	log.info("Operation " + operation);
-	log.info("Operation.getExecutionDate() = [" + operation.getExecutionDate() + "]");
-	log.info("Operation.getValueDate()     = [" + operation.getValueDate() + "]");
-	log.info("Operation.getAmount()        = [" + operation.getAmount() + "]");
-
 	if (operation.getAmount() == null || operation.getExecutionDate() == null || operation.getValueDate() == null) {
 	    System.exit(-1);
 	}

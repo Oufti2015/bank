@@ -16,10 +16,16 @@ public class MapDetailToLabel implements LabelActivity {
 	for (String key : details.keySet()) {
 	    // System.out.println(" ------> Key=" + key + " - " +
 	    // details.map(key));
-	    BankContainer.me().operations().stream()
-		    .filter(o -> o.getCategory().isDefaultCategory())
-		    .filter(o -> o.getDetail().contains(key))
-		    .forEach(o -> setCategory(o, key, details.map(key)));
+	    // BankContainer.me().operations().stream()
+	    // .filter(o -> o.getCategory().isDefaultCategory())
+	    // .filter(o -> o.getDetail().contains(key))
+	    // .forEach(o -> setCategory(o, key, details.map(key)));
+
+	    for (Operation operation : BankContainer.me().operations()) {
+		if (operation.getDetail().contains(key)) {
+		    setCategory(operation, key, details.map(key));
+		}
+	    }
 	}
 	// BankContainer.me().operations().stream()
 	// .filter(o -> o.getCategory().isDefaultCategory())
