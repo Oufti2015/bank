@@ -15,8 +15,8 @@ public class MergeBeneficiary {
     private void run() {
 	LifeCycleInterface.loadLifeCyle();
 
-	String[] idFrom = { "MULLER PNE CONTERN" };
-	String idInto = "Muller Pneus";
+	String[] idFrom = { "BNPPARIBAS" };
+	String idInto = "BNPPARIBASFORTIS";
 	for (int i = 0; i < idFrom.length; i++) {
 	    if (merge(idFrom[i], idInto)) {
 		LifeCycleInterface.saveBeneficiaries();

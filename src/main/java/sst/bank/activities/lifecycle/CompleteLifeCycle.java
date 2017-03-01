@@ -7,7 +7,6 @@ import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
 import sst.bank.activities.a.config.LabelsLoader;
-import sst.bank.activities.b.loading.BeneficiaryCreator;
 import sst.bank.activities.b.loading.BeneficiaryValidator;
 import sst.bank.activities.b.loading.OperationsLoader;
 import sst.bank.activities.c.parsing.OperationFiller;
@@ -38,7 +37,7 @@ public class CompleteLifeCycle extends LifeCycle {
 			new Configurator()),
 		new ActivityPhase(Phase.LOADING,
 			new OperationsLoader(),
-			new BeneficiaryCreator(),
+			// new BeneficiaryCreator(),
 			new BeneficiaryValidator()),
 		new ActivityPhase(Phase.PARSING,
 			new OperationsParser(),
