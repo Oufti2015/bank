@@ -21,7 +21,7 @@ public class MapDetailToLabel implements LabelActivity {
 	    // .filter(o -> o.getDetail().contains(key))
 	    // .forEach(o -> setCategory(o, key, details.map(key)));
 
-	    for (Operation operation : BankContainer.me().operations()) {
+	    for (Operation operation : BankContainer.me().operationsContainer().operations()) {
 		if (operation.getDetail().contains(key)) {
 		    setCategory(operation, key, details.map(key));
 		}

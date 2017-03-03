@@ -11,7 +11,7 @@ public class WithoutRuleLabel implements LabelActivity {
     @Override
     public void run() {
 	ids = BankConfiguration.me().getIdLabelsMapping();
-	BankContainer.me().operations().stream()
+	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getFortisId() != null)
 		.filter(o -> ids.map(o.getFortisId()) != null)
 		.forEach(o -> o.getLabels().add(ids.map(o.getFortisId())));

@@ -5,6 +5,7 @@ import sst.bank.activities.i.saving.CategoriesSaver;
 import sst.bank.model.Budget;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
+import sst.bank.model.container.ContainerInterface;
 
 public class MigrateCategories {
 
@@ -38,7 +39,7 @@ public class MigrateCategories {
     }
 
     private void rename(String newCat, String oldCat) {
-	BankContainer bc = BankContainer.me();
+	ContainerInterface bc = BankContainer.me();
 
 	Category toBeRemoved = bc.category(oldCat);
 
@@ -56,7 +57,7 @@ public class MigrateCategories {
     }
 
     private void merge(String toBeKeptString, String toBeRemovedString) {
-	BankContainer bc = BankContainer.me();
+	ContainerInterface bc = BankContainer.me();
 
 	Category toBeKept = bc.category(toBeKeptString);
 	Category toBeRemoved = bc.category(toBeRemovedString);

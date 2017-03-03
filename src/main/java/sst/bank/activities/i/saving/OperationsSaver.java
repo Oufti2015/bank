@@ -25,10 +25,10 @@ public class OperationsSaver implements BankActivity {
 
     private TransferObject fillTransferObject() {
 	TransferObject to = new TransferObject();
-	to.setLastId(BankContainer.me().getLastId());
+	to.setLastId(BankContainer.me().lastId());
 	to.setCreationDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
 	// to.setOperations(BankContainer.me().operations());
-	BankContainer.me().operations()
+	BankContainer.me().operationsContainer().operations()
 		.stream()
 		.map(o -> OperationTO.fromOperation(o))
 		.forEach(t -> to.getOperations().add(t));

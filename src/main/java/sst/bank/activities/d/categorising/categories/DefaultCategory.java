@@ -6,7 +6,7 @@ public class DefaultCategory implements CategoryActivity {
 
     @Override
     public void run() {
-	BankContainer.me().operations().stream()
+	BankContainer.me().operationsContainer().operations().stream()
 		.forEach(o -> o.setCategory(BankContainer.me().category("DEFAULT")));
     }
 }

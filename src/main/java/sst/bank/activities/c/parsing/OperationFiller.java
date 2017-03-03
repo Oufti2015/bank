@@ -22,7 +22,7 @@ public class OperationFiller implements BankActivity {
 
     @Override
     public void run() {
-	BankContainer.me().operations().stream().forEach(o -> fillOperation(o));
+	BankContainer.me().operationsContainer().operations().stream().forEach(o -> fillOperation(o));
     }
 
     private void fillOperation(Operation o) {

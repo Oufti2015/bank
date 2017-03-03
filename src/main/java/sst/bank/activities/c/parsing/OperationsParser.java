@@ -52,7 +52,7 @@ public class OperationsParser implements BankActivity {
 		File file = fileList[i];
 		log.info("Reading " + file + "...");
 		List<Operation> parseFile = parseFile(file);
-		BankContainer.me().addOperations(parseFile);
+		BankContainer.me().operationsContainer().addOperations(parseFile);
 		file.renameTo(new File(archiveFileName(file)));
 	    }
 	}

@@ -13,7 +13,7 @@ public class SalaireLabel implements LabelActivity {
     @Override
     public void run() {
 	counterparties = BankConfiguration.me().getPositifCounterpartiesLabelsMapping();
-	BankContainer.me().operations().stream()
+	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getCategory().isDefaultCategory())
 		.filter(o -> o.getAmount().compareTo(BigDecimal.ZERO) > 0)
 		.filter(o -> counterparties.map(o.getCounterparty()) != null)

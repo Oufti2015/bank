@@ -2,13 +2,11 @@ package sst.bank.activities.c.parsing.easyBanking;
 
 import com.google.common.base.Strings;
 
-import lombok.extern.log4j.Log4j;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.loader.interfaces.RecordFormatter;
 import sst.common.file.loader.interfaces.RecordSelector;
 
-@Log4j
 public class EasyBankingParser implements RecordFormatter, RecordSelector {
 
     @Override
@@ -37,11 +35,11 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	    System.exit(-1);
 	}
 
-	if (!BankContainer.me().operations().contains(operation)) {
+	if (!BankContainer.me().operationsContainer().operations().contains(operation)) {
 	    operation.setBankId(BankContainer.me().newId());
-	    BankContainer.me().operations().add(operation);
+	    BankContainer.me().operationsContainer().operations().add(operation);
 	} else {
-	    BankContainer.me().operations()
+	    BankContainer.me().operationsContainer().operations()
 		    .stream()
 		    .filter(o -> o.equals(operation))
 		    .forEach(o -> o.setFortisId(operation.getFortisId()));

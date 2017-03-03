@@ -16,7 +16,7 @@ public class MapDetailToCategory implements CategoryActivity {
 	for (String key : details.keySet()) {
 	    // System.out.println(" ------> Key=" + key + " - " +
 	    // details.map(key));
-	    BankContainer.me().operations().stream()
+	    BankContainer.me().operationsContainer().operations().stream()
 		    .filter(o -> o.getCategory().isDefaultCategory())
 		    .filter(o -> o.getDetail().contains(key))
 		    .forEach(o -> setCategory(o, key, details.map(key)));

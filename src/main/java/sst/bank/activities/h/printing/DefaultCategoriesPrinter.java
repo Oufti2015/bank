@@ -21,7 +21,8 @@ public class DefaultCategoriesPrinter implements BankActivity {
     public void run() {
 	try (OutputFile output = new OutputFile(new File(DATA_DEFAULT_TXT))) {
 
-	    BankContainer.me().operations().stream().filter(o -> o.getCategory().isDefaultCategory())
+	    BankContainer.me().operationsContainer().operations().stream()
+		    .filter(o -> o.getCategory().isDefaultCategory())
 		    .forEach(o -> print(output, o));
 	} catch (IOException e) {
 	    log.fatal("Cannot open " + DATA_DEFAULT_TXT, e);

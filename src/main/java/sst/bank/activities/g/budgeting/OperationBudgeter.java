@@ -61,7 +61,7 @@ public class OperationBudgeter implements BankActivity {
     }
 
     private Double averageSalary() {
-	OptionalDouble averageOption = BankContainer.me().operations()
+	OptionalDouble averageOption = BankContainer.me().operationsContainer().operations()
 		.stream()
 		.filter(o -> LocalDate.of(2016, Month.AUGUST, 15).compareTo(o.getExecutionDate()) < 0)
 		.filter(o -> o.getCategory().getName().equals("SALAIRE"))

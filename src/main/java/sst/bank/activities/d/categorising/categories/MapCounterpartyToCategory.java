@@ -11,7 +11,7 @@ public class MapCounterpartyToCategory implements CategoryActivity {
     @Override
     public void run() {
 	counterparties = BankConfiguration.me().getCounterpartiesMapping();
-	BankContainer.me().operations().stream()
+	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> counterparties.map(o.getCounterparty()) != null)
 		.forEach(o -> o.setCategory(counterparties.map(o.getCounterparty())));
     }

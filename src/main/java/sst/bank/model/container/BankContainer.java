@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
@@ -19,10 +17,9 @@ import sst.bank.model.Operation;
 import sst.bank.model.OperationLabel;
 
 @Log4j
-public class BankContainer {
+public class BankContainer implements ContainerInterface {
 
-    private static final String CACHE_CATEGORIES_BY_NAME = "CategoriesByName";
-    private static BankContainer me = null;
+    private static ContainerInterface me = null;
     static {
 	me = new BankContainer(true);
     }
@@ -30,17 +27,12 @@ public class BankContainer {
     private BankContainer(boolean usingCache) {
     }
 
-    public static BankContainer me() {
+    public static ContainerInterface me() {
 	return me;
     }
 
-    @Getter
-    @Setter
     private Integer lastId = 0;
-    @Getter
-    @Setter
     private String creationDate;
-    private List<Operation> operations = new ArrayList<>();
     private List<BankSummary> operationsByMonth = new ArrayList<>();
     private List<BankSummary> operationsByYear = new ArrayList<>();
     private List<BankSummary> operationsByCategory = new ArrayList<>();
@@ -52,45 +44,53 @@ public class BankContainer {
     private HashMap<String, Beneficiary> benefiaries = new HashMap<>();
     private HashMap<String, Beneficiary> benefiariesByCounterpartyDetails = new HashMap<>();
 
+    @Override
     public Integer newId() {
 	return lastId++;
     }
 
-    public List<Operation> operations() {
-	// // 2. Get a cache called "cache1", declared in ehcache.xml
-	// Cache cache = cacheManager.getCache("operationsCache");
-	// Map<String, V>cache.getAll(cache.getKeys());
-	return operations;
+    @Override
+    public Integer lastId() {
+	return lastId;
     }
 
-    public void addOperations(List<Operation> list) {
-	operations.addAll(list);
+    @Override
+    public void initLastId(Integer id) {
+	this.lastId = id;
     }
 
+    @Override
+    public void initCreationDate(String creationDate) {
+	this.creationDate = creationDate;
+
+    }
+
+    @Override
     public List<BankSummary> operationsByMonth() {
 	return operationsByMonth;
     }
 
+    @Override
     public void addMonth(BankSummary summary) {
 	operationsByMonth.add(summary);
     }
 
+    @Override
     public List<BankSummary> operationsByYear() {
 	return operationsByYear;
     }
 
+    @Override
     public void addYear(BankSummary summary) {
 	operationsByYear.add(summary);
     }
 
-    public List<BankSummary> operationsByCategory() {
-	return operationsByCategory.stream().sorted().collect(Collectors.toList());
-    }
-
+    @Override
     public void addOperationsByCategory(BankSummary summary) {
 	operationsByCategory.add(summary);
     }
 
+    @Override
     public BankSummary getBankSummaryByCategory(Category category) {
 	Optional<BankSummary> result = operationsByCategory
 		.stream()
@@ -102,26 +102,31 @@ public class BankContainer {
 	return null;
     }
 
+    @Override
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
 	categories.stream().forEach(c -> categoryByName.put(c.getName(), c));
     }
 
+    @Override
     public void setLabels(List<OperationLabel> labels) {
 	this.labels = labels;
 	labels.stream().forEach(c -> labelByName.put(c.getName(), c));
     }
 
+    @Override
     public Category category(String categoryName) {
 	return categoryByName.get(categoryName);
     }
 
+    @Override
     public OperationLabel label(String labelName) {
 	return labelByName.get(labelName);
     }
 
+    @Override
     public BankSummary yearlySummary(Year year, LocalDate endDate) {
-	List<Operation> result = operations.stream()
+	List<Operation> result = operationsContainer().operations().stream()
 		.filter(o -> year.equals(Year.from(o.getValueDate())))
 		.filter(o -> endDate.compareTo(o.getValueDate()) >= 0)
 		.collect(Collectors.toList());
@@ -129,10 +134,12 @@ public class BankContainer {
 	return new BankSummary(result);
     }
 
+    @Override
     public Collection<Category> getCategories() {
 	return categories;
     }
 
+    @Override
     public Collection<OperationLabel> getLabels() {
 	return labels;
     }
@@ -141,18 +148,17 @@ public class BankContainer {
 	visaOperations.add(operation);
     }
 
-    public void addOperation(Operation operation) {
-	operations.add(operation);
-    }
-
+    @Override
     public void addAllBeneficiaries(Collection<Beneficiary> list) {
 	list.stream().forEach(b -> addBeneficiary(b));
     }
 
+    @Override
     public Collection<Beneficiary> beneficiaries() {
 	return benefiaries.values();
     }
 
+    @Override
     public void addBeneficiary(Beneficiary beneficiary) {
 	if (checkDuplicate(beneficiary)) {
 	    benefiaries.put(beneficiary.getId(), beneficiary);
@@ -182,11 +188,28 @@ public class BankContainer {
 	return result;
     }
 
+    @Override
     public Beneficiary getBeneficiaryByCounterpartyDetails(String id) {
 	return benefiariesByCounterpartyDetails.get(id);
     }
 
+    @Override
     public Beneficiary getBeneficiary(String id) {
 	return benefiaries.get(id);
+    }
+
+    @Override
+    public String creationDate() {
+	return creationDate;
+    }
+
+    @Override
+    public List<BankSummary> operationsByCategory() {
+	return operationsByCategory.stream().sorted().collect(Collectors.toList());
+    }
+
+    @Override
+    public OperationsContainerInterface operationsContainer() {
+	return OperationsContainer.me();
     }
 }

@@ -11,7 +11,7 @@ public class MapCounterpartyToLabel implements LabelActivity {
     @Override
     public void run() {
 	counterparties = BankConfiguration.me().getCounterpartiesLabelsMapping();
-	BankContainer.me().operations().stream()
+	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> counterparties.map(o.getCounterparty()) != null)
 		.forEach(o -> o.getLabels().add(counterparties.map(o.getCounterparty())));
     }

@@ -11,6 +11,7 @@ import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
+import sst.bank.model.container.ContainerInterface;
 import sst.bank.model.transfer.TransferObject;
 
 @Log4j
@@ -20,10 +21,10 @@ public class OperationsLoader implements BankActivity {
     public void run() {
 	TransferObject to = load();
 	if (to != null) {
-	    BankContainer container = BankContainer.me();
-	    container.setCreationDate(to.getCreationDate());
-	    container.setLastId(to.getLastId());
-	    container.addOperations(to.getOperations()
+	    ContainerInterface container = BankContainer.me();
+	    container.initCreationDate(to.getCreationDate());
+	    container.initLastId(to.getLastId());
+	    container.operationsContainer().addOperations(to.getOperations()
 		    .stream()
 		    .map(o -> o.toOperation())
 		    .collect(Collectors.toList()));

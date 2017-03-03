@@ -6,7 +6,6 @@ import java.time.Month;
 import java.time.Period;
 import java.time.Year;
 
-import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
 import sst.bank.model.Operation;
@@ -14,7 +13,6 @@ import sst.bank.model.Operation.OperationType;
 import sst.bank.model.OperationLabel;
 import sst.bank.model.container.BankContainer;
 
-@Log4j
 public class OperationsDefaulter implements BankActivity {
 
     @Override
@@ -22,7 +20,7 @@ public class OperationsDefaulter implements BankActivity {
 	OperationLabel label = BankContainer.me().label("Visa");
 	if (label != null) {
 
-	    BankContainer.me().operations()
+	    BankContainer.me().operationsContainer().operations()
 		    .stream()
 		    .filter(o -> o.getLabels().contains(label))
 		    .filter(o -> o.getAmount().compareTo(BigDecimal.ZERO) != 0)
@@ -36,7 +34,7 @@ public class OperationsDefaulter implements BankActivity {
 	    final Month month = Month.from(execDate).minus(1);
 	    Year year = (Month.DECEMBER.equals(month)) ? Year.from(execDate).minus(Period.ofYears(1))
 		    : Year.from(execDate);
-	    Double visaSum = BankContainer.me().operations()
+	    Double visaSum = BankContainer.me().operationsContainer().operations()
 		    .stream()
 		    .filter(o -> Month.from(o.getExecutionDate()).equals(month)
 			    && Year.from(o.getExecutionDate()).equals(year))

@@ -17,7 +17,7 @@ public class OperationsGrouper implements BankActivity {
     @Override
     public void run() {
 
-	List<String> mois = BankContainer.me().operations().stream()
+	List<String> mois = BankContainer.me().operationsContainer().operations().stream()
 		.map(o -> o.getValueDate().format(dtf_month))
 		.distinct()
 		.sorted()
@@ -25,7 +25,7 @@ public class OperationsGrouper implements BankActivity {
 
 	mois.stream().forEach(m -> groupOperationsByMonth(m));
 
-	List<String> years = BankContainer.me().operations().stream()
+	List<String> years = BankContainer.me().operationsContainer().operations().stream()
 		.map(o -> o.getValueDate().format(dtf_year))
 		.distinct()
 		.sorted()
@@ -37,7 +37,7 @@ public class OperationsGrouper implements BankActivity {
     }
 
     private void groupOperationsByMonth(String m) {
-	List<Operation> collect = BankContainer.me().operations().stream()
+	List<Operation> collect = BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getValueDate().format(dtf_month).equals(m))
 		.sorted()
 		.collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class OperationsGrouper implements BankActivity {
     }
 
     private void groupOperationsByYear(String m) {
-	List<Operation> collect = BankContainer.me().operations().stream()
+	List<Operation> collect = BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getValueDate().format(dtf_year).equals(m))
 		.sorted()
 		.collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class OperationsGrouper implements BankActivity {
     }
 
     private void groupOperationsByCategory(Category c) {
-	List<Operation> collect = BankContainer.me().operations()
+	List<Operation> collect = BankContainer.me().operationsContainer().operations()
 		.stream()
 		.filter(o -> o.getCategory().equals(c))
 		.sorted()
