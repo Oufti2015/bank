@@ -6,6 +6,7 @@ import java.util.List;
 import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
+import sst.bank.activities.a.config.LabelsLoader;
 import sst.bank.activities.b.loading.OperationsLoader;
 import sst.bank.activities.d.categorising.OperationCategoriser;
 import sst.bank.activities.e.labelling.OperationLabeller;
@@ -18,6 +19,7 @@ public class ReadOnlyLifeCycle extends LifeCycle {
 	return Arrays.asList(
 		new ActivityPhase(Phase.CONFIG,
 			new CategoriesLoader(),
+			new LabelsLoader(),
 			new Configurator()),
 		new ActivityPhase(Phase.LOADING,
 			new OperationsLoader()),

@@ -1,5 +1,7 @@
 package sst.bank.activities.c.parsing.pcBanking;
 
+import com.google.common.base.Strings;
+
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.loader.interfaces.RecordFormatter;
@@ -11,7 +13,10 @@ public class PCBankingParser implements RecordFormatter, RecordSelector {
     public boolean select(String record) {
 	if (record != null) {
 	    String[] array = record.split(";", -2);
-	    return array.length == 9 && !record.contains("ANNEE + REFERENCE");
+	    return array.length == 8
+		    && !Strings.isNullOrEmpty(array[0])
+		    && array[0].length() == 9
+		    && !record.contains("cution;Date valeur;Montant;Devise du compte;D");
 	}
 	return false;
     }

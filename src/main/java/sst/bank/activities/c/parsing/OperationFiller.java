@@ -76,7 +76,7 @@ public class OperationFiller implements BankActivity {
 	    int i = 0;
 	    String result = "";
 	    while (i < group.length()) {
-		result += group.substring(i, i + 4) + " ";
+		result += group.substring(i, (i + 4 > group.length()) ? group.length() : i + 4) + " ";
 		i += 4;
 	    }
 	    return result.trim();

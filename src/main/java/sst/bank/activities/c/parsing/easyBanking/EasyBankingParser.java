@@ -12,7 +12,7 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
     @Override
     public boolean select(String record) {
 	String[] array = record.split(";", -2);
-	return array.length == 7
+	return array.length == 8
 		&& !Strings.isNullOrEmpty(array[0])
 		&& array[0].length() == 9
 		&& !record.contains("cution;Date valeur;Montant;Devise du compte;D")

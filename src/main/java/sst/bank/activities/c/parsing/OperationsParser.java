@@ -43,7 +43,7 @@ public class OperationsParser implements BankActivity {
     public void run() {
 	FileLoader fl = FileLoader.getInstance();
 	addPCBankingParser(fl);
-	addEasyBankingParser(fl);
+	// addEasyBankingParser(fl);
 	addVISAParsers(fl);
 
 	File[] fileList = readInputDir();
