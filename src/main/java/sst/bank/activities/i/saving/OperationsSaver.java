@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.config.GsonUtils;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.transfer.OperationTO;
 import sst.bank.model.transfer.TransferObject;
+import sst.common.file.output.OutputFile;
 
 @Log4j
 public class OperationsSaver implements BankActivity {
@@ -40,10 +40,9 @@ public class OperationsSaver implements BankActivity {
     }
 
     private void save(TransferObject to) {
-	ObjectMapper mapper = new ObjectMapper();
-	try {
+	try (OutputFile file = new OutputFile(new File(BankConfiguration.me().getOperationsJson()))) {
 	    // Object to JSON in file
-	    mapper.writeValue(new File(BankConfiguration.me().getOperationsJson()), to);
+	    file.println(GsonUtils.buildGson().toJson(to));
 	} catch (IOException e) {
 	    log.fatal("Cannot write file " + BankConfiguration.me().getOperationsJson(), e);
 	    OuftiBank.eventBus.post(e);

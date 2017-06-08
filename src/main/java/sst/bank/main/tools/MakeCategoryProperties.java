@@ -1,13 +1,11 @@
 package sst.bank.main.tools;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import sst.bank.activities.LifeCycleInterface;
+import sst.bank.activities.i.saving.CategoriesSaver;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.Budget;
@@ -26,14 +24,7 @@ public class MakeCategoryProperties {
     }
 
     private void exportToJSON() {
-	try {
-	    ObjectMapper mapper = new ObjectMapper();
-
-	    // Object to JSON in file
-	    mapper.writeValue(new File(BankConfiguration.me().getCategoriesJson()), BankContainer.me().getCategories());
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+	new CategoriesSaver().run();
     }
 
     private void exportToPropertyFile() {

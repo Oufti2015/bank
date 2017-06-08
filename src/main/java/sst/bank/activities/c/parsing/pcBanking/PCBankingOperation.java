@@ -4,13 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import lombok.Getter;
 import lombok.Setter;
-import sst.bank.config.LocalDateDeserializer;
-import sst.bank.config.LocalDateSerializer;
 import sst.common.file.parser.Parser;
 
 public class PCBankingOperation {
@@ -18,13 +13,9 @@ public class PCBankingOperation {
     private String fortisId;
     @Getter
     @Setter
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate executionDate;
     @Getter
     @Setter
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate valueDate;
     @Getter
     @Setter

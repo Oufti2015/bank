@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
+import sst.bank.config.GsonUtils;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.container.ContainerInterface;
 import sst.bank.model.transfer.TransferObject;
+import sst.textfile.InputTextFile;
+import sst.textfile.InputTextFileImpl;
 
 @Log4j
 public class OperationsLoader implements BankActivity {
@@ -36,12 +37,12 @@ public class OperationsLoader implements BankActivity {
     }
 
     private TransferObject load() {
-	ObjectMapper mapper = new ObjectMapper();
 	TransferObject to = null;
 
 	// JSON from file to Object
 	try {
-	    to = mapper.readValue(new File(BankConfiguration.me().getOperationsJson()), TransferObject.class);
+	    InputTextFile textFile = new InputTextFileImpl(new File(BankConfiguration.me().getOperationsJson()));
+	    to = GsonUtils.buildGson().fromJson(textFile.oneLine(), TransferObject.class);
 	} catch (IOException e) {
 	    log.fatal("Cannot read file " + BankConfiguration.me().getOperationsJson(), e);
 	    OuftiBank.eventBus.post(e);
