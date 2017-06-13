@@ -44,14 +44,17 @@ public class Operation implements Comparable<Operation> {
 
     @Override
     public boolean equals(Object obj) {
-	Operation second = (Operation) obj;
+	if (obj != null) {
+	    Operation second = (Operation) obj;
 
-	if (second.getFortisId() != null && getFortisId() != null) {
-	    return second.getFortisId().equals(getFortisId());
+	    if (second.getFortisId() != null && getFortisId() != null) {
+		return second.getFortisId().equals(getFortisId());
+	    }
+	    return second.getAmount().equals(getAmount())
+		    && second.getExecutionDate().equals(getExecutionDate())
+		    && second.getValueDate().equals(getValueDate());
 	}
-	return second.getAmount().equals(getAmount())
-		&& second.getExecutionDate().equals(getExecutionDate())
-		&& second.getValueDate().equals(getValueDate());
+	return false;
     }
 
     @Override

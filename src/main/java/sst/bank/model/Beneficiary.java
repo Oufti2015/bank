@@ -1,12 +1,13 @@
 package sst.bank.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class Beneficiary implements Comparable<Beneficiary> {
+public class Beneficiary implements Comparable<Beneficiary>, Serializable {
     private String id;
     private String name;
     private List<String> counterparties = new ArrayList<>();

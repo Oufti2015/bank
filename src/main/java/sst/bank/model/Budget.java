@@ -1,5 +1,6 @@
 package sst.bank.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
@@ -7,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import sst.bank.config.BankUtils;
 
-public class Budget {
+public class Budget implements Serializable {
     private static final int MONTHS_COUNT = 12;
 
     public enum BudgetFrequencyType {
