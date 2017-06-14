@@ -1,4 +1,4 @@
-package sst.bank.activities.h.printing.bycategory;
+package sst.bank.activities.i.printing.bycategory;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
-import sst.bank.activities.h.printing.OperationsIntoTableConverter;
-import sst.bank.activities.h.printing.SumRowIntoTableConverter;
-import sst.bank.activities.h.printing.SummaryIntoTableConverter;
-import sst.bank.activities.h.printing.SummarySumRowIntoTableConverter;
-import sst.bank.activities.h.printing.TotalAmountSummers;
+import sst.bank.activities.i.printing.OperationsIntoTableConverter;
+import sst.bank.activities.i.printing.SumRowIntoTableConverter;
+import sst.bank.activities.i.printing.SummaryIntoTableConverter;
+import sst.bank.activities.i.printing.SummarySumRowIntoTableConverter;
+import sst.bank.activities.i.printing.TotalAmountSummers;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.BankSummary;

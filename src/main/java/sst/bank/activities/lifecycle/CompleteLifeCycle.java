@@ -14,14 +14,15 @@ import sst.bank.activities.c.parsing.OperationsParser;
 import sst.bank.activities.d.categorising.OperationCategoriser;
 import sst.bank.activities.e.labelling.OperationLabeller;
 import sst.bank.activities.e.labelling.OperationsDefaulter;
-import sst.bank.activities.f.grouping.OperationsGrouper;
-import sst.bank.activities.g.budgeting.OperationBudgeter;
-import sst.bank.activities.h.printing.DefaultCategoriesPrinter;
-import sst.bank.activities.h.printing.bycategory.OperationsPrinterByCategory;
-import sst.bank.activities.h.printing.bydate.OperationsPrinterByDate;
-import sst.bank.activities.i.saving.CategoriesSaver;
-import sst.bank.activities.i.saving.LabelsSaver;
-import sst.bank.activities.i.saving.OperationsSaver;
+import sst.bank.activities.f.projectsSelecting.ProjectsSelecter;
+import sst.bank.activities.g.grouping.OperationsGrouper;
+import sst.bank.activities.h.budgeting.OperationBudgeter;
+import sst.bank.activities.i.printing.DefaultCategoriesPrinter;
+import sst.bank.activities.i.printing.bycategory.OperationsPrinterByCategory;
+import sst.bank.activities.i.printing.bydate.OperationsPrinterByDate;
+import sst.bank.activities.j.saving.CategoriesSaver;
+import sst.bank.activities.j.saving.LabelsSaver;
+import sst.bank.activities.j.saving.OperationsSaver;
 
 public class CompleteLifeCycle extends LifeCycle {
 
@@ -49,6 +50,8 @@ public class CompleteLifeCycle extends LifeCycle {
 			new OperationsDefaulter()),
 		new ActivityPhase(Phase.GROUPING,
 			new OperationsGrouper()),
+		new ActivityPhase(Phase.PROJECTS,
+			new ProjectsSelecter()),
 		new ActivityPhase(Phase.BUDGETING,
 			new OperationBudgeter()),
 		new ActivityPhase(Phase.PRINTING,

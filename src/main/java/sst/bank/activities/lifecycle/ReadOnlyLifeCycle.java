@@ -10,7 +10,7 @@ import sst.bank.activities.a.config.LabelsLoader;
 import sst.bank.activities.b.loading.OperationsLoader;
 import sst.bank.activities.d.categorising.OperationCategoriser;
 import sst.bank.activities.e.labelling.OperationLabeller;
-import sst.bank.activities.f.grouping.OperationsGrouper;
+import sst.bank.activities.g.grouping.OperationsGrouper;
 
 public class ReadOnlyLifeCycle extends LifeCycle {
 

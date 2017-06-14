@@ -1,6 +1,6 @@
-package sst.bank.activities.h.printing;
+package sst.bank.activities.i.printing;
 
-import sst.bank.activities.h.printing.TotalAmountSummers.SummerType;
+import sst.bank.activities.i.printing.TotalAmountSummers.SummerType;
 import sst.bank.components.AmountCellInfo;
 import sst.bank.model.BankSummary;
 import sst.common.html.table.builders.CellInfo;

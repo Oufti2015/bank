@@ -8,7 +8,7 @@ public interface OperationsContainerInterface {
 
     public List<Operation> operations();
 
-    public void addOperation(Operation operation);
+    public void add(Operation operation);
 
-    public void addOperations(List<Operation> list);
+    public void addAll(List<Operation> list);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.Data;
 import sst.bank.model.Beneficiary;
+import sst.bank.model.Project;
 
 @Data
 public class TransferObject implements Serializable {
@@ -14,4 +15,5 @@ public class TransferObject implements Serializable {
     private List<OperationTO> operations = new ArrayList<>();
     private String creationDate;
     private List<Beneficiary> beneficiaries = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 }

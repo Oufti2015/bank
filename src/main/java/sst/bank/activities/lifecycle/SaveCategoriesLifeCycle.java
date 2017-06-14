@@ -6,10 +6,10 @@ import java.util.List;
 import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.d.categorising.OperationCategoriser;
 import sst.bank.activities.e.labelling.OperationLabeller;
-import sst.bank.activities.f.grouping.OperationsGrouper;
-import sst.bank.activities.g.budgeting.OperationBudgeter;
-import sst.bank.activities.i.saving.CategoriesSaver;
-import sst.bank.activities.i.saving.OperationsSaver;
+import sst.bank.activities.g.grouping.OperationsGrouper;
+import sst.bank.activities.h.budgeting.OperationBudgeter;
+import sst.bank.activities.j.saving.CategoriesSaver;
+import sst.bank.activities.j.saving.OperationsSaver;
 
 public class SaveCategoriesLifeCycle extends LifeCycle {
 

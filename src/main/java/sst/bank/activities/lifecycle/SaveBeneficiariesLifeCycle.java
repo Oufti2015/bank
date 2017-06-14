@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import sst.bank.activities.ActivityPhase;
-import sst.bank.activities.i.saving.OperationsSaver;
+import sst.bank.activities.j.saving.OperationsSaver;
 
 public class SaveBeneficiariesLifeCycle extends LifeCycle {
 

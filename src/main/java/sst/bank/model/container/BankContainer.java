@@ -212,4 +212,9 @@ public class BankContainer implements ContainerInterface {
     public OperationsContainerInterface operationsContainer() {
 	return OperationsContainer.me();
     }
+
+    @Override
+    public ProjectsContainerInterface projectsContainer() {
+	return ProjectsContainer.me();
+    }
 }

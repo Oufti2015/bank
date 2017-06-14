@@ -1,5 +1,6 @@
 package sst.bank.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Operation implements Comparable<Operation> {
+public class Operation implements Comparable<Operation>, Serializable {
     public enum OperationType {
 	CASUAL, VISA
     };

@@ -1,8 +1,8 @@
-package sst.bank.activities.h.printing;
+package sst.bank.activities.i.printing;
 
 import java.math.BigDecimal;
 
-import sst.bank.activities.h.printing.TotalAmountSummers.SummerType;
+import sst.bank.activities.i.printing.TotalAmountSummers.SummerType;
 import sst.bank.components.AmountCellInfo;
 import sst.bank.components.NegatifAmountCellInfo;
 import sst.bank.components.PositifAmountCellInfo;

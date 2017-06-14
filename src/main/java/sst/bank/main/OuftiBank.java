@@ -50,6 +50,7 @@ public class OuftiBank { // NO_UCD (unused code)
 	log.info("CATEGORIES    : " + BankContainer.me().getCategories().size());
 	log.info("LABELS        : " + BankContainer.me().getLabels().size());
 	log.info("BENEFICIARIES : " + BankContainer.me().beneficiaries().size());
+	log.info("PROJECTS      : " + BankContainer.me().projectsContainer().projects().size());
     }
 
     @Subscribe

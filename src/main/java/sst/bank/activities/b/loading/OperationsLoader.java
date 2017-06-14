@@ -25,11 +25,12 @@ public class OperationsLoader implements BankActivity {
 	    ContainerInterface container = BankContainer.me();
 	    container.initCreationDate(to.getCreationDate());
 	    container.initLastId(to.getLastId());
-	    container.operationsContainer().addOperations(to.getOperations()
+	    container.operationsContainer().addAll(to.getOperations()
 		    .stream()
 		    .map(o -> o.toOperation())
 		    .collect(Collectors.toList()));
 	    container.addAllBeneficiaries(to.getBeneficiaries());
+	    container.projectsContainer().addAll(to.getProjects());
 
 	    log.info("" + to.getOperations().size() + " operations loaded.");
 	    log.info("" + to.getBeneficiaries().size() + " beneficiariess loaded.");

@@ -27,12 +27,12 @@ public class OperationsContainer implements OperationsContainerInterface {
     }
 
     @Override
-    public void addOperation(Operation operation) {
+    public void add(Operation operation) {
 	operations.add(operation);
     }
 
     @Override
-    public void addOperations(List<Operation> list) {
+    public void addAll(List<Operation> list) {
 	operations.addAll(list);
     }
 }

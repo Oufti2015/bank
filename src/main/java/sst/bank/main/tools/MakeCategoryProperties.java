@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import sst.bank.activities.LifeCycleInterface;
-import sst.bank.activities.i.saving.CategoriesSaver;
+import sst.bank.activities.j.saving.CategoriesSaver;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
 import sst.bank.model.Budget;

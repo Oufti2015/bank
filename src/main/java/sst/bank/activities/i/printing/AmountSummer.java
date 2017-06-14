@@ -1,4 +1,4 @@
-package sst.bank.activities.h.printing;
+package sst.bank.activities.i.printing;
 
 public class AmountSummer {
 

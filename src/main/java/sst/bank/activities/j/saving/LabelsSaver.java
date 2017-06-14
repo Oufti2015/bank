@@ -1,4 +1,4 @@
-package sst.bank.activities.i.saving;
+package sst.bank.activities.j.saving;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,15 +12,15 @@ import sst.bank.model.container.BankContainer;
 import sst.common.file.output.OutputFile;
 
 @Log4j
-public class CategoriesSaver implements BankActivity {
+public class LabelsSaver implements BankActivity {
 
     @Override
     public void run() {
-	try (OutputFile file = new OutputFile(new File(BankConfiguration.me().getCategoriesJson()))) {
+	try (OutputFile file = new OutputFile(new File(BankConfiguration.me().getLabelsJson()))) {
 	    // Object to JSON in file
-	    file.println(GsonUtils.buildGson().toJson(BankContainer.me().getCategories()));
+	    file.println(GsonUtils.buildGson().toJson(BankContainer.me().getLabels()));
 	} catch (IOException e) {
-	    log.fatal("Cannot save " + BankConfiguration.me().getCategoriesJson(), e);
+	    log.fatal("Cannot save " + BankConfiguration.me().getLabelsJson(), e);
 	    OuftiBank.eventBus.post(e);
 	}
     }

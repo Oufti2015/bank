@@ -26,6 +26,10 @@ public interface ContainerInterface {
 
     public OperationsContainerInterface operationsContainer();
 
+    /* Project */
+
+    public ProjectsContainerInterface projectsContainer();
+
     /* Category */
     public Category category(String categoryName);
 

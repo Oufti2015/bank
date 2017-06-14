@@ -1,4 +1,4 @@
-package sst.bank.activities.i.saving;
+package sst.bank.activities.j.saving;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +32,8 @@ public class OperationsSaver implements BankActivity {
 		.stream()
 		.map(o -> OperationTO.fromOperation(o))
 		.forEach(t -> to.getOperations().add(t));
-	BankContainer.me().beneficiaries()
-		.stream()
-		.forEach(t -> to.getBeneficiaries().add(t));
+	to.getBeneficiaries().addAll(BankContainer.me().beneficiaries());
+	to.getProjects().addAll(BankContainer.me().projectsContainer().projects());
 
 	return to;
     }
