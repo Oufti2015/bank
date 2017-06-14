@@ -11,4 +11,8 @@ public interface OperationsContainerInterface {
     public void add(Operation operation);
 
     public void addAll(List<Operation> list);
+
+    public Operation get(String id);
+
+    public Operation get(Integer id);
 }
