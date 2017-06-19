@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -28,6 +30,7 @@ public class Project implements Serializable, Comparable<Project> {
 
     @Override
     public String toString() {
-	return name + " (" + Month.from(startDate) + " " + Year.from(startDate) + ")";
+	return name + " (" + Month.from(startDate).getDisplayName(TextStyle.FULL, Locale.FRENCH) + " "
+		+ Year.from(startDate) + ")";
     }
 }
