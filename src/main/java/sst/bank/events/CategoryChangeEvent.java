@@ -8,7 +8,7 @@ public class CategoryChangeEvent {
     private Category category;
 
     public CategoryChangeEvent(Category category) {
-	super();
-	this.category = category;
+        super();
+        this.category = category;
     }
 }

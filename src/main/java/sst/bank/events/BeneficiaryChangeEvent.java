@@ -8,7 +8,7 @@ public class BeneficiaryChangeEvent {
     private Beneficiary beneficiary;
 
     public BeneficiaryChangeEvent(Beneficiary beneficiary) {
-	super();
-	this.beneficiary = beneficiary;
+        super();
+        this.beneficiary = beneficiary;
     }
 }

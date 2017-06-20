@@ -38,6 +38,7 @@ public class ProjectsSelecter implements BankActivity {
     private void createCategoriesList() {
 	if (unselectedCategories.isEmpty()) {
 	    unselectedCategories.add(BankContainer.me().category("BANK"));
+	    unselectedCategories.add(BankContainer.me().category("DOG"));
 	    unselectedCategories.add(BankContainer.me().category("EPARGNE"));
 	    unselectedCategories.add(BankContainer.me().category("HOUSE"));
 	    unselectedCategories.add(BankContainer.me().category("ASSURANCES"));
