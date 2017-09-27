@@ -42,7 +42,7 @@ public class OuftiBank { // NO_UCD (unused code)
     }
 
     private void run() {
-	LifeCycleInterface.runCompleteLifeCyle();
+	LifeCycleInterface.runPrintLifeCyle();
 
 	log.info("OPERATIONS    : " + BankContainer.me().operationsContainer().operations().size());
 	log.info("MONTHS        : " + BankContainer.me().operationsByMonth().size());

@@ -17,13 +17,17 @@ import sst.bank.activities.e.labelling.OperationsDefaulter;
 import sst.bank.activities.f.projectsSelecting.ProjectsSelecter;
 import sst.bank.activities.g.grouping.OperationsGrouper;
 import sst.bank.activities.h.budgeting.OperationBudgeter;
+import sst.bank.activities.i.printing.DefaultCategoriesPrinter;
+import sst.bank.activities.i.printing.budget.BudgetPrinterActivity;
+import sst.bank.activities.i.printing.bycategory.OperationsPrinterByCategory;
+import sst.bank.activities.i.printing.bydate.OperationsPrinterByDate;
 import sst.bank.activities.j.saving.CategoriesSaver;
 import sst.bank.activities.j.saving.LabelsSaver;
 import sst.bank.activities.j.saving.OperationsSaver;
 
-public class CompleteLifeCycle extends LifeCycle {
+public class PrintLifeCycle extends LifeCycle {
 
-    public CompleteLifeCycle() {
+    public PrintLifeCycle() {
     }
 
     @Override
@@ -51,6 +55,11 @@ public class CompleteLifeCycle extends LifeCycle {
 			new ProjectsSelecter()),
 		new ActivityPhase(Phase.BUDGETING,
 			new OperationBudgeter()),
+		new ActivityPhase(Phase.PRINTING,
+			new OperationsPrinterByDate(),
+			new OperationsPrinterByCategory(),
+			new DefaultCategoriesPrinter(),
+			new BudgetPrinterActivity()),
 		new ActivityPhase(Phase.SAVING,
 			new OperationsSaver(),
 			new CategoriesSaver(),

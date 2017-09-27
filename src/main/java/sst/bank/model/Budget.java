@@ -9,7 +9,7 @@ import lombok.Setter;
 import sst.bank.config.BankUtils;
 
 public class Budget implements Serializable {
-    private static final int MONTHS_COUNT = 12;
+    public static final int MONTHS_COUNT = 12;
 
     public enum BudgetFrequencyType {
 	YEARLY, MONTHLY
