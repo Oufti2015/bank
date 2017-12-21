@@ -11,6 +11,8 @@ import sst.bank.activities.c.parsing.easyBanking.EasyBankingOperation;
 import sst.bank.activities.c.parsing.easyBanking.EasyBankingParser;
 import sst.bank.activities.c.parsing.pcBanking.PCBankingOperation;
 import sst.bank.activities.c.parsing.pcBanking.PCBankingParser;
+import sst.bank.activities.c.parsing.visa.VISA2Operation;
+import sst.bank.activities.c.parsing.visa.VISA2Parser;
 import sst.bank.activities.c.parsing.visa.VISAFirstLine;
 import sst.bank.activities.c.parsing.visa.VISAFirstLineParser;
 import sst.bank.activities.c.parsing.visa.VISASecondLine;
@@ -44,7 +46,8 @@ public class OperationsParser implements BankActivity {
 	FileLoader fl = FileLoader.getInstance();
 	addPCBankingParser(fl);
 	// addEasyBankingParser(fl);
-	addVISAParsers(fl);
+	// addVISAParsers(fl);
+	addVISA2Parsers(fl);
 
 	File[] fileList = readInputDir();
 	if (fileList != null) {
@@ -56,6 +59,12 @@ public class OperationsParser implements BankActivity {
 		file.renameTo(new File(archiveFileName(file)));
 	    }
 	}
+    }
+
+    private void addVISA2Parsers(FileLoader fl) {
+	VISA2Parser visaParser1 = new VISA2Parser();
+	fl.addRecordFormat(visaParser1,
+		new GenericParser(VISA2Operation.class).delimiter(";").removeQuotes(true).trim(true), visaParser1);
     }
 
     private void addVISAParsers(FileLoader fl) {

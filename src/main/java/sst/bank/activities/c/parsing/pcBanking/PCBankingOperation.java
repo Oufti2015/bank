@@ -59,9 +59,13 @@ public class PCBankingOperation {
 
     @Parser(position = 3)
     public void setAmountString(String amount) {
-	setAmount(new BigDecimal(amount
-		.replaceAll("\\.", "")
-		.replaceAll(",", ".")));
+	String replaceAll = amount;
+	if (amount.contains(",")) {
+	    replaceAll = amount
+		    .replaceAll("\\.", "")
+		    .replaceAll(",", ".");
+	}
+	setAmount(new BigDecimal(replaceAll));
     }
 
     @Parser(position = 4)

@@ -27,8 +27,9 @@ public class ProjectsSelecter implements BankActivity {
 	    List<Operation> subSet = operations.stream()
 		    .filter(o -> o.getValueDate().compareTo(project.getStartDate()) >= 0)
 		    .filter(o -> o.getValueDate().compareTo(project.getEndDate()) <= 0)
-		    .filter(o -> o.getCategory() == null || !unselectedCategories.contains(o.getCategory()))
+		    .filter(o -> o.getCategory() == null)
 		    .collect(Collectors.toList());
+	    subSet.stream().forEach(o -> o.setCategory(BankContainer.me().category("PROJECT")));
 	    project.getOperations().addAll(subSet);
 
 	    log.info("Project : " + project + " (" + subSet.size() + " operations.)");

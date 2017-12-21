@@ -42,7 +42,13 @@ public class EasyBankingParser implements RecordFormatter, RecordSelector {
 	    BankContainer.me().operationsContainer().operations()
 		    .stream()
 		    .filter(o -> o.equals(operation))
-		    .forEach(o -> o.setFortisId(operation.getFortisId()));
+		    .forEach(o -> {
+			System.out.println("Operation updated ! Amount : old : " + o.getAmount() + " / new : "
+				+ operation.getAmount());
+			o.setFortisId(operation.getFortisId());
+			o.setAmount(operation.getAmount());
+			System.out.println("Operation updated : " + o);
+		    });
 	}
     }
 }

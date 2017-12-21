@@ -1,4 +1,4 @@
-package sst.bank.activities.c.parsing.easyBanking;
+package sst.bank.activities.c.parsing.visa;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import sst.common.file.parser.Parser;
 
-public class EasyBankingOperation {
-    @Getter
-    private String fortisId;
+public class VISA2Operation {
     @Getter
     @Setter
     private LocalDate executionDate;
@@ -25,24 +23,18 @@ public class EasyBankingOperation {
     @Getter
     private String detail;
     @Getter
-    private String account;
-
-    public EasyBankingOperation() {
-    }
+    private String tauxDeChange;
+    @Getter
+    private String coutAssocie;
 
     public DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Parser(position = 0)
-    public void setFortisId(String fortisId) {
-	this.fortisId = fortisId;
-    }
-
-    @Parser(position = 1)
     public void setExecutionDateString(String executionDate) {
 	setExecutionDate(LocalDate.parse(executionDate, dtf));
     }
 
-    @Parser(position = 2)
+    @Parser(position = 1)
     public void setValueDateString(String valueDate) {
 	setValueDate(LocalDate.parse(valueDate, dtf));
     }
@@ -55,7 +47,7 @@ public class EasyBankingOperation {
 	return dtf.format(valueDate);
     }
 
-    @Parser(position = 3)
+    @Parser(position = 2)
     public void setAmountString(String amount) {
 	String replaceAll = amount;
 	if (amount.contains(",")) {
@@ -64,18 +56,24 @@ public class EasyBankingOperation {
 	setAmount(new BigDecimal(replaceAll));
     }
 
-    @Parser(position = 4)
+    @Parser(position = 3)
     public void setCurrency(String currency) {
 	this.currency = currency;
     }
 
-    @Parser(position = 5)
+    @Parser(position = 4)
     public void setDetail(String detail) {
 	this.detail = detail;
     }
 
-    @Parser(position = 6)
-    public void setAccount(String account) {
-	this.account = account;
+    @Parser(position = 5)
+    public void setTauxDeChange(String tauxDeChange) {
+	this.tauxDeChange = tauxDeChange;
     }
+
+    @Parser(position = 6)
+    public void setCoutAssocie(String coutAssocie) {
+	this.coutAssocie = coutAssocie;
+    }
+
 }
