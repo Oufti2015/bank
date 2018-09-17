@@ -45,11 +45,13 @@ public class PCBankingParser implements RecordFormatter, RecordSelector {
 		    .stream()
 		    .filter(o -> o.equals(op))
 		    .forEach(o -> {
-			log.info("Operation updated ! Amount : old : " + o.getAmount() + " / new : "
-				+ op.getAmount());
+			/*
+			 * log.info("Operation updated ! Amount : old : " +
+			 * o.getAmount() + " / new : " + op.getAmount());
+			 */
 			o.setFortisId(op.getFortisId());
 			o.setAmount(op.getAmount());
-			log.info("Operation updated : " + o);
+			// log.info("Operation updated : " + o);
 		    });
 	}
     }
