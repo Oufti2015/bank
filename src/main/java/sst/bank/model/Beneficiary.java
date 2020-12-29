@@ -1,10 +1,10 @@
 package sst.bank.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Data;
 
 @Data
 public class Beneficiary implements Comparable<Beneficiary>, Serializable {
@@ -19,30 +19,30 @@ public class Beneficiary implements Comparable<Beneficiary>, Serializable {
     }
 
     public Beneficiary(String id) {
-	super();
-	this.id = id;
-	this.name = id;
+        super();
+        this.id = id;
+        this.name = id;
     }
 
     public Beneficiary counterparty(String counterparty) {
-	counterparties.add(counterparty);
-	details.remove(counterparty);
-	return this;
+        counterparties.add(counterparty);
+        details.remove(counterparty);
+        return this;
     }
 
     public Beneficiary detail(String detail) {
-	counterparties.remove(detail);
-	details.add(detail);
-	return this;
+        counterparties.remove(detail);
+        details.add(detail);
+        return this;
     }
 
     @Override
     public String toString() {
-	return name;
+        return name;
     }
 
     @Override
     public int compareTo(Beneficiary o) {
-	return name.compareTo(o.getName());
+        return name.compareTo(o.getName());
     }
 }

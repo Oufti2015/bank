@@ -1,22 +1,16 @@
 package sst.bank.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import sst.bank.model.Operation.OperationType;
+import sst.bank.model.container.BankContainer;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-
-import lombok.Getter;
-import lombok.Setter;
-import sst.bank.model.Operation.OperationType;
-import sst.bank.model.container.BankContainer;
+import java.util.*;
 
 public class BankSummary implements Comparable<BankSummary> {
     @Getter

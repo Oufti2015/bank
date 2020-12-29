@@ -1,18 +1,18 @@
 package sst.bank.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-
 @Data
 public class Operation implements Comparable<Operation>, Serializable {
     public enum OperationType {
-	CASUAL, VISA
-    };
+        CASUAL, VISA
+    }
 
     private OperationType operationType = OperationType.CASUAL;
     private Integer bankId;
@@ -27,52 +27,49 @@ public class Operation implements Comparable<Operation>, Serializable {
     private Category category;
     private List<OperationLabel> labels = new ArrayList<>();
 
-    public Operation() {
-    }
-
     @Override
     public int compareTo(Operation o) {
 
-	if (o.getFortisId() != null && getFortisId() != null) {
-	    return getFortisId().compareTo(o.getFortisId());
-	}
-	int c = getExecutionDate().compareTo(o.getExecutionDate());
-	if (c == 0) {
-	    return getValueDate().compareTo(o.getValueDate());
-	}
-	return c;
+        if (o.getFortisId() != null && getFortisId() != null) {
+            return getFortisId().compareTo(o.getFortisId());
+        }
+        int c = getExecutionDate().compareTo(o.getExecutionDate());
+        if (c == 0) {
+            return getValueDate().compareTo(o.getValueDate());
+        }
+        return c;
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (obj != null) {
-	    Operation second = (Operation) obj;
+        if (obj instanceof Operation) {
+            Operation second = (Operation) obj;
 
-	    if (second.getFortisId() != null && getFortisId() != null) {
-		return second.getFortisId().equals(getFortisId());
-	    }
-	    return second.getAmount().equals(getAmount())
-		    && second.getExecutionDate().equals(getExecutionDate())
-		    && second.getValueDate().equals(getValueDate());
-	}
-	return false;
+            if (second.getFortisId() != null && getFortisId() != null) {
+                return second.getFortisId().equals(getFortisId());
+            }
+            return second.getAmount().equals(getAmount())
+                    && second.getExecutionDate().equals(getExecutionDate())
+                    && second.getValueDate().equals(getValueDate());
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-	final int PRIME = 59;
-	int result = bankId;
+        final int PRIME = 59;
+        int result = bankId;
 
-	result = (result * PRIME) + (this.fortisId == null ? 43 : this.fortisId.hashCode());
-	result = (result * PRIME) + (this.executionDate == null ? 43 : this.executionDate.hashCode());
-	result = (result * PRIME) + (this.valueDate == null ? 43 : this.valueDate.hashCode());
-	result = (result * PRIME) + (this.amount == null ? 43 : this.amount.hashCode());
-	result = (result * PRIME) + (this.currency == null ? 43 : this.currency.hashCode());
-	result = (result * PRIME) + (this.counterparty == null ? 43 : this.counterparty.hashCode());
-	result = (result * PRIME) + (this.detail == null ? 43 : this.detail.hashCode());
-	result = (result * PRIME) + (this.account == null ? 43 : this.account.hashCode());
-	result = (result * PRIME) + (this.category == null ? 43 : this.category.hashCode());
+        result = (result * PRIME) + (this.fortisId == null ? 43 : this.fortisId.hashCode());
+        result = (result * PRIME) + (this.executionDate == null ? 43 : this.executionDate.hashCode());
+        result = (result * PRIME) + (this.valueDate == null ? 43 : this.valueDate.hashCode());
+        result = (result * PRIME) + (this.amount == null ? 43 : this.amount.hashCode());
+        result = (result * PRIME) + (this.currency == null ? 43 : this.currency.hashCode());
+        result = (result * PRIME) + (this.counterparty == null ? 43 : this.counterparty.hashCode());
+        result = (result * PRIME) + (this.detail == null ? 43 : this.detail.hashCode());
+        result = (result * PRIME) + (this.account == null ? 43 : this.account.hashCode());
+        result = (result * PRIME) + (this.category == null ? 43 : this.category.hashCode());
 
-	return result;
+        return result;
     }
 }

@@ -2,6 +2,7 @@ package sst.bank.activities.i.printing;
 
 import java.math.BigDecimal;
 
+import lombok.Getter;
 import sst.bank.activities.i.printing.TotalAmountSummers.SummerType;
 import sst.bank.components.AmountCellInfo;
 import sst.bank.components.NegatifAmountCellInfo;
@@ -12,7 +13,8 @@ import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
 public class SummaryIntoTableConverter implements IntoTableConverter {
-    public static final String[] headers = { "CATEGORY", "AMOUNT", "BUDGET", "DIFF." };
+    @Getter
+	private static final String[] headers = { "CATEGORY", "AMOUNT", "BUDGET", "DIFF." };
 
     private Category category;
     private BigDecimal amount;

@@ -5,14 +5,11 @@ import sst.bank.config.InvertedLabelProperties;
 import sst.bank.model.container.BankContainer;
 
 public class MapCounterpartyToLabel implements LabelActivity {
-
-    private static InvertedLabelProperties counterparties = null;
-
     @Override
     public void run() {
-	counterparties = BankConfiguration.me().getCounterpartiesLabelsMapping();
-	BankContainer.me().operationsContainer().operations().stream()
-		.filter(o -> counterparties.map(o.getCounterparty()) != null)
-		.forEach(o -> o.getLabels().add(counterparties.map(o.getCounterparty())));
+        InvertedLabelProperties counterparties = BankConfiguration.me().getCounterpartiesLabelsMapping();
+        BankContainer.me().operationsContainer().operations().stream()
+                .filter(o -> counterparties.map(o.getCounterparty()) != null)
+                .forEach(o -> o.getLabels().add(counterparties.map(o.getCounterparty())));
     }
 }

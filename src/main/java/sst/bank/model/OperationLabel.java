@@ -1,8 +1,8 @@
 package sst.bank.model;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 public class OperationLabel implements Comparable<OperationLabel>, Serializable {
@@ -11,6 +11,6 @@ public class OperationLabel implements Comparable<OperationLabel>, Serializable 
 
     @Override
     public int compareTo(OperationLabel label) {
-	return id.compareTo(label.id);
+        return id.compareTo(label.id);
     }
 }

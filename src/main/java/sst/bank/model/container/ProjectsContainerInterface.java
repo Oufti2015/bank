@@ -1,14 +1,14 @@
 package sst.bank.model.container;
 
-import java.util.List;
-
 import sst.bank.model.Project;
+
+import java.util.List;
 
 public interface ProjectsContainerInterface {
 
-    public List<Project> projects();
+    List<Project> projects();
 
-    public void add(Project operation);
+    void add(Project operation);
 
-    public void addAll(List<Project> list);
+    void addAll(List<Project> list);
 }

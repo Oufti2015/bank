@@ -36,6 +36,9 @@ public class LifeCycleInterface {
 	run(new PrintLifeCycle());
     }
 
+    private LifeCycleInterface() {
+    }
+
     private static void run(LifeCycle lifecycle) {
 	String lifeCycleName = lifecycle.getClass().getSimpleName();
 	log.info("Starting " + lifeCycleName + "...");

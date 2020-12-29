@@ -5,13 +5,10 @@ import sst.bank.model.Operation;
 import sst.bank.model.Operation.OperationType;
 import sst.bank.model.container.BankContainer;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OperationFiller implements BankActivity {
-    //DE13585501300001104488
     private final Pattern[] patternDetails = {
             Pattern.compile(".*((BE)\\d{14}).*"),
             Pattern.compile(".*((LU)\\d{18}).*"),
@@ -27,26 +24,15 @@ public class OperationFiller implements BankActivity {
 
     @Override
     public void run() {
-        BankContainer.me().operationsContainer().operations().stream().forEach(o -> fillOperation(o));
+        BankContainer.me().operationsContainer().operations().stream().forEach(this::fillOperation);
     }
 
     private void fillOperation(Operation o) {
-
         defaultCounterparty(o);
-        // correctVISADate(o);
-        return;
-    }
-
-    private void correctVISADate(Operation o) {
-        if ("CARTE VISA".equals(o.getCounterparty())) {
-            o.setExecutionDate(LocalDate.of(2016, Month.SEPTEMBER, 4));
-            o.setValueDate(LocalDate.of(2016, Month.SEPTEMBER, 4));
-            o.setCounterparty("RELEVE VISA");
-        }
     }
 
     private void defaultCounterparty(Operation o) {
-        if (o.getCounterparty() != null && (o.getCounterparty().startsWith("LU")) && o.getCounterparty().length() == 16) {
+        if (o.getCounterparty() != null && o.getCounterparty().startsWith("LU") && o.getCounterparty().length() == 16) {
             o.setCounterparty(null);
         }
 
@@ -64,26 +50,29 @@ public class OperationFiller implements BankActivity {
             }
 
             if (o.getCounterparty() != null) {
-                o.setCounterparty(
-                        formatCounterparty(o.getCounterparty(), countries[i], countriesForb[i], patternFormatted[i]));
+                o.setCounterparty(formatCounterparty(o.getCounterparty(), countries[i], countriesForb[i], patternFormatted[i]));
             }
         }
 
+        visa(o);
+    }
+
+    private void visa(Operation o) {
         if (o.getCounterparty() == null && OperationType.VISA.equals(o.getOperationType())) {
             o.setCounterparty("CARTE VISA");
         }
     }
 
     private String formatCounterparty(String group, String country, String countryForb, Pattern pattern) {
-        // System.out.println("group=" + group);
         Matcher matcher = pattern.matcher(group);
         if (!matcher.find() && group.startsWith(country) && !group.startsWith(countryForb)) {
             int i = 0;
-            String result = "";
+            StringBuilder bid = new StringBuilder();
             while (i < group.length()) {
-                result += group.substring(i, (i + 4 > group.length()) ? group.length() : i + 4) + " ";
+                bid.append(group.substring(i, Math.min(i + 4, group.length())) + " ");
                 i += 4;
             }
+            String result = bid.toString();
             return result.trim();
         }
         return group;

@@ -1,19 +1,19 @@
 package sst.bank.model;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 public class Category implements Comparable<Category>, Serializable {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
     public enum CategoryType {
-	POSITIF, NEGATIF
-    };
+        POSITIF, NEGATIF
+    }
 
     private String name;
     private String label;
@@ -27,50 +27,50 @@ public class Category implements Comparable<Category>, Serializable {
     private String fxName;
 
     public Category() {
-	super();
+        super();
     }
 
     public Category(String name, String label, String style) {
-	super();
-	this.label = label;
-	this.style = style;
-	this.name = name;
+        super();
+        this.label = label;
+        this.style = style;
+        this.name = name;
     }
 
     public Category(String name, String label, String style, CategoryType type) {
-	super();
-	this.name = name;
-	this.label = label;
-	this.style = style;
-	this.type = type;
+        super();
+        this.name = name;
+        this.label = label;
+        this.style = style;
+        this.type = type;
     }
 
     public Category(String name, String label, String style, CategoryType type, Budget budget,
-	    boolean defaultCategory) {
-	super();
-	this.name = name;
-	this.label = label;
-	this.style = style;
-	this.type = type;
-	this.budget = budget;
-	this.defaultCategory = defaultCategory;
+                    boolean defaultCategory) {
+        super();
+        this.name = name;
+        this.label = label;
+        this.style = style;
+        this.type = type;
+        this.budget = budget;
+        this.defaultCategory = defaultCategory;
     }
 
     @Override
     public int compareTo(Category o) {
-	return this.label.compareTo(o.label);
+        return this.label.compareTo(o.label);
     }
 
     public boolean isNegatif() {
-	return getType().equals(CategoryType.NEGATIF);
+        return getType().equals(CategoryType.NEGATIF);
     }
 
     @Override
     public String toString() {
-	return this.getFxName();
+        return this.getFxName();
     }
 
     public String getFxName() {
-	return (null == fxName) ? this.getLabel() : this.fxName;
+        return (null == fxName) ? this.getLabel() : this.fxName;
     }
 }

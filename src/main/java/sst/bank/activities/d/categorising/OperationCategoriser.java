@@ -23,7 +23,7 @@ public class OperationCategoriser implements BankActivity {
 
     @Override
     public void run() {
-	categories.stream().forEach(catAct -> runCategoriser(catAct));
+	categories.stream().forEach(this::runCategoriser);
     }
 
     private void runCategoriser(CategoryActivity catAct) {

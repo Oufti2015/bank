@@ -22,10 +22,9 @@ public class UtilisationIntoTableConverter implements IntoTableConverter {
         cellInfo[i++] = new CellInfo(category.getLabel(), category.getStyle());
         cellInfo[i++] = new AmountCellInfo(category.getBudget().yearlyControlledAmount(12));
 
-        for (int j = 0; j < utilisations.length; j++) {
-            cellInfo[i++] = new AmountCellInfo(utilisations[j]);
+        for (Double utilisation : utilisations) {
+            cellInfo[i++] = new AmountCellInfo(utilisation);
         }
         return cellInfo;
     }
-
 }

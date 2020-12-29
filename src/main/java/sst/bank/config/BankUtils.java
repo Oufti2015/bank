@@ -6,13 +6,16 @@ import java.text.NumberFormat;
 
 public abstract class BankUtils {
 
-    private final static NumberFormat formatting = new DecimalFormat("0.00");
+    private BankUtils() {
+    }
+
+    private static final NumberFormat formatting = new DecimalFormat("0.00");
 
     public static String format(BigDecimal amount) {
-	return format(amount.doubleValue());
+        return format(amount.doubleValue());
     }
 
     public static String format(double amount) {
-	return formatting.format(amount);
+        return formatting.format(amount);
     }
 }

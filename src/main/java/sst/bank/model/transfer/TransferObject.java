@@ -1,12 +1,12 @@
 package sst.bank.model.transfer;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Data;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Project;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class TransferObject implements Serializable {

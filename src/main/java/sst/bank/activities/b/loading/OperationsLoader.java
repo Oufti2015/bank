@@ -15,6 +15,7 @@ import sst.bank.model.Operation;
 import sst.bank.model.Project;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.container.ContainerInterface;
+import sst.bank.model.transfer.OperationTO;
 import sst.bank.model.transfer.TransferObject;
 import sst.textfile.InputTextFile;
 import sst.textfile.InputTextFileImpl;
@@ -31,7 +32,7 @@ public class OperationsLoader implements BankActivity {
 	    container.initLastId(to.getLastId());
 	    container.operationsContainer().addAll(to.getOperations()
 		    .stream()
-		    .map(o -> o.toOperation())
+		    .map(OperationTO::toOperation)
 		    .collect(Collectors.toList()));
 	    container.addAllBeneficiaries(to.getBeneficiaries());
 	    container.projectsContainer().addAll(to.getProjects());

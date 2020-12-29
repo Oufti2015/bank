@@ -7,8 +7,10 @@ import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
 
 public class BudgetIntoTableConverter implements IntoTableConverter {
-    public static final String[] headers = {"CATEGORY", "AMOUNT", "AMOUNT", "AMOUNT", "AMOUNT", "TYPE",
-            "TYPE"};
+    public static final String AMOUNT_HEADER = "AMOUNT";
+    public static final String CATEGORY_HEADER = "CATEGORY";
+    public static final String TYPE_HEADER = "TYPE";
+    protected static final String[] headers = {CATEGORY_HEADER, AMOUNT_HEADER, AMOUNT_HEADER, AMOUNT_HEADER, AMOUNT_HEADER, TYPE_HEADER, TYPE_HEADER};
 
     private final Category category;
 
@@ -27,9 +29,8 @@ public class BudgetIntoTableConverter implements IntoTableConverter {
         cellInfos[i++] = new AmountCellInfo(category.getBudget().yearlyAmount(Budget.MONTHS_COUNT));
         cellInfos[i++] = new AmountCellInfo(category.getBudget().yearlyControlledAmount(Budget.MONTHS_COUNT));
         cellInfos[i++] = new CellInfo(category.getBudget().getBudgetFrequencyType().name());
-        cellInfos[i++] = new CellInfo(category.getBudget().getBudgetType().name());
+        cellInfos[i] = new CellInfo(category.getBudget().getBudgetType().name());
 
         return cellInfos;
     }
-
 }

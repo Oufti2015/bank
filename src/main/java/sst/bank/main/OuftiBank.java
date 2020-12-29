@@ -13,32 +13,28 @@ import sst.bank.events.CategoryChangeEvent;
 import sst.bank.model.container.BankContainer;
 
 @Log4j
-public class OuftiBank { // NO_UCD (unused code)
-    public static EventBus eventBus = new EventBus();
+public class OuftiBank {
+	public static final String MESSAGE_LINE_STRING = "+----------------------------------------------------------------------------------------------+";
+	public static final  EventBus eventBus = new EventBus();
 
     public static void main(String[] args) {
 	Instant start = Instant.now();
 
-	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info(MESSAGE_LINE_STRING);
 	log.info("|----O-U-F-T-I----B-A-N-K----------------------------------------------------------------------|");
-	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info(MESSAGE_LINE_STRING);
 
 	OuftiBank bank = new OuftiBank();
-	bank.init();
 	bank.run();
 	Instant stop = Instant.now();
 
 	log.info("Oufti Bank finished in "
 		+ ChronoUnit.MILLIS.between(start, stop) + " ms.");
-	log.info("+----------------------------------------------------------------------------------------------+");
+	log.info(MESSAGE_LINE_STRING);
     }
 
     public OuftiBank() {
 	eventBus.register(this);
-    }
-
-    private void init() {
-	// eventBus.post(new Exception("Test"));
     }
 
     private void run() {

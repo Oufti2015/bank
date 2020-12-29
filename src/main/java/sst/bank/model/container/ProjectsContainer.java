@@ -1,39 +1,40 @@
 package sst.bank.model.container;
 
+import sst.bank.model.Project;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import sst.bank.model.Project;
-
 public class ProjectsContainer implements ProjectsContainerInterface {
 
-    private static ProjectsContainerInterface me = null;
+    private static ProjectsContainerInterface me;
+
     static {
-	me = new ProjectsContainer();
+        me = new ProjectsContainer();
     }
 
     private ProjectsContainer() {
     }
 
     public static ProjectsContainerInterface me() {
-	return me;
+        return me;
     }
 
     List<Project> projects = new ArrayList<>();
 
     @Override
     public List<Project> projects() {
-	return projects;
+        return projects;
     }
 
     @Override
     public void add(Project project) {
-	projects.add(project);
+        projects.add(project);
     }
 
     @Override
     public void addAll(List<Project> list) {
-	projects.addAll(list);
+        projects.addAll(list);
     }
 
 }

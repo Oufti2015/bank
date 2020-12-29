@@ -10,17 +10,14 @@ public class BeneficiaryValidator implements BankActivity {
 
     @Override
     public void run() {
-	BankContainer.me().beneficiaries()
-		.stream()
-		.filter(b -> hasDuplicate(b))
-		.forEach(b -> log.warn("Duplicate beneficiary " + b));
+        BankContainer.me().beneficiaries()
+                .stream()
+                .filter(this::hasDuplicate)
+                .forEach(b -> log.warn("Duplicate beneficiary " + b));
     }
 
     private boolean hasDuplicate(Beneficiary beneficiary) {
-	Beneficiary found = BankContainer.me().getBeneficiaryByCounterpartyDetails(beneficiary.getId());
-	if (beneficiary != found) {
-	    return true;
-	}
-	return false;
+        Beneficiary found = BankContainer.me().getBeneficiaryByCounterpartyDetails(beneficiary.getId());
+        return beneficiary != found;
     }
 }

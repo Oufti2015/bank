@@ -1,15 +1,14 @@
 package sst.bank.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-import org.junit.Assert;
-
 import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 import sst.bank.main.OuftiBank;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Properties;
 
 @Log4j
 public class BankConfiguration {
@@ -37,31 +36,32 @@ public class BankConfiguration {
     public static final String OPERATIONS_TXT = "data" + File.separator + "operations.txt";
 
     private static BankConfiguration me;
+
     static {
-	me = new BankConfiguration();
+        me = new BankConfiguration();
     }
 
     private BankConfiguration() {
-	try {
-	    ClassLoader classLoader = getClass().getClassLoader();
-	    properties.load(new FileInputStream(new File(classLoader.getResource("oufti.properties").getFile())));
-	} catch (IOException e) {
-	    log.fatal("Cannot read " + "oufti.properties", e);
-	    OuftiBank.eventBus.post(e);
-	}
+        ClassLoader classLoader = getClass().getClassLoader();
+        try (FileInputStream fileInputStream = new FileInputStream(Objects.requireNonNull(classLoader.getResource("oufti.properties")).getFile())) {
+            properties.load(fileInputStream);
+        } catch (IOException e) {
+            log.fatal("Cannot read " + "oufti.properties", e);
+            OuftiBank.eventBus.post(e);
+        }
     }
 
     public void init() {
-	try {
-	    String pathname = getInputDir() + File.separator;
+        try {
+            String pathname = getInputDir() + File.separator;
 
-	    initCategories(pathname);
+            initCategories(pathname);
 
-	    initLabels(pathname);
-	} catch (IOException e) {
-	    log.fatal("Cannot read property file", e);
-	    OuftiBank.eventBus.post(e);
-	}
+            initLabels(pathname);
+        } catch (IOException e) {
+            log.fatal("Cannot read property file", e);
+            OuftiBank.eventBus.post(e);
+        }
     }
 
     /**
@@ -69,21 +69,17 @@ public class BankConfiguration {
      * @throws IOException
      */
     private void initCategories(String pathname) throws IOException {
-	File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
-	counterpartiesMapping = InvertedCategoryProperties.load(inputFile);
-	Assert.assertTrue(COUNTERPARTY_PROPERTIES, !counterpartiesMapping.keySet().isEmpty());
+        File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
+        counterpartiesMapping = InvertedCategoryProperties.load(inputFile);
 
-	inputFile = new File(pathname + DETAIL_PROPERTIES);
-	detailsMapping = InvertedCategoryProperties.load(inputFile);
-	Assert.assertTrue(DETAIL_PROPERTIES, !detailsMapping.keySet().isEmpty());
+        inputFile = new File(pathname + DETAIL_PROPERTIES);
+        detailsMapping = InvertedCategoryProperties.load(inputFile);
 
-	inputFile = new File(pathname + POSITIF_COUNTERPARTY_PROPERTIES);
-	positifCounterpartiesMapping = InvertedCategoryProperties.load(inputFile);
-	Assert.assertTrue(POSITIF_COUNTERPARTY_PROPERTIES, !positifCounterpartiesMapping.keySet().isEmpty());
+        inputFile = new File(pathname + POSITIF_COUNTERPARTY_PROPERTIES);
+        positifCounterpartiesMapping = InvertedCategoryProperties.load(inputFile);
 
-	inputFile = new File(pathname + ID_PROPERTIES);
-	idMapping = InvertedCategoryProperties.load(inputFile);
-	Assert.assertTrue(ID_PROPERTIES, !idMapping.keySet().isEmpty());
+        inputFile = new File(pathname + ID_PROPERTIES);
+        idMapping = InvertedCategoryProperties.load(inputFile);
     }
 
     /**
@@ -91,21 +87,21 @@ public class BankConfiguration {
      * @throws IOException
      */
     private void initLabels(String pathname) throws IOException {
-	File inputFile = new File(pathname + COUNTERPARTY_LABEL_PROPERTIES);
-	counterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
+        File inputFile = new File(pathname + COUNTERPARTY_LABEL_PROPERTIES);
+        counterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-	inputFile = new File(pathname + DETAIL_LABEL_PROPERTIES);
-	detailsLabelsMapping = InvertedLabelProperties.load(inputFile);
+        inputFile = new File(pathname + DETAIL_LABEL_PROPERTIES);
+        detailsLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-	inputFile = new File(pathname + POSITIF_COUNTERPARTY_LABEL_PROPERTIES);
-	positifCounterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
+        inputFile = new File(pathname + POSITIF_COUNTERPARTY_LABEL_PROPERTIES);
+        positifCounterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-	inputFile = new File(pathname + ID_LABEL_PROPERTIES);
-	idLabelsMapping = InvertedLabelProperties.load(inputFile);
+        inputFile = new File(pathname + ID_LABEL_PROPERTIES);
+        idLabelsMapping = InvertedLabelProperties.load(inputFile);
     }
 
     public static BankConfiguration me() {
-	return me;
+        return me;
     }
 
     @Getter
@@ -127,22 +123,22 @@ public class BankConfiguration {
     private InvertedLabelProperties idLabelsMapping = null;
 
     public String getInputDir() {
-	return properties.getProperty(INPUT_DIR);
+        return properties.getProperty(INPUT_DIR);
     }
 
     public String getOutputDir() {
-	return properties.getProperty(OUTPUT_DIR);
+        return properties.getProperty(OUTPUT_DIR);
     }
 
     public String getOperationsJson() {
-	return getInputDir() + File.separator + OPERATIONS_JSON;
+        return getInputDir() + File.separator + OPERATIONS_JSON;
     }
 
     public String getCategoriesJson() {
-	return getInputDir() + File.separator + CATEGORIES_JSON;
+        return getInputDir() + File.separator + CATEGORIES_JSON;
     }
 
     public String getLabelsJson() {
-	return getInputDir() + File.separator + LABELS_JSON;
+        return getInputDir() + File.separator + LABELS_JSON;
     }
 }

@@ -1,14 +1,14 @@
 package sst.bank.model.container;
 
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.Collection;
-import java.util.List;
-
 import sst.bank.model.BankSummary;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.Category;
 import sst.bank.model.OperationLabel;
+
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.Collection;
+import java.util.List;
 
 public interface ContainerInterface {
 

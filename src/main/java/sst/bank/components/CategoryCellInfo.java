@@ -6,7 +6,7 @@ import sst.common.html.table.builders.CellInfo;
 public class CategoryCellInfo extends CellInfo {
 
     public CategoryCellInfo(Category category) {
-	super(category.getLabel(), category.getStyle());
+        super(category.getLabel(), category.getStyle());
     }
 
 }

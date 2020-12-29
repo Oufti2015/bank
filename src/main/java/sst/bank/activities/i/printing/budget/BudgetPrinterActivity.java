@@ -1,11 +1,5 @@
 package sst.bank.activities.i.printing.budget;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
@@ -22,10 +16,14 @@ import sst.common.html.table.HTMLTable;
 import sst.common.html.table.builders.IntoTableConverter;
 import sst.common.html.table.builders.TableBuilder;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Log4j
 public class BudgetPrinterActivity implements BankActivity {
-    private TableBuilder budgetsTableBuilder = null;
-
     @Override
     public void run() {
         List<BankSummary> operationsByYear = BankContainer.me().operationsByYear();
@@ -35,8 +33,8 @@ public class BudgetPrinterActivity implements BankActivity {
 
         operationsByYear
                 .stream()
-                .map(bm -> bm.toString())
-                .forEach(s -> header.add(s));
+                .map(BankSummary::toString)
+                .forEach(header::add);
 
         HTML html = createDocument();
         html.body().addChild(createTable(operationsByYear, header));
@@ -65,7 +63,7 @@ public class BudgetPrinterActivity implements BankActivity {
     }
 
     private HTMLTable createTable(List<BankSummary> operationsByYear, List<String> header) {
-        budgetsTableBuilder = new TableBuilder(header.toArray(new String[header.size()]));
+        TableBuilder budgetsTableBuilder = new TableBuilder(header.toArray(new String[header.size()]));
 
         List<IntoTableConverter> rows = new ArrayList<>(BankContainer.me().getCategories().size());
         for (Category category : BankContainer.me().getCategories().stream().sorted().collect(Collectors.toList())) {

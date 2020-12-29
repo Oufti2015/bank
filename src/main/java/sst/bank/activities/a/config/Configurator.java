@@ -7,6 +7,6 @@ public class Configurator implements BankActivity {
 
     @Override
     public void run() {
-	BankConfiguration.me().init();
+        BankConfiguration.me().init();
     }
 }

@@ -9,22 +9,21 @@ public class BeneficiaryCreator implements BankActivity {
 
     @Override
     public void run() {
-	// BankContainer.me().beneficiaries().removeAll(BankContainer.me().beneficiaries());
-	BankConfiguration.me().getCounterpartiesMapping().keySet()
-		.stream()
-		.filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
-		.forEach(s -> createCounterpartyBeneficiary(s));
-	BankConfiguration.me().getDetailsMapping().keySet()
-		.stream()
-		.filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
-		.forEach(s -> createDetailBeneficiary(s));
+        BankConfiguration.me().getCounterpartiesMapping().keySet()
+                .stream()
+                .filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
+                .forEach(this::createCounterpartyBeneficiary);
+        BankConfiguration.me().getDetailsMapping().keySet()
+                .stream()
+                .filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
+                .forEach(this::createDetailBeneficiary);
     }
 
     private void createCounterpartyBeneficiary(String id) {
-	BankContainer.me().addBeneficiary(new Beneficiary(id).counterparty(id));
+        BankContainer.me().addBeneficiary(new Beneficiary(id).counterparty(id));
     }
 
     private void createDetailBeneficiary(String id) {
-	BankContainer.me().addBeneficiary(new Beneficiary(id).detail(id));
+        BankContainer.me().addBeneficiary(new Beneficiary(id).detail(id));
     }
 }

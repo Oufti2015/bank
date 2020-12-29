@@ -5,12 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class GsonUtils {
+    private GsonUtils() {
+    }
 
     public static Gson buildGson() {
-	return Converters
-		.registerOffsetDateTime(new GsonBuilder())
-		.setPrettyPrinting()
-		.serializeNulls()
-		.create();
+        return Converters
+                .registerOffsetDateTime(new GsonBuilder())
+                .setPrettyPrinting()
+                .serializeNulls()
+                .create();
     }
 }

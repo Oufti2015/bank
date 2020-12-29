@@ -1,18 +1,18 @@
 package sst.bank.model.container;
 
-import java.util.List;
-
 import sst.bank.model.Operation;
+
+import java.util.List;
 
 public interface OperationsContainerInterface {
 
-    public List<Operation> operations();
+    List<Operation> operations();
 
-    public void add(Operation operation);
+    void add(Operation operation);
 
-    public void addAll(List<Operation> list);
+    void addAll(List<Operation> list);
 
-    public Operation get(String id);
+    Operation get(String id);
 
-    public Operation get(Integer id);
+    Operation get(Integer id);
 }
