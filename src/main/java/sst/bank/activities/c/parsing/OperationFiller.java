@@ -1,5 +1,6 @@
 package sst.bank.activities.c.parsing;
 
+import lombok.extern.log4j.Log4j;
 import sst.bank.activities.BankActivity;
 import sst.bank.model.Operation;
 import sst.bank.model.Operation.OperationType;
@@ -8,6 +9,7 @@ import sst.bank.model.container.BankContainer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Log4j
 public class OperationFiller implements BankActivity {
     private final Pattern[] patternDetails = {
             Pattern.compile(".*((BE)\\d{14}).*"),
@@ -25,6 +27,7 @@ public class OperationFiller implements BankActivity {
     @Override
     public void run() {
         BankContainer.me().operationsContainer().operations().stream().forEach(this::fillOperation);
+        log.info("Operation Filler done on " + BankContainer.me().operationsContainer().operations().size() + " operations.");
     }
 
     private void fillOperation(Operation o) {
@@ -36,8 +39,8 @@ public class OperationFiller implements BankActivity {
             o.setCounterparty(null);
         }
 
-        for (int i = 0; i < patternDetails.length; i++) {
-            if (o.getCounterparty() == null) {
+        if (o.getCounterparty() == null || o.getCounterparty().isEmpty()) {
+            for (int i = 0; i < patternDetails.length; i++) {
                 Matcher matcher = patternDetails[i].matcher(o.getDetail());
                 if (matcher.find()) {
                     o.setCounterparty(matcher.group(1));
@@ -47,10 +50,10 @@ public class OperationFiller implements BankActivity {
                         o.setCounterparty(matcher.group(1));
                     }
                 }
-            }
 
-            if (o.getCounterparty() != null) {
-                o.setCounterparty(formatCounterparty(o.getCounterparty(), countries[i], countriesForb[i], patternFormatted[i]));
+                if (o.getCounterparty() != null && !o.getCounterparty().isEmpty()) {
+                    o.setCounterparty(formatCounterparty(o.getCounterparty(), countries[i], countriesForb[i], patternFormatted[i]));
+                }
             }
         }
 

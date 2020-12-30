@@ -53,11 +53,9 @@ public class BankConfiguration {
 
     public void init() {
         try {
-            String pathname = getInputDir() + File.separator;
+            initCategories();
 
-            initCategories(pathname);
-
-            initLabels(pathname);
+            initLabels();
         } catch (IOException e) {
             log.fatal("Cannot read property file", e);
             OuftiBank.eventBus.post(e);
@@ -65,38 +63,40 @@ public class BankConfiguration {
     }
 
     /**
-     * @param pathname
      * @throws IOException
      */
-    private void initCategories(String pathname) throws IOException {
-        File inputFile = new File(pathname + COUNTERPARTY_PROPERTIES);
+    private void initCategories() throws IOException {
+        File inputFile = getMappingFile(COUNTERPARTY_PROPERTIES);
         counterpartiesMapping = InvertedCategoryProperties.load(inputFile);
 
-        inputFile = new File(pathname + DETAIL_PROPERTIES);
+        inputFile = getMappingFile(DETAIL_PROPERTIES);
         detailsMapping = InvertedCategoryProperties.load(inputFile);
 
-        inputFile = new File(pathname + POSITIF_COUNTERPARTY_PROPERTIES);
+        inputFile = getMappingFile(POSITIF_COUNTERPARTY_PROPERTIES);
         positifCounterpartiesMapping = InvertedCategoryProperties.load(inputFile);
 
-        inputFile = new File(pathname + ID_PROPERTIES);
+        inputFile = getMappingFile(ID_PROPERTIES);
         idMapping = InvertedCategoryProperties.load(inputFile);
     }
 
+    public File getMappingFile(String counterpartyProperties) {
+        return new File(getInputDir() + File.separator + counterpartyProperties);
+    }
+
     /**
-     * @param pathname
      * @throws IOException
      */
-    private void initLabels(String pathname) throws IOException {
-        File inputFile = new File(pathname + COUNTERPARTY_LABEL_PROPERTIES);
+    private void initLabels() throws IOException {
+        File inputFile = getMappingFile(COUNTERPARTY_LABEL_PROPERTIES);
         counterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-        inputFile = new File(pathname + DETAIL_LABEL_PROPERTIES);
+        inputFile = getMappingFile(DETAIL_LABEL_PROPERTIES);
         detailsLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-        inputFile = new File(pathname + POSITIF_COUNTERPARTY_LABEL_PROPERTIES);
+        inputFile = getMappingFile(POSITIF_COUNTERPARTY_LABEL_PROPERTIES);
         positifCounterpartiesLabelsMapping = InvertedLabelProperties.load(inputFile);
 
-        inputFile = new File(pathname + ID_LABEL_PROPERTIES);
+        inputFile = getMappingFile(ID_LABEL_PROPERTIES);
         idLabelsMapping = InvertedLabelProperties.load(inputFile);
     }
 
