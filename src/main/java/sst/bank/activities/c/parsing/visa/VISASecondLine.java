@@ -1,12 +1,12 @@
 package sst.bank.activities.c.parsing.visa;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import lombok.Getter;
 import lombok.Setter;
 import sst.common.file.parser.Parser;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VISASecondLine {
     @Getter

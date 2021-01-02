@@ -1,7 +1,7 @@
 package sst.bank.config;
 
 import lombok.Getter;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.main.OuftiBank;
 
 import java.io.File;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-@Log4j
+@Log4j2
 public class BankConfiguration {
     public static final String EURO_CHAR = "\u20ac";
 

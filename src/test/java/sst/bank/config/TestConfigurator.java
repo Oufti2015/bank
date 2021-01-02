@@ -1,18 +1,17 @@
 package sst.bank.config;
 
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.LifeCycleInterface;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;
 import sst.bank.model.container.BankContainer;
+
+import java.io.IOException;
+
+import static org.junit.Assert.fail;
 
 public class TestConfigurator {
 

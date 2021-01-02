@@ -1,11 +1,11 @@
 package sst.bank.activities.b.loading;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.container.BankContainer;
 
-@Log4j
+@Log4j2
 public class BeneficiaryValidator implements BankActivity {
 
     @Override

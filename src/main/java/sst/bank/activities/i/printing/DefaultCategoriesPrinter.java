@@ -1,6 +1,6 @@
 package sst.bank.activities.i.printing;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
@@ -11,7 +11,7 @@ import sst.common.file.output.OutputFile;
 import java.io.File;
 import java.io.IOException;
 
-@Log4j
+@Log4j2
 public class DefaultCategoriesPrinter implements BankActivity {
     private static final String DATA_DEFAULT_TXT = BankConfiguration.me().getOutputDir()
             + File.separator

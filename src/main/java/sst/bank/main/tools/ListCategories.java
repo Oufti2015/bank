@@ -1,12 +1,12 @@
 package sst.bank.main.tools;
 
 import com.google.common.base.Strings;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 
-@Log4j
+@Log4j2
 public class ListCategories {
 
     public static void main(String[] args) {

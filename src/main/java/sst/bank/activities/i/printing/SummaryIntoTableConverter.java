@@ -1,7 +1,5 @@
 package sst.bank.activities.i.printing;
 
-import java.math.BigDecimal;
-
 import lombok.Getter;
 import sst.bank.activities.i.printing.TotalAmountSummers.SummerType;
 import sst.bank.components.AmountCellInfo;
@@ -11,6 +9,8 @@ import sst.bank.model.Budget;
 import sst.bank.model.Category;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
+
+import java.math.BigDecimal;
 
 public class SummaryIntoTableConverter implements IntoTableConverter {
     @Getter

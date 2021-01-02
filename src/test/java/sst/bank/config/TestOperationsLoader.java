@@ -3,7 +3,6 @@ package sst.bank.config;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.a.config.Configurator;

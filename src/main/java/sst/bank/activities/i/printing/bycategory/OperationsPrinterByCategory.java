@@ -1,6 +1,6 @@
 package sst.bank.activities.i.printing.bycategory;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.i.printing.*;
 import sst.bank.config.BankConfiguration;
@@ -20,7 +20,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j
+@Log4j2
 public class OperationsPrinterByCategory implements BankActivity {
     private TableBuilder operationsTableBuilder = new TableBuilder(OperationsIntoTableConverter.getHeaders());
 

@@ -1,7 +1,6 @@
 package sst.bank.activities.c.parsing.visa;
 
 import com.google.common.base.Strings;
-
 import sst.bank.model.Operation;
 import sst.bank.model.Operation.OperationType;
 import sst.bank.model.container.BankContainer;

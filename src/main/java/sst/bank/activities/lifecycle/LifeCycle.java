@@ -1,6 +1,6 @@
 package sst.bank.activities.lifecycle;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.ActivityPhase;
 import sst.bank.activities.BankActivity;
 import sst.bank.main.OuftiBank;
@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@Log4j
+@Log4j2
 public abstract class LifeCycle {
 
     public enum Phase {

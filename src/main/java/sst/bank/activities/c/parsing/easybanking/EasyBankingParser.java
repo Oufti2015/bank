@@ -1,13 +1,13 @@
 package sst.bank.activities.c.parsing.easybanking;
 
 import com.google.common.base.Strings;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.model.Operation;
 import sst.bank.model.container.BankContainer;
 import sst.common.file.loader.interfaces.RecordFormatter;
 import sst.common.file.loader.interfaces.RecordSelector;
 
-@Log4j
+@Log4j2
 public class EasyBankingParser implements RecordFormatter, RecordSelector {
 
     @Override

@@ -1,6 +1,6 @@
 package sst.bank.activities.c.parsing;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.activities.c.parsing.easybanking.EasyBankingOperation;
 import sst.bank.activities.c.parsing.easybanking.EasyBankingParser;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log4j
+@Log4j2
 public class OperationsParser implements BankActivity {
     private List<Operation> list = new ArrayList<>();
 

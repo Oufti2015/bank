@@ -1,18 +1,17 @@
 package sst.bank.main;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.LifeCycleInterface;
 import sst.bank.events.CategoryChangeEvent;
 import sst.bank.model.container.BankContainer;
 
-@Log4j
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+@Log4j2
 public class OuftiBank {
 	public static final String MESSAGE_LINE_STRING = "+----------------------------------------------------------------------------------------------+";
 	public static final  EventBus eventBus = new EventBus();

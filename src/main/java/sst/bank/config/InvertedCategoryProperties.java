@@ -40,8 +40,8 @@ public class InvertedCategoryProperties extends AbstractInvertedProperties {
     }
 
     public void save(File outputFile) throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSXXX");
-        Files.copy(outputFile.toPath(), new File(outputFile.getAbsolutePath() + sdf.format(new Date())).toPath());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        Files.copy(outputFile.toPath(), new File(outputFile.getAbsolutePath() + "." + sdf.format(new Date())).toPath());
 
         Properties props = properties();
 

@@ -1,6 +1,6 @@
 package sst.bank.model.container;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.model.*;
 
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Log4j
+@Log4j2
 public class BankContainer implements ContainerInterface {
 
     private static ContainerInterface me;

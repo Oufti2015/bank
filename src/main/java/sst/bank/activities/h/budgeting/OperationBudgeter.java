@@ -1,6 +1,6 @@
 package sst.bank.activities.h.budgeting;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankUtils;
 import sst.bank.main.OuftiBank;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
-@Log4j
+@Log4j2
 public class OperationBudgeter implements BankActivity {
 
     @Override

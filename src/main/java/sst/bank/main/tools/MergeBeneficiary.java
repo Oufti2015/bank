@@ -1,11 +1,11 @@
 package sst.bank.main.tools;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.LifeCycleInterface;
 import sst.bank.model.Beneficiary;
 import sst.bank.model.container.BankContainer;
 
-@Log4j
+@Log4j2
 public class MergeBeneficiary {
 
     public static void main(String[] args) {

@@ -1,12 +1,6 @@
 package sst.bank.activities.b.loading;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.config.GsonUtils;
@@ -20,7 +14,13 @@ import sst.bank.model.transfer.TransferObject;
 import sst.textfile.InputTextFile;
 import sst.textfile.InputTextFileImpl;
 
-@Log4j
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Log4j2
 public class OperationsLoader implements BankActivity {
 
     @Override

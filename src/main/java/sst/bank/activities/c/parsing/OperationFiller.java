@@ -1,6 +1,6 @@
 package sst.bank.activities.c.parsing;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.model.Operation;
 import sst.bank.model.Operation.OperationType;
@@ -9,7 +9,7 @@ import sst.bank.model.container.BankContainer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Log4j
+@Log4j2
 public class OperationFiller implements BankActivity {
     private final Pattern[] patternDetails = {
             Pattern.compile(".*((BE)\\d{14}).*"),

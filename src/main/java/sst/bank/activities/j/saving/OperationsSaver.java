@@ -1,6 +1,6 @@
 package sst.bank.activities.j.saving;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.config.GsonUtils;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Log4j
+@Log4j2
 public class OperationsSaver implements BankActivity {
     @Override
     public void run() {

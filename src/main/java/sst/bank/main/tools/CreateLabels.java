@@ -1,6 +1,6 @@
 package sst.bank.main.tools;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.j.saving.LabelsSaver;
 import sst.bank.model.OperationLabel;
 import sst.bank.model.container.BankContainer;
@@ -8,7 +8,7 @@ import sst.bank.model.container.BankContainer;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Log4j
+@Log4j2
 public class CreateLabels {
 
     public static void main(String[] args) {

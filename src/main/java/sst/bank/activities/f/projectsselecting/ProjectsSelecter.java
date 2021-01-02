@@ -1,6 +1,6 @@
 package sst.bank.activities.f.projectsselecting;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.model.Category;
 import sst.bank.model.Operation;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j
+@Log4j2
 public class ProjectsSelecter implements BankActivity {
     List<Category> unselectedCategories = new ArrayList<>();
 

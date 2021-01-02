@@ -1,6 +1,6 @@
 package sst.bank.main.tools;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.activities.j.saving.CategoriesSaver;
 import sst.bank.model.Budget;
@@ -8,7 +8,7 @@ import sst.bank.model.Category;
 import sst.bank.model.container.BankContainer;
 import sst.bank.model.container.ContainerInterface;
 
-@Log4j
+@Log4j2
 public class MigrateCategories {
 
     public static final String HOUSE = "HOUSE";

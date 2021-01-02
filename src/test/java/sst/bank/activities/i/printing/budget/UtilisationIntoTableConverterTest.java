@@ -1,14 +1,13 @@
 package sst.bank.activities.i.printing.budget;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import sst.bank.activities.a.config.CategoriesLoader;
 import sst.bank.model.container.BankContainer;
 import sst.common.html.table.builders.CellInfo;
 import sst.common.html.table.builders.IntoTableConverter;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by steph on 22/06/17.

@@ -1,6 +1,6 @@
 package sst.bank.activities.i.printing.budget;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import sst.bank.activities.BankActivity;
 import sst.bank.config.BankConfiguration;
 import sst.bank.main.OuftiBank;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j
+@Log4j2
 public class BudgetPrinterActivity implements BankActivity {
     @Override
     public void run() {
