@@ -57,6 +57,7 @@ public class OperationsGrouper implements BankActivity {
     private void groupOperationsByCategory(Category c) {
         List<Operation> collect = BankContainer.me().operationsContainer().operations()
                 .stream()
+                .filter(o -> o.getCategory() != null)
                 .filter(o -> o.getCategory().equals(c))
                 .sorted()
                 .collect(Collectors.toList());

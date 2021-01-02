@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Deprecated
 public class InvertedLabelProperties extends AbstractInvertedProperties {
     private final Map<String, OperationLabel> mapping = new HashMap<>();
 

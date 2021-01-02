@@ -2,7 +2,9 @@ package sst.bank.config;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import sst.bank.main.OuftiBank;
+import sst.inverted.properties.InvertedProperties;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,7 +58,7 @@ public class BankConfiguration {
             initCategories();
 
             initLabels();
-        } catch (IOException e) {
+        } catch (IOException | ConfigurationException e) {
             log.fatal("Cannot read property file", e);
             OuftiBank.eventBus.post(e);
         }
@@ -65,18 +67,18 @@ public class BankConfiguration {
     /**
      * @throws IOException
      */
-    private void initCategories() throws IOException {
+    private void initCategories() throws IOException, ConfigurationException {
         File inputFile = getMappingFile(COUNTERPARTY_PROPERTIES);
-        counterpartiesMapping = InvertedCategoryProperties.load(inputFile);
+        counterpartiesMapping = new InvertedCategoryProperties(inputFile);
 
         inputFile = getMappingFile(DETAIL_PROPERTIES);
-        detailsMapping = InvertedCategoryProperties.load(inputFile);
+        detailsMapping = new InvertedCategoryProperties(inputFile);
 
         inputFile = getMappingFile(POSITIF_COUNTERPARTY_PROPERTIES);
-        positifCounterpartiesMapping = InvertedCategoryProperties.load(inputFile);
+        positifCounterpartiesMapping = new InvertedCategoryProperties(inputFile);
 
         inputFile = getMappingFile(ID_PROPERTIES);
-        idMapping = InvertedCategoryProperties.load(inputFile);
+        idMapping = new InvertedCategoryProperties(inputFile);
     }
 
     public File getMappingFile(String counterpartyProperties) {

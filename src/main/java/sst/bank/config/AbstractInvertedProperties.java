@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+@Deprecated
 public abstract class AbstractInvertedProperties {
     protected static List<String> getCounterparties(Properties props, String category) {
         String counterpartyString = props.getProperty(category);

@@ -9,11 +9,11 @@ public class BeneficiaryCreator implements BankActivity {
 
     @Override
     public void run() {
-        BankConfiguration.me().getCounterpartiesMapping().keySet()
+        BankConfiguration.me().getCounterpartiesMapping().keys()
                 .stream()
                 .filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
                 .forEach(this::createCounterpartyBeneficiary);
-        BankConfiguration.me().getDetailsMapping().keySet()
+        BankConfiguration.me().getDetailsMapping().keys()
                 .stream()
                 .filter(s -> null == BankContainer.me().getBeneficiaryByCounterpartyDetails(s))
                 .forEach(this::createDetailBeneficiary);

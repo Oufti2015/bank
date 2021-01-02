@@ -1,5 +1,7 @@
 package sst.bank.config;
 
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.junit.Assert;
 import org.junit.Test;
 import sst.bank.activities.a.config.CategoriesLoader;
 
@@ -13,15 +15,17 @@ public class TestInvertedPropertiesLoadAndSave {
         try {
             new CategoriesLoader().run();
 
-            final InvertedCategoryProperties inverted = InvertedCategoryProperties.load("/Users/steph/Documents/bank/input/counterparty.properties");
+            final InvertedCategoryProperties inverted = new InvertedCategoryProperties(new File("/Users/steph/Documents/bank/input/counterparty.properties"));
 
-            System.out.println("Loaded " + inverted.keySet().size());
+            System.out.println("Loaded " + inverted.size());
 
             final File tempFile = File.createTempFile("Test", ".properties");
-            inverted.save(tempFile);
+            inverted.save();
 
             System.out.println("Temp File = [" + tempFile.getAbsolutePath() + "] length = <" + tempFile.length() + ">");
-        } catch (IOException e) {
+
+            Assert.assertNotEquals(0, inverted.size());
+        } catch (IOException | ConfigurationException e) {
             e.printStackTrace();
         }
     }

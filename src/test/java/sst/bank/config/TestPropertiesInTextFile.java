@@ -53,12 +53,11 @@ public class TestPropertiesInTextFile {
     }
 
     private void extractProperties(String name, Bucket bucket, InvertedCategoryProperties details) {
-        Set<String> keys = details.keySet();
+        Set<String> keys = details.keys();
 
         Bucket detBucket = bucket.newBucket(name);
-
         for (String key : keys) {
-            detBucket.newEntry(key, details.map(key).getName());
+            detBucket.newEntry(key, details.mapCategory(key).getName());
         }
     }
 }

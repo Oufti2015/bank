@@ -16,7 +16,7 @@ public class SalaireCategory implements CategoryActivity {
 	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getCategory().isDefaultCategory())
 		.filter(o -> o.getAmount().compareTo(BigDecimal.ZERO) > 0)
-		.filter(o -> counterparties.map(o.getCounterparty()) != null)
-		.forEach(o -> o.setCategory(counterparties.map(o.getCounterparty())));
+		.filter(o -> counterparties.mapCategory(o.getCounterparty()) != null)
+		.forEach(o -> o.setCategory(counterparties.mapCategory(o.getCounterparty())));
     }
 }

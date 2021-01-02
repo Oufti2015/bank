@@ -13,7 +13,7 @@ public class WithoutRuleCategory implements CategoryActivity {
 	ids = BankConfiguration.me().getIdMapping();
 	BankContainer.me().operationsContainer().operations().stream()
 		.filter(o -> o.getFortisId() != null)
-		.filter(o -> ids.map(o.getFortisId()) != null)
-		.forEach(o -> o.setCategory(ids.map(o.getFortisId())));
+		.filter(o -> ids.mapCategory(o.getFortisId()) != null)
+		.forEach(o -> o.setCategory(ids.mapCategory(o.getFortisId())));
     }
 }

@@ -11,6 +11,7 @@ public class SalaireLabel implements LabelActivity {
     public void run() {
         InvertedLabelProperties counterparties = BankConfiguration.me().getPositifCounterpartiesLabelsMapping();
         BankContainer.me().operationsContainer().operations().stream()
+                .filter(o -> o.getCategory() != null)
                 .filter(o -> o.getCategory().isDefaultCategory())
                 .filter(o -> o.getAmount().compareTo(BigDecimal.ZERO) > 0)
                 .filter(o -> counterparties.map(o.getCounterparty()) != null)
