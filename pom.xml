@@ -10,7 +10,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.42</version>
         </dependency>
         <dependency>
             <groupId>sst.common.output</groupId>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>sst.common.html</groupId>
             <artifactId>html</artifactId>
-            <version>1.0</version>
+            <version>1.6</version>
         </dependency>
         <dependency>
             <groupId>sst.common.parser</groupId>
